@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace VFSClient.Model
 {
-    public class Class1
+
+    /// <summary>
+    /// Virtual File System
+    /// </summary>
+    public class VirtualFS
     {
+
     }
+
 }
