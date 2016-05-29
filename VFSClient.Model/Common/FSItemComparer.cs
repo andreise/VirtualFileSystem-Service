@@ -39,7 +39,7 @@ namespace VFSClient.Model
         /// <summary>
         /// Default Instance
         /// </summary>
-        private static FSItemComparer Default => defaultInstance.Value;
+        public static FSItemComparer Default => defaultInstance.Value;
 
         /// <summary>
         /// Static constructor

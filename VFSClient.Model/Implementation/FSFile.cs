@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using static System.FormattableString;
 
 namespace VFSClient.Model
 {
@@ -13,7 +13,7 @@ namespace VFSClient.Model
         /// <summary>
         /// Validates name
         /// </summary>
-        /// <param name="name">FSItem Name</param>
+        /// <param name="name">Item Name</param>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file name</exception>
         protected override void ValidateName(string name)
@@ -21,7 +21,7 @@ namespace VFSClient.Model
             base.ValidateName(name);
 
             if (!FSPath.IsValidFileName(name))
-                throw new ArgumentException("The name is not a valid file name.", nameof(name));
+                throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid file name."), nameof(name));
         }
 
         /// <summary>

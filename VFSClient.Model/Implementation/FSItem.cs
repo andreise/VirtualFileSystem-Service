@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using static System.FormattableString;
 
 namespace VFSClient.Model
 {
@@ -23,9 +23,9 @@ namespace VFSClient.Model
         /// <summary>
         /// Parent Item
         /// </summary>
-        public IFSItem Parent { get; internal set; } = null;
+        public virtual IFSItem Parent { get; protected internal set; }
 
-        internal readonly HashSet<IFSItem> childItemsInternal = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
+        protected internal readonly HashSet<IFSItem> childItemsInternal = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
 
         /// <summary>
         /// Child Items
@@ -35,7 +35,7 @@ namespace VFSClient.Model
         /// <summary>
         /// Validates name
         /// </summary>
-        /// <param name="name">FSItem Name</param>
+        /// <param name="name">Item Name</param>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
         protected virtual void ValidateName(string name)
@@ -43,28 +43,28 @@ namespace VFSClient.Model
             if ((object)name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (name.Length == 0)
-                throw new ArgumentException(nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="kind">FSItem Kind</param>
-        /// <param name="name">FSItem Name</param>
+        /// <param name="kind">Item Kind</param>
+        /// <param name="name">Item Name</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if the kind is incorrect</exception>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
         public FSItem(FSItemKind kind, string name)
         {
             if (!Enum.IsDefined(typeof(FSItemKind), kind))
-                throw new ArgumentOutOfRangeException(nameof(kind), kind, "FSItem kind is incorrect.");
+                throw new ArgumentOutOfRangeException(nameof(kind), kind, Invariant($"{nameof(kind)} is incorrect."));
 
             this.ValidateName(name);
 
             this.Kind = kind;
 
-            this.Name = name;
+            this.Name = name.Trim();
         }
     }
 

@@ -50,8 +50,10 @@
     <Compile Include="Implementation\FSFile.cs" />
     <Compile Include="Implementation\FSVolume.cs" />
     <Compile Include="Interfaces\IFSItem.cs" />
+    <Compile Include="Interfaces\IVirtualFS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VirtualFS.cs" />
+    <Compile Include="Implementation\VirtualFS.cs" />
+    <Compile Include="VirtualFSFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

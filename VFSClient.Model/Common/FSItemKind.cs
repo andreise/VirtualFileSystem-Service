@@ -7,13 +7,20 @@
     public enum FSItemKind
     {
         /// <summary>
+        /// File System
+        /// </summary>
+        FileSystem,
+
+        /// <summary>
         /// Volume
         /// </summary>
         Volume,
+
         /// <summary>
         /// Directory
         /// </summary>
         Directory,
+
         /// <summary>
         /// File
         /// </summary>

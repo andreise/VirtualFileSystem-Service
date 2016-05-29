@@ -13,7 +13,7 @@ namespace VFSClient.Model
     internal static class FSPath
     {
 
-        private static char[] InitValidVolumeChars()
+        private static char[] GetValidVolumeChars()
         {
             const char firstChar = 'C';
             const char lastChar = 'Z';
@@ -30,7 +30,7 @@ namespace VFSClient.Model
             return chars;
         }
 
-        private static string[] InitValidVolumeNames()
+        private static string[] GetValidVolumeNames()
         {
             string[] names = new string[ValidVolumeChars.Count];
 
@@ -40,23 +40,13 @@ namespace VFSClient.Model
             return names;
         }
 
-        private static readonly Lazy<IReadOnlyList<char>> validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(InitValidVolumeChars()));
+        private static readonly Lazy<IReadOnlyList<char>> validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(GetValidVolumeChars()));
 
-        private static readonly Lazy<IReadOnlyList<string>> validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(InitValidVolumeNames()));
+        private static readonly Lazy<IReadOnlyList<string>> validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(GetValidVolumeNames()));
 
         private static readonly Lazy<IReadOnlyList<char>> invalidPathChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidPathChars()));
 
         private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
-
-        public const char VolumeSeparator = ':';
-
-        public const char PathSeparator = '\\';
-
-        public const char AltPathSeparator = '/';
-
-        public const int MaxDirectoryNameLength = 255;
-
-        public const int MaxFileNameLength = 255;
 
         public static IReadOnlyList<string> ValidVolumeNames => validVolumeNames.Value;
 
@@ -65,6 +55,18 @@ namespace VFSClient.Model
         public static IReadOnlyList<char> InvalidPathChars => invalidPathChars.Value;
 
         public static IReadOnlyList<char> InvalidFileNameChars => invalidFileNameChars.Value;
+
+        public const char VolumeSeparator = ':';
+
+        public const char PathSeparator = '\\';
+
+        public const char AltPathSeparator = '/';
+
+        public const int MaxFileSystemNameLength = 255;
+
+        public const int MaxDirectoryNameLength = 255;
+
+        public const int MaxFileNameLength = 255;
 
         public static bool IsVolumeSeparator(char c) => c == VolumeSeparator;
 
@@ -77,6 +79,8 @@ namespace VFSClient.Model
         public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => item != c);
 
         public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => item != c);
+
+        public static bool IsValidFileSystemName(string name) => (object)name != null && name.Length <= MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
 
         public static bool IsValidDirectoryName(string name) => (object)name != null && name.Length <= MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
 
@@ -91,6 +95,7 @@ namespace VFSClient.Model
         static FSPath()
         {
         }
+
     }
 
 }
