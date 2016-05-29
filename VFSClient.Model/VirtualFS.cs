@@ -13,6 +13,8 @@ namespace VFSClient.Model
     public class VirtualFS
     {
 
+        //public SortedSet<FSVolume> Volumes { get; } = new SortedSet<FSVolume>(FSItemEqualityComparer.Default);
+
     }
 
 }

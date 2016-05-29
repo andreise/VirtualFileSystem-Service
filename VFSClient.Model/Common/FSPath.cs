@@ -7,6 +7,9 @@ using System.Linq;
 namespace VFSClient.Model
 {
 
+    /// <summary>
+    /// File System Path Utils
+    /// </summary>
     internal static class FSPath
     {
 
@@ -37,13 +40,13 @@ namespace VFSClient.Model
             return names;
         }
 
-        private static readonly Lazy<IReadOnlyList<char>> validVolumeChars;
+        private static readonly Lazy<IReadOnlyList<char>> validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(InitValidVolumeChars()));
 
-        private static readonly Lazy<IReadOnlyList<string>> validVolumeNames;
+        private static readonly Lazy<IReadOnlyList<string>> validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(InitValidVolumeNames()));
 
-        private static readonly Lazy<IReadOnlyList<char>> invalidPathChars;
+        private static readonly Lazy<IReadOnlyList<char>> invalidPathChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidPathChars()));
 
-        private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars;
+        private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
 
         public const char VolumeSeparator = ':';
 
@@ -79,12 +82,14 @@ namespace VFSClient.Model
 
         public static bool IsValidFileName(string name) => (object)name != null && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
+        /// <summary>
+        /// Static constructor
+        /// </summary>
+        /// <remarks>
+        /// Needs for the guaranted static fields initialization in a multithreading work
+        /// </remarks>
         static FSPath()
         {
-            validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(InitValidVolumeChars()));
-            validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(InitValidVolumeNames()));
-            invalidPathChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidPathChars()));
-            invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
         }
     }
 

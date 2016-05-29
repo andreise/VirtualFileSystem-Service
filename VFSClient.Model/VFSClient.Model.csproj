@@ -40,10 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FSItemKind.cs" />
-    <Compile Include="FSPath.cs" />
-    <Compile Include="FSItemImplementations.cs" />
-    <Compile Include="FSItemInterfaces.cs" />
+    <Compile Include="Common\FSItemComparer.cs" />
+    <Compile Include="Common\FSItemEqualityComparer.cs" />
+    <Compile Include="Common\FSItemKind.cs" />
+    <Compile Include="Common\FSItemNameCompareRules.cs" />
+    <Compile Include="Common\FSPath.cs" />
+    <Compile Include="Implementation\FSDirectory.cs" />
+    <Compile Include="Implementation\FSItem.cs" />
+    <Compile Include="Implementation\FSFile.cs" />
+    <Compile Include="Implementation\FSVolume.cs" />
+    <Compile Include="Interfaces\IFSItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VirtualFS.cs" />
   </ItemGroup>
