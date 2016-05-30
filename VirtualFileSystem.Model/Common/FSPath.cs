@@ -72,13 +72,13 @@ namespace VFSClient.Model
 
         public static bool IsPathSeparator(char c) => c == PathSeparator || c == AltPathSeparator;
 
-        public static bool IsValidVolumeChar(char c) => c >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
+        public static bool IsValidVolumeChar(char c) => (c = FSItemNameCompareRules.NormalizeChar(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
 
         public static bool IsValidVolumeName(string name) => (object)name != null && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
-        public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => item != c);
+        public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => c != item);
 
-        public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => item != c);
+        public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => c != item);
 
         public static bool IsValidFileSystemName(string name) => (object)name != null && name.Length <= MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
 
