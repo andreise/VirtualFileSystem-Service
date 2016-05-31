@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
 
 namespace VirtualFileSystem.Service
 {
 
-    [ServiceContract(SessionMode = SessionMode.Required)]
+    [ServiceContract(Name = "VFSService", Namespace = "http://andrey.sergeev.vfsservice", SessionMode = SessionMode.Required)]
     public interface IVFSService
     {
+
+        [OperationContract]
+        void Foo();
 
     }
 
