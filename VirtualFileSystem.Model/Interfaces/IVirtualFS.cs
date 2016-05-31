@@ -9,6 +9,8 @@ namespace VFSClient.Model
     public interface IVirtualFS : IFSItem
     {
 
+        
+
         ///// <summary>
         ///// Current Volume. Returns empty string if a current volume is not set in the file system
         ///// </summary>
