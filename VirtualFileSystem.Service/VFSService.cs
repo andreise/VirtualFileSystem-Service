@@ -1,13 +1,184 @@
 ﻿using System;
+using System.Web.Configuration;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.ServiceModel;
+using System.Xml;
+using static System.FormattableString;
 
 namespace VirtualFileSystem.Service
 {
 
+    internal sealed class UserSessionInfo
+    {
+        public DateTime LastActivityTime { get; }
+
+        public byte[] Token { get; }
+
+        public UserSessionInfo(DateTime lastActivityTime, byte[] token)
+        {
+            this.LastActivityTime = lastActivityTime;
+            this.Token = token;
+        }
+    }
+
+    internal sealed class AuthenticateUserException : Exception
+    {
+        public AuthenticateUserException(string message) : base(message)
+        {
+        }
+    }
+
+    internal sealed class TokenProvider
+    {
+        private readonly RandomNumberGenerator tokenGenerator = RandomNumberGenerator.Create();
+
+        public const int TokenLength = 64;
+
+        public byte[] GenerateToken()
+        {
+            byte[] token = new byte[TokenLength];
+            this.tokenGenerator.GetBytes(token);
+            return token;
+        }
+
+        public static bool IsEqualTokens(byte[] token1, byte[] token2)
+        {
+            Action<byte[], string> checkToken = (token, tokenName) =>
+            {
+                if ((object)token == null)
+                    throw new ArgumentNullException(paramName: tokenName);
+
+                if (token.Length == 0)
+                    throw new ArgumentException(paramName: tokenName, message: "Token is empty.");
+
+                if (token.Length != TokenLength)
+                    throw new ArgumentException(paramName: tokenName, message: "Token is an invalid token (token has an invalid length).");
+            };
+
+            checkToken(token1, nameof(token1));
+            checkToken(token2, nameof(token2));
+
+            for (int i = 0; i < token1.Length; i++)
+                if (token1[i] != token2[i])
+                    return false;
+
+            return true;
+        }
+
+    }
+
     public class VFSService : IVFSService
     {
 
-        public void Foo()
+        private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>();
+
+        private const int TokenLength = 64;
+
+        private readonly TokenProvider tokenProvider = new TokenProvider();
+
+        private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
+            if (!this.connectedUsers.ContainsKey(userName))
+                throw new AuthenticateUserException(Invariant($"User '{userName}' is not connected."));
+
+            if (!TokenProvider.IsEqualTokens(token, this.connectedUsers[userName].Token))
+                throw new AuthenticateUserException("User token is invalid.");
+        }
+
+        private bool IsActualUserSession(string userName)
+        {
+            DateTime lastActivityTime = this.connectedUsers[userName].LastActivityTime;
+
+            TimeSpan userSessionTimeout = TimeSpan.FromTicks(
+                TimeSpan.TicksPerSecond *
+                XmlConvert.ToInt32(WebConfigurationManager.AppSettings["vfsservice:UserSessionTimeoutSeconds"])
+            );
+
+            DateTime now = DateTime.Now;
+
+            return (now >= lastActivityTime) && (now - lastActivityTime <= userSessionTimeout);
+        }
+
+        private void AuthenticateUser(string userName, byte[] token)
+        {
+            AuthenticateUserWithoutSessionChecking(userName, token);
+            
+            if (!this.IsActualUserSession(userName))
+                throw new AuthenticateUserException(Invariant($"'{userName}' user session is not actual or is expired."));
+        }
+
+        private static FaultException<ConnectFault> CreateConnectFaultException(string userName, string message) =>
+            new FaultException<ConnectFault>(
+                detail: new ConnectFault() { UserName = userName, FaultMessage = message },
+                reason: message
+            );
+
+        public ConnectResponse Connect(ConnectRequest request)
+        {
+            if ((object)request == null)
+                throw CreateConnectFaultException(null, Invariant($"{nameof(request)} is null."));
+
+            if ((object)request.UserName == null)
+                throw CreateConnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
+
+            if (string.IsNullOrEmpty(request.UserName))
+                throw CreateConnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
+
+            request.UserName = request.UserName.Trim();
+
+            if (this.connectedUsers.ContainsKey(request.UserName))
+            {
+                if (this.IsActualUserSession(request.UserName))
+                    throw CreateConnectFaultException(request.UserName, Invariant($"User '{request.UserName}' already connected."));
+                else
+                    this.connectedUsers.Remove(request.UserName);
+            }
+
+            byte[] token = this.tokenProvider.GenerateToken();
+
+            this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.Now, token));
+
+            return new ConnectResponse() { ConnectedUsers = this.connectedUsers.Count, Token = token };
+        }
+
+        private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>
+            new FaultException<DisconnectFault>(
+                detail: new DisconnectFault() { UserName = userName, FaultMessage = message },
+                reason: message
+            );
+
+        public DisconnectResponse Disconnect(DisconnectRequest request)
+        {
+            if ((object)request == null)
+                throw CreateDisconnectFaultException(null, Invariant($"{nameof(request)} is null."));
+
+            if ((object)request.UserName == null)
+                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
+
+            if (string.IsNullOrEmpty(request.UserName))
+                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
+
+            if ((object)request.Token == null)
+                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.Token)} is null."));
+
+            if (request.Token.Length == 0)
+                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.Token)} is empty."));
+
+            request.UserName = request.UserName.Trim();
+
+            try
+            {
+                this.AuthenticateUserWithoutSessionChecking(request.UserName, request.Token);
+            }
+            catch (AuthenticateUserException e)
+            {
+                throw CreateDisconnectFaultException(request.UserName, e.Message);
+            }
+
+            this.connectedUsers.Remove(request.UserName);
+
+            return new DisconnectResponse();
         }
 
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://andrey.sergeev.vfsservice" elementFormDefault="qualified" targetNamespace="http://andrey.sergeev.vfsservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ConnectRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConnectRequest" nillable="true" type="tns:ConnectRequest" />
+  <xs:complexType name="ConnectResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConnectedUsers" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConnectResponse" nillable="true" type="tns:ConnectResponse" />
+  <xs:complexType name="ConnectFault">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:FaultBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConnectFault" nillable="true" type="tns:ConnectFault" />
+  <xs:complexType name="FaultBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaultBase" nillable="true" type="tns:FaultBase" />
+</xs:schema>

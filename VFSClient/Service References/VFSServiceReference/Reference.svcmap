@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8c1a9422-a99a-41c9-9c83-dafaf68e222d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8000/VFSService/service" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.disco" MetadataType="Disco" ID="c8792332-7467-4bdc-b799-65a4ecce1948" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?disco" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="6709d90e-27c4-41f3-bfc9-1284e7a5dcd5" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd2" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="591615d9-851e-4870-8987-7c7ed44c3b4b" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd1" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="bc27f498-3cdf-4695-94d1-f596391bf725" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd0" />
+    <MetadataFile FileName="VFSService.wsdl" MetadataType="Wsdl" ID="a96cb17f-b5c2-4159-97e4-0c4dc3622927" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -10,18 +10,18 @@ namespace VirtualFileSystem.Service
 
         public const string DefaultServiceName = "Virtual File System Windows Service @ ASergeev";
 
-        public ServiceHost ServiceHost { get; private set; }
+        private ServiceHost ServiceHost { get; /*private*/ set; }
 
-        public VFSWindowsService(string serviceName)
+        private VFSWindowsService(string serviceName)
         {
             this.ServiceName = serviceName;
         }
 
-        public VFSWindowsService() : this(serviceName: DefaultServiceName)
+        private VFSWindowsService() : this(serviceName: DefaultServiceName)
         {
         }
 
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Run(new VFSWindowsService());
         }
