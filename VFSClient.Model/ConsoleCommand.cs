@@ -17,6 +17,8 @@ namespace VFSClient.Model
         /// </summary>
         public string Command { get; }
 
+        public ConsoleCommandCode CommandCode { get; }
+
         /// <summary>
         /// Command Parameters
         /// </summary>
@@ -42,6 +44,11 @@ namespace VFSClient.Model
                     throw new ArgumentException(paramName: nameof(parameters), message: Invariant($"Some {nameof(parameters)} item is null or empty."));
 
             this.Command = command.Trim();
+
+            ConsoleCommandCode commandCode;
+            if (Enum.TryParse(value: this.Command, ignoreCase: true, result: out commandCode))
+                this.CommandCode = commandCode;
+
             this.Parameters = new ReadOnlyCollection<string>(parameters ?? new string[0]);
         }
 
@@ -80,21 +87,21 @@ namespace VFSClient.Model
         }
 
         /// <summary>
-        /// Test command to comform with the specified command code
+        /// Test command to comform with the specified command
         /// </summary>
-        /// <param name="commandCode">Command code</param>
-        /// <returns>Returns true if the command is comforms to the specified command code, otherwise returns false</returns>
-        /// <exception cref="ArgumentNullException">Throws if the specified command code is null</exception>
-        /// <exception cref="ArgumentException">Throws if the specified command code is empty</exception>
-        public bool IsCommand(string commandCode)
+        /// <param name="command">Command</param>
+        /// <returns>Returns true if the command is comforms to the specified command, otherwise returns false</returns>
+        /// <exception cref="ArgumentNullException">Throws if the specified command is null</exception>
+        /// <exception cref="ArgumentException">Throws if the specified command is empty</exception>
+        public bool IsCommand(string command)
         {
-            if ((object)commandCode == null)
-                throw new ArgumentNullException(paramName: nameof(commandCode));
+            if ((object)command == null)
+                throw new ArgumentNullException(paramName: nameof(command));
 
-            if (string.IsNullOrWhiteSpace(commandCode))
-                throw new ArgumentException(paramName: nameof(commandCode), message: Invariant($"Some {nameof(commandCode)} item is empty."));
+            if (string.IsNullOrWhiteSpace(command))
+                throw new ArgumentException(paramName: nameof(command), message: Invariant($"Some {nameof(command)} item is empty."));
 
-            return string.Equals(this.Command, commandCode.Trim(), StringComparison.OrdinalIgnoreCase);
+            return string.Equals(this.Command, command.Trim(), StringComparison.OrdinalIgnoreCase);
         }
     }
 

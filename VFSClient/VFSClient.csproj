@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -61,6 +62,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.ConnectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.DisconnectResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />

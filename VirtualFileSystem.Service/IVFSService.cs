@@ -6,7 +6,11 @@ using System.ServiceModel;
 namespace VirtualFileSystem.Service
 {
 
-    [ServiceContract]
+    /// <summary>
+    /// Virtual File System Service
+    /// </summary>
+    //[ServiceContract(SessionMode = SessionMode.Required)]
+    [ServiceContract()]
     public interface IVFSService
     {
 
@@ -52,10 +56,13 @@ namespace VirtualFileSystem.Service
     public class ConnectResponse
     {
         [DataMember]
-        public int ConnectedUsers { get; set; }
+        public string UserName { get; set; }
 
         [DataMember]
         public byte[] Token { get; set; }
+
+        [DataMember]
+        public int TotalUsers { get; set; }
     }
 
     [DataContract]

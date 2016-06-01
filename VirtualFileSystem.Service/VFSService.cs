@@ -68,6 +68,10 @@ namespace VirtualFileSystem.Service
 
     }
 
+    /// <summary>
+    /// Virtual File System Service
+    /// </summary>
+    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class VFSService : IVFSService
     {
 
@@ -82,13 +86,13 @@ namespace VirtualFileSystem.Service
             if (!this.connectedUsers.ContainsKey(userName))
                 throw new AuthenticateUserException(Invariant($"User '{userName}' is not connected."));
 
-            if (!TokenProvider.IsEqualTokens(token, this.connectedUsers[userName].Token))
+            if (!TokenProvider.IsEqualTokens(token, connectedUsers[userName].Token))
                 throw new AuthenticateUserException("User token is invalid.");
         }
 
         private bool IsActualUserSession(string userName)
         {
-            DateTime lastActivityTime = this.connectedUsers[userName].LastActivityTime;
+            DateTime lastActivityTime = connectedUsers[userName].LastActivityTime;
 
             TimeSpan userSessionTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerSecond *
@@ -139,7 +143,7 @@ namespace VirtualFileSystem.Service
 
             this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.Now, token));
 
-            return new ConnectResponse() { ConnectedUsers = this.connectedUsers.Count, Token = token };
+            return new ConnectResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
         }
 
         private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>

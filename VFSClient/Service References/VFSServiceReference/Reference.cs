@@ -68,7 +68,13 @@ namespace VFSClient.VFSServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ConnectedUsersField;
+        private byte[] TokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalUsersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -81,14 +87,40 @@ namespace VFSClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ConnectedUsers {
+        public byte[] Token {
             get {
-                return this.ConnectedUsersField;
+                return this.TokenField;
             }
             set {
-                if ((this.ConnectedUsersField.Equals(value) != true)) {
-                    this.ConnectedUsersField = value;
-                    this.RaisePropertyChanged("ConnectedUsers");
+                if ((object.ReferenceEquals(this.TokenField, value) != true)) {
+                    this.TokenField = value;
+                    this.RaisePropertyChanged("Token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalUsers {
+            get {
+                return this.TotalUsersField;
+            }
+            set {
+                if ((this.TotalUsersField.Equals(value) != true)) {
+                    this.TotalUsersField = value;
+                    this.RaisePropertyChanged("TotalUsers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
                 }
             }
         }
@@ -105,10 +137,11 @@ namespace VFSClient.VFSServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FaultBase", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.DisconnectFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.ConnectFault))]
-    public partial class FaultBase : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -151,9 +184,9 @@ namespace VFSClient.VFSServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectFault : VFSClient.VFSServiceReference.FaultBase {
+    public partial class DisconnectFault : VFSClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -172,6 +205,119 @@ namespace VFSClient.VFSServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class ConnectFault : VFSClient.VFSServiceReference.BaseFault {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectRequest", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class DisconnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] TokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Token {
+            get {
+                return this.TokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TokenField, value) != true)) {
+                    this.TokenField = value;
+                    this.RaisePropertyChanged("Token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class DisconnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService")]
     public interface IVFSService {
@@ -182,6 +328,13 @@ namespace VFSClient.VFSServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
         System.Threading.Tasks.Task<VFSClient.VFSServiceReference.ConnectResponse> ConnectAsync(VFSClient.VFSServiceReference.ConnectRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(VFSClient.VFSServiceReference.DisconnectFault), Action="http://tempuri.org/IVFSService/DisconnectDisconnectFaultFault", Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VFSClient.VFSServiceReference.DisconnectResponse Disconnect(VFSClient.VFSServiceReference.DisconnectRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
+        System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -217,6 +370,14 @@ namespace VFSClient.VFSServiceReference {
         
         public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.ConnectResponse> ConnectAsync(VFSClient.VFSServiceReference.ConnectRequest request) {
             return base.Channel.ConnectAsync(request);
+        }
+        
+        public VFSClient.VFSServiceReference.DisconnectResponse Disconnect(VFSClient.VFSServiceReference.DisconnectRequest request) {
+            return base.Channel.Disconnect(request);
+        }
+        
+        public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request) {
+            return base.Channel.DisconnectAsync(request);
         }
     }
 }

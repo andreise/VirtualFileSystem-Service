@@ -8,13 +8,15 @@
   <xs:element name="ConnectRequest" nillable="true" type="tns:ConnectRequest" />
   <xs:complexType name="ConnectResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ConnectedUsers" type="xs:int" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="TotalUsers" type="xs:int" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConnectResponse" nillable="true" type="tns:ConnectResponse" />
   <xs:complexType name="ConnectFault">
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:FaultBase">
+      <xs:extension base="tns:BaseFault">
         <xs:sequence>
           <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
         </xs:sequence>
@@ -22,10 +24,31 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ConnectFault" nillable="true" type="tns:ConnectFault" />
-  <xs:complexType name="FaultBase">
+  <xs:complexType name="BaseFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FaultBase" nillable="true" type="tns:FaultBase" />
+  <xs:element name="BaseFault" nillable="true" type="tns:BaseFault" />
+  <xs:complexType name="DisconnectRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DisconnectRequest" nillable="true" type="tns:DisconnectRequest" />
+  <xs:complexType name="DisconnectResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="DisconnectResponse" nillable="true" type="tns:DisconnectResponse" />
+  <xs:complexType name="DisconnectFault">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DisconnectFault" nillable="true" type="tns:DisconnectFault" />
 </xs:schema>

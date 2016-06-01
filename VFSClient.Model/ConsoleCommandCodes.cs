@@ -1,13 +1,25 @@
 ﻿namespace VFSClient.Model
 {
-    public static class ConsoleCommandCodes
+    /// <summary>
+    /// Console Command Codes
+    /// </summary>
+    public enum ConsoleCommandCode
     {
 
-        public const string Exit = "EXIT";
+        /// <summary>
+        /// Exit Command
+        /// </summary>
+        Exit = 1,
 
-        public const string Connect = "CONNECT";
+        /// <summary>
+        /// Connect Command
+        /// </summary>
+        Connect,
 
-        public const string Disconnect = "DISCONNECT";
+        /// <summary>
+        /// Disconnect Command
+        /// </summary>
+        Disconnect
 
     }
 }
