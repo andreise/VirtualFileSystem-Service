@@ -140,6 +140,7 @@ namespace VFSClient.VFSServiceReference {
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.DisconnectFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.FSCommandFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.ConnectFault))]
     public partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -190,6 +191,45 @@ namespace VFSClient.VFSServiceReference {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class FSCommandFault : VFSClient.VFSServiceReference.BaseFault {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommandLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommandLine {
+            get {
+                return this.CommandLineField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
+                    this.CommandLineField = value;
+                    this.RaisePropertyChanged("CommandLine");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string UserName {
@@ -298,6 +338,9 @@ namespace VFSClient.VFSServiceReference {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -305,6 +348,173 @@ namespace VFSClient.VFSServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandRequest", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class FSCommandRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommandLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] TokenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommandLine {
+            get {
+                return this.CommandLineField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
+                    this.CommandLineField = value;
+                    this.RaisePropertyChanged("CommandLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Token {
+            get {
+                return this.TokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TokenField, value) != true)) {
+                    this.TokenField = value;
+                    this.RaisePropertyChanged("Token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandResponse", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class FSCommandResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommandLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ResponseMessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommandLine {
+            get {
+                return this.CommandLineField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
+                    this.CommandLineField = value;
+                    this.RaisePropertyChanged("CommandLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ResponseMessage {
+            get {
+                return this.ResponseMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResponseMessageField, value) != true)) {
+                    this.ResponseMessageField = value;
+                    this.RaisePropertyChanged("ResponseMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
             }
         }
         
@@ -335,6 +545,13 @@ namespace VFSClient.VFSServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
         System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(VFSClient.VFSServiceReference.FSCommandFault), Action="http://tempuri.org/IVFSService/FSCommandFSCommandFaultFault", Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VFSClient.VFSServiceReference.FSCommandResponse FSCommand(VFSClient.VFSServiceReference.FSCommandRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
+        System.Threading.Tasks.Task<VFSClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VFSClient.VFSServiceReference.FSCommandRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -378,6 +595,14 @@ namespace VFSClient.VFSServiceReference {
         
         public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request) {
             return base.Channel.DisconnectAsync(request);
+        }
+        
+        public VFSClient.VFSServiceReference.FSCommandResponse FSCommand(VFSClient.VFSServiceReference.FSCommandRequest request) {
+            return base.Channel.FSCommand(request);
+        }
+        
+        public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VFSClient.VFSServiceReference.FSCommandRequest request) {
+            return base.Channel.FSCommandAsync(request);
         }
     }
 }

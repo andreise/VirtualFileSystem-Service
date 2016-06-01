@@ -67,6 +67,9 @@
     <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.DisconnectResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.FSCommandResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
   </ItemGroup>
   <ItemGroup>

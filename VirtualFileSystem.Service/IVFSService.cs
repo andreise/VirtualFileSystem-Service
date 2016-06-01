@@ -13,7 +13,6 @@ namespace VirtualFileSystem.Service
     [ServiceContract()]
     public interface IVFSService
     {
-
         [OperationContract]
         [FaultContract(typeof(ConnectFault))]
         ConnectResponse Connect(ConnectRequest request);
@@ -22,6 +21,9 @@ namespace VirtualFileSystem.Service
         [FaultContract(typeof(DisconnectFault))]
         DisconnectResponse Disconnect(DisconnectRequest request);
 
+        [OperationContract]
+        [FaultContract(typeof(FSCommandFault))]
+        FSCommandResponse FSCommand(FSCommandRequest request);
     }
 
     [DataContract]
@@ -43,6 +45,16 @@ namespace VirtualFileSystem.Service
     {
         [DataMember]
         public string UserName { get; set; }
+    }
+
+    [DataContract]
+    public class FSCommandFault: BaseFault
+    {
+        [DataMember]
+        public string UserName { get; set; }
+
+        [DataMember]
+        public string CommandLine;
     }
 
     [DataContract]
@@ -78,6 +90,34 @@ namespace VirtualFileSystem.Service
     [DataContract]
     public class DisconnectResponse
     {
+        [DataMember]
+        public string UserName { get; set; }
+    }
+
+    [DataContract]
+    public class FSCommandRequest
+    {
+        [DataMember]
+        public string UserName;
+
+        [DataMember]
+        public byte[] Token;
+
+        [DataMember]
+        public string CommandLine;
+    }
+
+    [DataContract]
+    public class FSCommandResponse
+    {
+        [DataMember]
+        public string UserName;
+
+        [DataMember]
+        public string CommandLine;
+
+        [DataMember]
+        public string ResponseMessage;
     }
 
 }

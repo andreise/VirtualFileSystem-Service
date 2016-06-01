@@ -50,7 +50,7 @@ namespace VFSClient
 
             string commandLine;
             ConsoleCommand command;
-            VFSServiceClient service = null;
+            VFSServiceClient service = new VFSServiceClient();
             UserInfo userInfo = null;
 
             while (
@@ -74,23 +74,14 @@ namespace VFSClient
                             else
                             {
                                 if (
-                                    (object)service != null
-                                    && new Uri(
+                                    new Uri(
                                         service.Endpoint.ListenUri.ToString().Replace(service.Endpoint.ListenUri.Authority, command.Parameters[0])
                                     ).ToString() != service.Endpoint.ListenUri.ToString()
                                 )
-                                {
-                                    service.DisconnectAsync(new DisconnectRequest() { UserName = userInfo.UserName, Token = userInfo.Token }).Wait(taskTimeout);
-                                    service.Close();
-                                    service = null;
-                                }
-                                if (service == null)
-                                {
-                                    service = new VFSServiceClient();
                                     service.Endpoint.ListenUri = new Uri(
                                         service.Endpoint.Address.Uri.ToString().Replace(defaultEndpointAuthority, command.Parameters[0])
                                     );
-                                }
+
                                 try
                                 {
                                     ConnectResponse response = service.Connect(new ConnectRequest() { UserName = command.Parameters[1] });
@@ -108,9 +99,9 @@ namespace VFSClient
 
                     case ConsoleCommandCode.Disconnect:
                         {
-                            if ((object)service == null)
+                            if ((object)userInfo == null)
                             {
-                                Console.WriteLine("User already disconnected.");
+                                Console.WriteLine("Current user is undefined.");
                                 break;
                             }
 
@@ -122,6 +113,7 @@ namespace VFSClient
                                     WriteCommandExecutionTimeoutExpired(command);
                                 else
                                     Console.WriteLine(Invariant($"User '{userInfo.UserName}' disconnected."));
+                                userInfo = null;
                             }
                             catch (FaultException<DisconnectFault> e)
                             {
@@ -131,15 +123,15 @@ namespace VFSClient
                             {
                                 Console.WriteLine(e.InnerException.Message);
                             }
-                            finally
-                            {
-                                service.Close();
-                                service = null;
-                            }
                         }
+                        break;
+
+                    case ConsoleCommandCode.FSCommand:
+
                         break;
                 }
             } // while
+
         } // Run method
 
         static void Main(string[] args)

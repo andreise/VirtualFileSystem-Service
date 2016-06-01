@@ -11,7 +11,7 @@ namespace VirtualFileSystem.Service
 
     internal sealed class UserSessionInfo
     {
-        public DateTime LastActivityTime { get; }
+        public DateTime LastActivityTime { get; set; }
 
         public byte[] Token { get; }
 
@@ -71,7 +71,8 @@ namespace VirtualFileSystem.Service
     /// <summary>
     /// Virtual File System Service
     /// </summary>
-    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
+    [ServiceBehavior(AutomaticSessionShutdown = false, InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+    //[ServiceBehavior()]
     public class VFSService : IVFSService
     {
 
@@ -118,6 +119,18 @@ namespace VirtualFileSystem.Service
                 reason: message
             );
 
+        private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>
+            new FaultException<DisconnectFault>(
+                detail: new DisconnectFault() { UserName = userName, FaultMessage = message },
+                reason: message
+            );
+
+        private static FaultException<FSCommandFault> CreateFSCommandFaultException(string userName, string commandLine, string message) =>
+            new FaultException<FSCommandFault>(
+                detail: new FSCommandFault() { UserName = userName, CommandLine = commandLine, FaultMessage = message },
+                reason: message
+            );
+
         public ConnectResponse Connect(ConnectRequest request)
         {
             if ((object)request == null)
@@ -145,12 +158,6 @@ namespace VirtualFileSystem.Service
 
             return new ConnectResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
         }
-
-        private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>
-            new FaultException<DisconnectFault>(
-                detail: new DisconnectFault() { UserName = userName, FaultMessage = message },
-                reason: message
-            );
 
         public DisconnectResponse Disconnect(DisconnectRequest request)
         {
@@ -182,9 +189,41 @@ namespace VirtualFileSystem.Service
 
             this.connectedUsers.Remove(request.UserName);
 
-            return new DisconnectResponse();
+            return new DisconnectResponse() { UserName = request.UserName };
         }
 
+        public FSCommandResponse FSCommand(FSCommandRequest request)
+        {
+            if ((object)request == null)
+                throw CreateFSCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));
+
+            if ((object)request.UserName == null)
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
+
+            if (string.IsNullOrEmpty(request.UserName))
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
+
+            if ((object)request.CommandLine == null)
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
+
+            if (string.IsNullOrEmpty(request.CommandLine))
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is empty."));
+
+            request.UserName = request.UserName.Trim();
+
+            try
+            {
+                this.AuthenticateUser(request.UserName, request.Token);
+            }
+            catch (AuthenticateUserException e)
+            {
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
+            }
+
+            this.connectedUsers[request.UserName].LastActivityTime = DateTime.Now;
+
+            throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented exception.");
+        }
     }
 
 }

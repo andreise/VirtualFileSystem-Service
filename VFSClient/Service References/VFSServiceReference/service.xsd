@@ -29,4 +29,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="FSCommand">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FSCommandRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FSCommandResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FSCommandResult" nillable="true" type="q6:FSCommandResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

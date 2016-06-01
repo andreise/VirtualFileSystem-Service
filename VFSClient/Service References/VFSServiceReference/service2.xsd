@@ -38,7 +38,9 @@
   </xs:complexType>
   <xs:element name="DisconnectRequest" nillable="true" type="tns:DisconnectRequest" />
   <xs:complexType name="DisconnectResponse">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="DisconnectResponse" nillable="true" type="tns:DisconnectResponse" />
   <xs:complexType name="DisconnectFault">
@@ -51,4 +53,31 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="DisconnectFault" nillable="true" type="tns:DisconnectFault" />
+  <xs:complexType name="FSCommandRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FSCommandRequest" nillable="true" type="tns:FSCommandRequest" />
+  <xs:complexType name="FSCommandResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FSCommandResponse" nillable="true" type="tns:FSCommandResponse" />
+  <xs:complexType name="FSCommandFault">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FSCommandFault" nillable="true" type="tns:FSCommandFault" />
 </xs:schema>

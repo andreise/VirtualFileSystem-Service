@@ -19,7 +19,12 @@
         /// <summary>
         /// Disconnect Command
         /// </summary>
-        Disconnect
+        Disconnect,
+
+        /// <summary>
+        /// File System Command
+        /// </summary>
+        FSCommand
 
     }
 }
