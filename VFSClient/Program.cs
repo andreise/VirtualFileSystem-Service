@@ -40,9 +40,10 @@ namespace VFSClient
         static void Run()
         {
             Console.WriteLine("Virtual File System Client");
-            Console.WriteLine("Put command to work with the file system, ot type Exit to exit");
+            Console.WriteLine("Put command to work with the file system, or type Exit to exit");
 
             string defaultEndpointAuthority = ConfigurationManager.AppSettings["DefaultEndpointAuthority"];
+
             TimeSpan taskTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerMillisecond *
                 XmlConvert.ToInt32(ConfigurationManager.AppSettings["TaskTimeoutMilliseconds"])
@@ -126,8 +127,29 @@ namespace VFSClient
                         }
                         break;
 
-                    case ConsoleCommandCode.FSCommand:
+                    case 0:
+                        {
+                            if ((object)userInfo == null)
+                            {
+                                Console.WriteLine("Current user is undefined.");
+                                break;
+                            }
 
+                            try
+                            {
+                                FSCommandResponse response = service.FSCommand(
+                                    new FSCommandRequest() { UserName = userInfo.UserName, Token = userInfo.Token, CommandLine = commandLine }
+                                );
+                            }
+                            catch (FaultException<FSCommandFault> e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                            catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
+                            {
+                                Console.WriteLine(e.InnerException.Message);
+                            }
+                        }
                         break;
                 }
             } // while

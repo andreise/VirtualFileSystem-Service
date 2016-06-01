@@ -1,11 +1,11 @@
 ﻿namespace VFSClient.Model
 {
+
     /// <summary>
     /// Console Command Codes
     /// </summary>
     public enum ConsoleCommandCode
     {
-
         /// <summary>
         /// Exit Command
         /// </summary>
@@ -19,12 +19,7 @@
         /// <summary>
         /// Disconnect Command
         /// </summary>
-        Disconnect,
-
-        /// <summary>
-        /// File System Command
-        /// </summary>
-        FSCommand
-
+        Disconnect
     }
+
 }
