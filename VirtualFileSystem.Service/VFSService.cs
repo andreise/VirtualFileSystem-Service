@@ -246,7 +246,7 @@ namespace VirtualFileSystem.Service
             Action<int> checkParameterCount = estimatedCount =>
             {
                 if (command.Parameters.Count < estimatedCount)
-                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameter count too small");
+                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
             };
 
             string responseMessage = null;
@@ -272,33 +272,33 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.DeleteTree:
-                        vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         checkParameterCount(1);
+                        vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
 
                     case ConsoleCommandCode.LockFile:
-                        vfs.LockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         checkParameterCount(1);
+                        vfs.LockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
 
                     case ConsoleCommandCode.MakeDirectory:
-                        vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         checkParameterCount(1);
+                        vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
 
                     case ConsoleCommandCode.MakeFile:
-                        vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         checkParameterCount(1);
+                        vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
 
                     case ConsoleCommandCode.Move:
-                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1], command.Parameters[1]);
                         checkParameterCount(2);
+                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1], command.Parameters[1]);
                         break;
 
                     case ConsoleCommandCode.PrintTree:
-                        responseMessage = vfs.PrintTree(this.connectedUsers[request.UserName].CurrentDirectory);
                         checkParameterCount(0);
+                        responseMessage = vfs.PrintTree(this.connectedUsers[request.UserName].CurrentDirectory);
                         break;
 
                     case ConsoleCommandCode.RemoveDirectory:
@@ -307,8 +307,8 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.UnlockFile:
-                        vfs.UnlockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         checkParameterCount(1);
+                        vfs.UnlockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
 
                     default:
