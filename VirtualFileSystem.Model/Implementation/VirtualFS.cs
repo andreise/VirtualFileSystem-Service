@@ -154,7 +154,26 @@ namespace VirtualFileSystem.Model
         public string DeleteTree(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(directory))
+                directory = FSPath.CombinePath(currentDirectory, directory);
+
+            string[] directoryParts = FSPath.SplitPath(directory);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.Directory)
+                throw new FSException("Destination path is not a directory.");
+
+            currentItem.Parent.RemoveChildDirectoryWithTree(currentItem.Name);
+
+            return directory;
         }
 
         public string MakeFile(string currentDirectory, string fileName)

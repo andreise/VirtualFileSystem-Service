@@ -74,6 +74,16 @@ namespace VirtualFileSystem.Model
         void RemoveChildDirectory(string name);
 
         /// <summary>
+        /// Removes empty child directory
+        /// </summary>
+        /// <param name="name">Directory name</param>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if child item is not a directory
+        /// or if the item kind is not volume or directory, or if a child item with the specified name is not exists
+        /// </exception>
+        void RemoveChildDirectoryWithTree(string name);
+
+        /// <summary>
         /// Adds child file
         /// </summary>
         /// <param name="name">File name</param>

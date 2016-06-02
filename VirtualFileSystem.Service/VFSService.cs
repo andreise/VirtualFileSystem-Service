@@ -276,8 +276,11 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.DeleteTree:
-                        checkParameterCount(1);
-                        vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        {
+                            checkParameterCount(1);
+                            string directory = vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"Tree '{directory}' removed succesfully.");
+                        }
                         break;
 
                     case ConsoleCommandCode.LockFile:

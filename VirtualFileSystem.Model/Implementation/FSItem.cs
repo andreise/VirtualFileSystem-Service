@@ -170,6 +170,32 @@ namespace VirtualFileSystem.Model
         }
 
         /// <summary>
+        /// Removes empty child directory
+        /// </summary>
+        /// <param name="name">Directory name</param>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if child item is not a directory
+        /// or if the item kind is not volume or directory, or if a child item with the specified name is not exists
+        /// </exception>
+        public void RemoveChildDirectoryWithTree(string name)
+        {
+            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item kind is not volume or directory.");
+
+            IFSItem directory = new FSDirectory(name);
+
+            IFSItem child = this.childItemsInternal.FirstOrDefault(item => FSItemEqualityComparer.Default.Equals(item, directory));
+
+            if ((object)child == null)
+                throw new InvalidOperationException("Directory with the specified name is not exists.");
+
+            if (child.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item with the specified name is not a directory.");
+
+            this.childItemsInternal.Remove(child);
+        }
+
+        /// <summary>
         /// Removes child file
         /// </summary>
         /// <param name="name">File name</param>
