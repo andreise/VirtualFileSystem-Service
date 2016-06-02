@@ -25,9 +25,9 @@ namespace VirtualFileSystem.Model
 
         string UnlockFile(string userName, string currentDirectory, string fileName);
 
-        string Copy(string currentDirectory, string sourcePath, string destPath);
+        void Copy(string currentDirectory, string sourcePath, string destPath);
 
-        string Move(string currentDirectory, string sourcePath, string destPath);
+        void Move(string currentDirectory, string sourcePath, string destPath);
 
         string PrintTree(string currentDirectory);
 

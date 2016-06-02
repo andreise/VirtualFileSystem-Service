@@ -22,7 +22,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Parent Item
         /// </summary>
-        IFSItem Parent { get; }
+        IFSItem Parent { get; set; }
 
         /// <summary>
         /// Child Items
@@ -103,6 +103,30 @@ namespace VirtualFileSystem.Model
         /// or if a child item with the specified name is locked
         /// </exception>
         void RemoveChildFile(string name);
+
+        /// <summary>
+        /// Adds child item
+        /// </summary>
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
+        /// or if the item child list already contains child with the same name
+        /// </exception>
+        void AddChild(IFSItem child);
+
+        /// <summary>
+        /// Remove child item
+        /// </summary>
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory,
+        /// or if the child item is not a directory or a file,
+        /// or if the child item is a locked file,
+        /// or if the child item is not contains in the item child list
+        /// </exception>
+        void RemoveChild(IFSItem child);
     }
 
 }

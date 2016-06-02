@@ -24,7 +24,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Parent Item
         /// </summary>
-        public virtual IFSItem Parent { get; protected internal set; }
+        public virtual IFSItem Parent { get; set; }
 
         protected internal readonly HashSet<IFSItem> childItemsInternal = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
 
@@ -221,6 +221,65 @@ namespace VirtualFileSystem.Model
 
             if (child.LockedBy.Count > 0)
                 throw new InvalidOperationException("File with the specified name is locked.");
+
+            this.childItemsInternal.Remove(child);
+        }
+
+        /// <summary>
+        /// Adds child item
+        /// </summary>
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
+        /// or if the item child list already contains child with the same name
+        /// </exception>
+        public void AddChild(IFSItem child)
+        {
+            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item is not a volume or a directory.");
+
+            if ((object)child == null)
+                throw new ArgumentNullException(nameof(child));
+
+            if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
+                throw new InvalidOperationException("Child item is not a directory or a file.");
+
+            if (this.childItemsInternal.Contains(child))
+                throw new InvalidOperationException("Directory already contains child item (directory or file) with the same name.");
+
+            child.Parent = this;
+            this.childItemsInternal.Add(child);
+        }
+
+        /// <summary>
+        /// Remove child item
+        /// </summary>
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory,
+        /// or if the child item is not a directory or a file,
+        /// or if the child item is a locked file,
+        /// or if the child item is not contains in the item child list
+        /// </exception>
+        public void RemoveChild(IFSItem child)
+        {
+            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item is not a volume or a directory.");
+
+            if ((object)child == null)
+                throw new ArgumentNullException(nameof(child));
+
+            if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
+                throw new InvalidOperationException("Child item is not a directory or a file.");
+
+            if (child.Kind == FSItemKind.File)
+                if (child.LockedBy.Count > 0)
+                    throw new InvalidOperationException("Child item is a locked file.");
+
+            if (!this.childItemsInternal.Contains(child))
+                throw new InvalidOperationException("Directory not contains child item (directory or file) with the specified name.");
 
             this.childItemsInternal.Remove(child);
         }

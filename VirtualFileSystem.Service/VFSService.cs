@@ -309,7 +309,7 @@ namespace VirtualFileSystem.Service
 
                     case ConsoleCommandCode.Move:
                         checkParameterCount(2);
-                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1], command.Parameters[1]);
+                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         break;
 
                     case ConsoleCommandCode.PrintTree:

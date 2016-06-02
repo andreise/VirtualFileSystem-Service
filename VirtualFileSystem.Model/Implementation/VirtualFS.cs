@@ -69,7 +69,7 @@ namespace VirtualFileSystem.Model
                 return null;
             }
 
-            protected internal set
+            set
             {
                 throw new InvalidOperationException("File system cannot has a parent item.");
             }
@@ -275,16 +275,67 @@ namespace VirtualFileSystem.Model
             return fileName;
         }
 
-        public string Copy(string currentDirectory, string sourcePath, string destPath)
+        public void CopyOrMove(string currentDirectory, string sourcePath, string destPath, bool move)
         {
+
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+
+            if (!FSPath.IsAbsolutePath(sourcePath))
+                sourcePath = FSPath.CombinePath(currentDirectory, sourcePath);
+
+            if (!FSPath.IsAbsolutePath(destPath))
+                destPath = FSPath.CombinePath(currentDirectory, destPath);
+
+            string[] sourcePathParts = FSPath.SplitPath(sourcePath);
+
+            IFSItem sourcePathCurrentItem = this;
+
+            for (int i = 0; i < sourcePathParts.Length; i++)
+            {
+                sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, sourcePathParts[i]));
+                if ((object)sourcePathCurrentItem == null)
+                    throw new FSException("Source path is not exists.");
+            }
+
+            if (sourcePathCurrentItem.Kind != FSItemKind.Directory && sourcePathCurrentItem.Kind != FSItemKind.File)
+                throw new FSException(Invariant($"{nameof(sourcePath)} is not a directory or a file."));
+
+            if (sourcePathCurrentItem.Kind == FSItemKind.File)
+                if (sourcePathCurrentItem.LockedBy.Count > 0)
+                    throw new FSException(Invariant($"File {nameof(sourcePath)} is locked."));
+
+            string[] destPathParts = FSPath.SplitPath(destPath);
+
+            IFSItem destPathCurrentItem = this;
+
+            for (int i = 0; i < destPathParts.Length; i++)
+            {
+                destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, destPathParts[i]));
+                if ((object)destPathCurrentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (destPathCurrentItem.Kind != FSItemKind.Volume && destPathCurrentItem.Kind != FSItemKind.Directory)
+                throw new FSException(Invariant($"{nameof(destPath)} is not a volume or a directory."));
+
+            if (sourcePathCurrentItem == destPathCurrentItem)
+                throw new FSException("Source path and destination path should be not equal.");
+
+            if (move)
+            {
+                destPathCurrentItem.AddChild(sourcePathCurrentItem);
+                sourcePathCurrentItem.Parent.RemoveChild(sourcePathCurrentItem);
+            }
         }
 
-        public string Move(string currentDirectory, string sourcePath, string destPath)
+        public void Copy(string currentDirectory, string sourcePath, string destPath)
         {
-            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            CopyOrMove(currentDirectory, sourcePath, destPath, false);
+        }
+
+        public void Move(string currentDirectory, string sourcePath, string destPath)
+        {
+            CopyOrMove(currentDirectory, sourcePath, destPath, true);
         }
 
         public string PrintTree(string currentDirectory)
