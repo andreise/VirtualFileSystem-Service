@@ -79,19 +79,19 @@ namespace VirtualFileSystem.Model
         private static string NormalizeCurrentDirectory(string currentDirectory)
             => string.IsNullOrWhiteSpace(currentDirectory) ? defaultVolumePath : currentDirectory.Trim();
 
-        public string MakeDirectory(string currentDirectory, string newDirectory)
+        public string MakeDirectory(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            if (!FSPath.IsAbsolutePath(newDirectory))
-                newDirectory = FSPath.CombinePath(currentDirectory, newDirectory);
+            if (!FSPath.IsAbsolutePath(directory))
+                directory = FSPath.CombinePath(currentDirectory, directory);
 
-            string[] newDirectoryParts = FSPath.SplitPath(newDirectory);
+            string[] directoryParts = FSPath.SplitPath(directory);
 
             IFSItem currentItem = this;
 
-            for (int i = 0; i < newDirectoryParts.Length - 1; i++)
+            for (int i = 0; i < directoryParts.Length - 1; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, newDirectoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -99,23 +99,23 @@ namespace VirtualFileSystem.Model
             if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
                 throw new FSException("Destination path is not a directory.");
 
-            currentItem.AddChildDirectory(newDirectoryParts[newDirectoryParts.Length - 1]);
-            return newDirectory;
+            currentItem.AddChildDirectory(directoryParts[directoryParts.Length - 1]);
+            return directory;
         }
 
-        public string ChangeDirectory(string currentDirectory, string newDirectory)
+        public string ChangeDirectory(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            if (!FSPath.IsAbsolutePath(newDirectory))
-                newDirectory = FSPath.CombinePath(currentDirectory, newDirectory);
+            if (!FSPath.IsAbsolutePath(directory))
+                directory = FSPath.CombinePath(currentDirectory, directory);
 
-            string[] newDirectoryParts = FSPath.SplitPath(newDirectory);
+            string[] directoryParts = FSPath.SplitPath(directory);
 
             IFSItem currentItem = this;
 
-            for (int i = 0; i < newDirectoryParts.Length; i++)
+            for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, newDirectoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -123,13 +123,32 @@ namespace VirtualFileSystem.Model
             if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
                 throw new FSException("Destination path is not a directory.");
 
-            return newDirectory;
+            return directory;
         }
 
         public string RemoveDirectory(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(directory))
+                directory = FSPath.CombinePath(currentDirectory, directory);
+
+            string[] directoryParts = FSPath.SplitPath(directory);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.Directory)
+                throw new FSException("Destination path is not a directory.");
+
+            currentItem.Parent.RemoveChildDirectory(currentItem.Name);
+
+            return directory;
         }
 
         public string DeleteTree(string currentDirectory, string directory)
@@ -138,28 +157,103 @@ namespace VirtualFileSystem.Model
             throw new NotImplementedException();
         }
 
-        public string MakeFile(string currentDirectory, string newFileName)
+        public string MakeFile(string currentDirectory, string fileName)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(fileName))
+                fileName = FSPath.CombinePath(currentDirectory, fileName);
+
+            string[] directoryParts = FSPath.SplitPath(fileName);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length - 1; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
+                throw new FSException("Destination path is not a directory.");
+
+            currentItem.AddChildFile(directoryParts[directoryParts.Length - 1]);
+            return fileName;
         }
 
         public string DeleteFile(string currentDirectory, string fileName)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(fileName))
+                fileName = FSPath.CombinePath(currentDirectory, fileName);
+
+            string[] directoryParts = FSPath.SplitPath(fileName);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.File)
+                throw new FSException("Destination path is not a file.");
+
+            currentItem.Parent.RemoveChildFile(currentItem.Name);
+
+            return fileName;
         }
 
-        public string LockFile(string currentDirectory, string fileName)
+        public string LockFile(string userName, string currentDirectory, string fileName)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(fileName))
+                fileName = FSPath.CombinePath(currentDirectory, fileName);
+
+            string[] directoryParts = FSPath.SplitPath(fileName);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.File)
+                throw new FSException("Destination path is not a file.");
+
+            currentItem.Lock(userName);
+
+            return fileName;
         }
 
-        public string UnlockFile(string currentDirectory, string fileName)
+        public string UnlockFile(string userName, string currentDirectory, string fileName)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(fileName))
+                fileName = FSPath.CombinePath(currentDirectory, fileName);
+
+            string[] directoryParts = FSPath.SplitPath(fileName);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < directoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.File)
+                throw new FSException("Destination path is not a file.");
+
+            currentItem.Unlock(userName);
+
+            return fileName;
         }
 
         public string Copy(string currentDirectory, string sourcePath, string destPath)

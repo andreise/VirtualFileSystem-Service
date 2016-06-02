@@ -17,13 +17,13 @@ namespace VirtualFileSystem.Model
 
         string DeleteTree(string currentDirectory, string directory);
 
-        string MakeFile(string currentDirectory, string newFileName);
+        string MakeFile(string currentDirectory, string fileName);
 
         string DeleteFile(string currentDirectory, string fileName);
 
-        string LockFile(string currentDirectory, string fileName);
+        string LockFile(string userName, string currentDirectory, string fileName);
 
-        string UnlockFile(string currentDirectory, string fileName);
+        string UnlockFile(string userName, string currentDirectory, string fileName);
 
         string Copy(string currentDirectory, string sourcePath, string destPath);
 

@@ -268,8 +268,11 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.DeleteFile:
-                        checkParameterCount(1);
-                        vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        {
+                            checkParameterCount(1);
+                            string fileName = vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"File '{fileName}' deleted succesfully.");
+                        }
                         break;
 
                     case ConsoleCommandCode.DeleteTree:
@@ -278,19 +281,27 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.LockFile:
-                        checkParameterCount(1);
-                        vfs.LockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        {
+                            checkParameterCount(1);
+                            string fileName = vfs.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
+                        }
                         break;
 
                     case ConsoleCommandCode.MakeDirectory:
-                        checkParameterCount(1);
-                        string newDirectory = vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                        responseMessage = Invariant($"Directory '{newDirectory}' created succesfully.");
+                        {
+                            checkParameterCount(1);
+                            string directory = vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"Directory '{directory}' created succesfully.");
+                        }
                         break;
 
                     case ConsoleCommandCode.MakeFile:
-                        checkParameterCount(1);
-                        vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        {
+                            checkParameterCount(1);
+                            string fileName = vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"File '{fileName}' created succesfully.");
+                        }
                         break;
 
                     case ConsoleCommandCode.Move:
@@ -304,13 +315,19 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.RemoveDirectory:
-                        vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                        checkParameterCount(1);
+                        {
+                            checkParameterCount(1);
+                            string directory = vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"Directory '{directory}' removed succesfully.");
+                        }
                         break;
 
                     case ConsoleCommandCode.UnlockFile:
-                        checkParameterCount(1);
-                        vfs.UnlockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        {
+                            checkParameterCount(1);
+                            string fileName = vfs.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
+                        }
                         break;
 
                     default:

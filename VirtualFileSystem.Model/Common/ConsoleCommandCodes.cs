@@ -85,7 +85,7 @@
         /// <summary>
         /// Unlock File Command
         /// </summary>
-        UNLOCK,
+        UNLOCK = UnlockFile,
 
         /// <summary>
         /// Copy File or Directory Command
