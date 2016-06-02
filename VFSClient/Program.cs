@@ -30,12 +30,17 @@ namespace VFSClient
     {
         public void FileSystemChangedNotify(FileSystemChangedData data)
         {
+            if (data.UserName == Program.UserInfo.UserName)
+                return;
+
             Console.WriteLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}."));
         }
     }
 
     static class Program
     {
+
+        public static UserInfo UserInfo { get; private set; }
 
         static ConsoleCommand ParseCommandLine(string commandLine) =>
             string.IsNullOrWhiteSpace(commandLine) ? null : ConsoleCommand.Parse(commandLine);
@@ -58,7 +63,7 @@ namespace VFSClient
             string commandLine;
             ConsoleCommand command;
             VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler()));
-            UserInfo userInfo = null;
+            UserInfo = null;
 
             while (
                 (
@@ -92,7 +97,7 @@ namespace VFSClient
                                 try
                                 {
                                     ConnectResponse response = service.Connect(new ConnectRequest() { UserName = command.Parameters[1] });
-                                    userInfo = new UserInfo(command.Parameters[1], response.Token);
+                                    UserInfo = new UserInfo(command.Parameters[1], response.Token);
                                     Console.WriteLine(Invariant($"User '{response.UserName}' connected successfully."));
                                     Console.WriteLine(Invariant($"Total users: {response.TotalUsers}."));
                                 }
@@ -106,7 +111,7 @@ namespace VFSClient
 
                     case ConsoleCommandCode.Disconnect:
                         {
-                            if ((object)userInfo == null)
+                            if ((object)UserInfo == null)
                             {
                                 Console.WriteLine("Current user is undefined.");
                                 break;
@@ -115,12 +120,12 @@ namespace VFSClient
                             try
                             {
                                 if (
-                                    !service.DisconnectAsync(new DisconnectRequest() { UserName = userInfo.UserName, Token = userInfo.Token }).Wait(taskTimeout)
+                                    !service.DisconnectAsync(new DisconnectRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token }).Wait(taskTimeout)
                                 )
                                     WriteCommandExecutionTimeoutExpired(command);
                                 else
-                                    Console.WriteLine(Invariant($"User '{userInfo.UserName}' disconnected."));
-                                userInfo = null;
+                                    Console.WriteLine(Invariant($"User '{UserInfo.UserName}' disconnected."));
+                                UserInfo = null;
                             }
                             catch (FaultException<DisconnectFault> e)
                             {
@@ -135,7 +140,7 @@ namespace VFSClient
 
                     case 0:
                         {
-                            if ((object)userInfo == null)
+                            if ((object)UserInfo == null)
                             {
                                 Console.WriteLine("Current user is undefined.");
                                 break;
@@ -144,7 +149,7 @@ namespace VFSClient
                             try
                             {
                                 FSCommandResponse response = service.FSCommand(
-                                    new FSCommandRequest() { UserName = userInfo.UserName, Token = userInfo.Token, CommandLine = commandLine }
+                                    new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = commandLine }
                                 );
                             }
                             catch (FaultException<FSCommandFault> e)
