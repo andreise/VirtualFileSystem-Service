@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Xml;
+using VirtualFileSystem.Model;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Service
 {
-    using Model;
 
     internal sealed class UserSessionInfo
     {
