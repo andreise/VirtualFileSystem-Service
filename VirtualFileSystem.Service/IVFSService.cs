@@ -116,6 +116,9 @@ namespace VirtualFileSystem.Service
         public string UserName;
 
         [DataMember]
+        public string CurrentDirectory;
+
+        [DataMember]
         public string CommandLine;
 
         [DataMember]

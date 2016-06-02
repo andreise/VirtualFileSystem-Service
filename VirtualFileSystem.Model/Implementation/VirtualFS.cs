@@ -74,7 +74,7 @@ namespace VirtualFileSystem.Model
             throw new NotImplementedException();
         }
 
-        public string Print(string currentDirectory)
+        public string PrintTree(string currentDirectory)
         {
             throw new NotImplementedException();
         }

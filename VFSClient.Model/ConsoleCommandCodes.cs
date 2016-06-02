@@ -12,6 +12,11 @@
         Quit = 1,
 
         /// <summary>
+        /// Exit Command
+        /// </summary>
+        Exit = Quit,
+
+        /// <summary>
         /// Connect Command
         /// </summary>
         Connect,

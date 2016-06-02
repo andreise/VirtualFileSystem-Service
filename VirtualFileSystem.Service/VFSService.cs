@@ -243,6 +243,12 @@ namespace VirtualFileSystem.Service
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
+            Action<int> checkParameterCount = estimatedCount =>
+            {
+                if (command.Parameters.Count < estimatedCount)
+                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameter count too small");
+            };
+
             string responseMessage = null;
 
             try
@@ -250,29 +256,61 @@ namespace VirtualFileSystem.Service
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.ChangeDirectory:
+                        checkParameterCount(1);
                         this.connectedUsers[request.UserName].CurrentDirectory =
-                            vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1]);
+                            vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
+
                     case ConsoleCommandCode.Copy:
+                        checkParameterCount(2);
+                        vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         break;
+
                     case ConsoleCommandCode.DeleteFile:
+                        checkParameterCount(1);
+                        vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         break;
+
                     case ConsoleCommandCode.DeleteTree:
+                        vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     case ConsoleCommandCode.LockFile:
+                        vfs.LockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     case ConsoleCommandCode.MakeDirectory:
+                        vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     case ConsoleCommandCode.MakeFile:
+                        vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     case ConsoleCommandCode.Move:
+                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1], command.Parameters[1]);
+                        checkParameterCount(2);
                         break;
+
                     case ConsoleCommandCode.PrintTree:
+                        responseMessage = vfs.PrintTree(this.connectedUsers[request.UserName].CurrentDirectory);
+                        checkParameterCount(0);
                         break;
+
                     case ConsoleCommandCode.RemoveDirectory:
+                        vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     case ConsoleCommandCode.UnlockFile:
+                        vfs.UnlockFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        checkParameterCount(1);
                         break;
+
                     default:
                         throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Unsupported command code ({command.CommandCode})."));
                 }
@@ -284,7 +322,13 @@ namespace VirtualFileSystem.Service
 
             this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
-            return new FSCommandResponse() { UserName = request.UserName, CommandLine = request.CommandLine, ResponseMessage = responseMessage ?? "Command performed successfully." };
+            return new FSCommandResponse()
+            {
+                UserName = request.UserName,
+                CurrentDirectory = this.connectedUsers[request.UserName].CurrentDirectory,
+                CommandLine = request.CommandLine,
+                ResponseMessage = responseMessage ?? "Command performed successfully."
+            };
 
             //throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented.");
         }
