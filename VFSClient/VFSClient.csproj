@@ -77,6 +77,10 @@
       <Project>{2bd4316f-b7c1-4f81-9526-52acd1f64e9d}</Project>
       <Name>VFSClient.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
+      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
+      <Name>VFSCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -229,6 +229,8 @@ namespace VirtualFileSystem.Service
 
             this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
+
+
             throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented exception.");
         }
     }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}</ProjectGuid>
+    <ProjectGuid>{8C825BFE-1E4B-458E-A5EE-06357A3DD345}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VFSClient.Model</RootNamespace>
-    <AssemblyName>VFSClient.Model</AssemblyName>
+    <RootNamespace>VFSCommon</RootNamespace>
+    <AssemblyName>VFSCommon</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,14 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommand.cs" />
-    <Compile Include="ConsoleCommandCodes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
-      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
-      <Name>VFSCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
