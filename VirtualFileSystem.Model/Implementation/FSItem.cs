@@ -32,6 +32,8 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItemsInternal;
 
+        private HashSet<string> lockedBy = new HashSet<string>();
+
         /// <summary>
         /// Validates name
         /// </summary>
@@ -45,6 +47,60 @@ namespace VirtualFileSystem.Model
 
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
+        }
+
+        /// <summary>
+        /// Locks Item
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <exception cref="ArgumentNullException">Throws if user name is null</exception>
+        /// <exception cref="ArgumentException">Throws if user name is empty</exception>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        public void Lock(string userName)
+        {
+            if (this.Kind != FSItemKind.File)
+                throw new InvalidOperationException("Item is not a file.");
+
+            if ((object)userName == null)
+                throw new ArgumentNullException(paramName: nameof(userName));
+
+            if (string.IsNullOrWhiteSpace(userName))
+                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
+        }
+
+        /// <summary>
+        /// Unlock Item
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <exception cref="ArgumentNullException">Throws if user name is null</exception>
+        /// <exception cref="ArgumentException">Throws if user name is empty</exception>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        public void Unlock(string userName)
+        {
+            if (this.Kind != FSItemKind.File)
+                throw new InvalidOperationException("Item is not a file.");
+
+            if ((object)userName == null)
+                throw new ArgumentNullException(paramName: nameof(userName));
+
+            if (string.IsNullOrWhiteSpace(userName))
+                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
+
+        }
+
+        /// <summary>
+        /// User list which blocked the item
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        public IReadOnlyCollection<string> LockedBy
+        {
+            get
+            {
+                if (this.Kind != FSItemKind.File)
+                    throw new InvalidOperationException("Item is not a file.");
+
+                return this.lockedBy;
+            }
         }
 
         /// <summary>

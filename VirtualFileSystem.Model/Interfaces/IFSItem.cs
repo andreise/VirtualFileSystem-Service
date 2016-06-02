@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace VirtualFileSystem.Model
 {
@@ -27,6 +28,30 @@ namespace VirtualFileSystem.Model
         /// Child Items
         /// </summary>
         IReadOnlyCollection<IFSItem> ChildItems { get; }
+
+        /// <summary>
+        /// Locks Item
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <exception cref="ArgumentNullException">Throws if user name is null</exception>
+        /// <exception cref="ArgumentException">Throws if user name is empty</exception>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        void Lock(string userName);
+
+        /// <summary>
+        /// Unlock Item
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <exception cref="ArgumentNullException">Throws if user name is null</exception>
+        /// <exception cref="ArgumentException">Throws if user name is empty</exception>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        void Unlock(string userName);
+
+        /// <summary>
+        /// User list which blocked the item
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        IReadOnlyCollection<string> LockedBy { get; }
     }
 
 }

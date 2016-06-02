@@ -23,7 +23,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Default Virtual File System
         /// </summary>
-        private static IVirtualFS Default => defaultInstance.Value;
+        public static IVirtualFS Default => defaultInstance.Value;
 
         /// <summary>
         /// Static constructor

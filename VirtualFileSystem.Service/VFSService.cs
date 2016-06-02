@@ -80,6 +80,8 @@ namespace VirtualFileSystem.Service
     public class VFSService : IVFSService
     {
 
+        private readonly IVirtualFS vfs = VirtualFSFactory.Default;
+
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>();
@@ -239,37 +241,48 @@ namespace VirtualFileSystem.Service
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
-            switch (command.CommandCode)
+            string responseMessage = null;
+
+            try
             {
-                case ConsoleCommandCode.ChangeDirectory:
-                    break;
-                case ConsoleCommandCode.Copy:
-                    break;
-                case ConsoleCommandCode.DeleteFile:
-                    break;
-                case ConsoleCommandCode.DeleteTree:
-                    break;
-                case ConsoleCommandCode.LockFile:
-                    break;
-                case ConsoleCommandCode.MakeDirectory:
-                    break;
-                case ConsoleCommandCode.MakeFile:
-                    break;
-                case ConsoleCommandCode.Move:
-                    break;
-                case ConsoleCommandCode.PrintTree:
-                    break;
-                case ConsoleCommandCode.RemoveDirectory:
-                    break;
-                case ConsoleCommandCode.UnlockFile:
-                    break;
-                default:
-                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Unsupported command code ({command.CommandCode})."));
+                switch (command.CommandCode)
+                {
+                    case ConsoleCommandCode.ChangeDirectory:
+                        break;
+                    case ConsoleCommandCode.Copy:
+                        break;
+                    case ConsoleCommandCode.DeleteFile:
+                        break;
+                    case ConsoleCommandCode.DeleteTree:
+                        break;
+                    case ConsoleCommandCode.LockFile:
+                        break;
+                    case ConsoleCommandCode.MakeDirectory:
+                        break;
+                    case ConsoleCommandCode.MakeFile:
+                        break;
+                    case ConsoleCommandCode.Move:
+                        break;
+                    case ConsoleCommandCode.PrintTree:
+                        break;
+                    case ConsoleCommandCode.RemoveDirectory:
+                        break;
+                    case ConsoleCommandCode.UnlockFile:
+                        break;
+                    default:
+                        throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Unsupported command code ({command.CommandCode})."));
+                }
+            }
+            catch (Exception e)
+            {
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
             this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
-            throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented exception.");
+            return new FSCommandResponse() { UserName = request.UserName, CommandLine = request.CommandLine, ResponseMessage = responseMessage ?? "Command performed successfully." };
+
+            //throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented.");
         }
     }
 
