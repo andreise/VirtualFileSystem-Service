@@ -39,8 +39,8 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if the command is empty</exception>
         new public static ConsoleCommand Parse(string commandLine)
         {
-            BaseConsoleCommand commonCommand = BaseConsoleCommand.Parse(commandLine);
-            return new ConsoleCommand(commonCommand.Command, commonCommand.Parameters.ToArray());
+            BaseConsoleCommand command = BaseConsoleCommand.Parse(commandLine);
+            return new ConsoleCommand(command.Command, command.Parameters.ToArray());
         }
 
     }

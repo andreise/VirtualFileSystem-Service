@@ -86,29 +86,55 @@ namespace VirtualFileSystem.Model
 
         public static bool IsValidFileName(string name) => (object)name != null && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
+        public static bool IsAbsolutePath(string path)
+        {
+            if (object)
+        }
+
         public static string CombinePath(string path1, string relativePath2)
         {
-            if ((object)relativePath2 != null && IsValidVolumeName(relativePath2.Substring(0, 2)))
+            if ((object)path1 == null)
+                path1 = string.Empty;
+
+            if ((object)relativePath2 == null)
+                relativePath2 = string.Empty;
+
+            path1 = path1.Trim().TrimEnd(PathSeparator, AltPathSeparator);
+
+            relativePath2 = relativePath2.Trim().TrimStart(PathSeparator, AltPathSeparator);
+
+            if (relativePath2.Length >= 2 && IsValidVolumeName(relativePath2.Substring(0, 2)))
                 return relativePath2;
 
-            if ((object)path1 != null)
-                path1 = path1.TrimEnd(PathSeparator, AltPathSeparator);
-
-            if ((object)relativePath2 != null)
-                relativePath2 = relativePath2.TrimStart(PathSeparator, AltPathSeparator);
-
-            if (string.IsNullOrWhiteSpace(path1) && string.IsNullOrWhiteSpace(relativePath2))
+            if (path1.Length == 0 && relativePath2.Length == 0)
                 return string.Empty;
 
-            if (string.IsNullOrWhiteSpace(path1))
+            if (path1.Length == 0)
                 return relativePath2;
 
-            if (string.IsNullOrWhiteSpace(relativePath2))
+            if (relativePath2.Length == 0)
                 return path1;
 
             return path1 + PathSeparator + relativePath2;
-                
         }
+
+        public static string[] SplitPath(string path)
+        {
+            if ((object)path == null)
+                return new string[0];
+
+            string[] tempItems = path.Split(new char[] { PathSeparator, AltPathSeparator }, StringSplitOptions.RemoveEmptyEntries);
+            List<string> items = new List<string>(tempItems.Length);
+            for (int i = 0; i < tempItems.Length; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(tempItems[i]))
+                    items.Add(tempItems[i]);
+            }
+
+            return items.ToArray();
+        }
+
+        //public static bool IsAbsolutePath(string path) => (object)path != null && path.StartsWith()
 
         /// <summary>
         /// Static constructor
