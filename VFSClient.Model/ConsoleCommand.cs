@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using VFSCommon;
 
 namespace VFSClient.Model
 {
@@ -7,7 +8,7 @@ namespace VFSClient.Model
     /// <summary>
     /// Console Command
     /// </summary>
-    public class ConsoleCommand: VFSCommon.ConsoleCommand
+    public class ConsoleCommand: BaseConsoleCommand
     {
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace VFSClient.Model
         /// <exception cref="ArgumentException">Throws if the command is empty</exception>
         new public static ConsoleCommand Parse(string commandLine)
         {
-            VFSCommon.ConsoleCommand commonCommand = VFSCommon.ConsoleCommand.Parse(commandLine);
+            BaseConsoleCommand commonCommand = BaseConsoleCommand.Parse(commandLine);
             return new ConsoleCommand(commonCommand.Command, commonCommand.Parameters.ToArray());
         }
 

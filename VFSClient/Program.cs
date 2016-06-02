@@ -51,7 +51,7 @@ namespace VFSClient
         static void Run()
         {
             Console.WriteLine("Virtual File System Client");
-            Console.WriteLine("Put command to work with the file system, or type Exit to exit");
+            Console.WriteLine(Invariant($"Put command to work with the file system, or type {ConsoleCommandCode.Quit} to exit"));
 
             string defaultEndpointAuthority = ConfigurationManager.AppSettings["DefaultEndpointAuthority"];
 
@@ -71,7 +71,7 @@ namespace VFSClient
                 ) &&
                 (
                     (object)(command = ParseCommandLine(commandLine)) == null ||
-                    command.CommandCode != ConsoleCommandCode.Exit
+                    command.CommandCode != ConsoleCommandCode.Quit
                 )
             )
             {

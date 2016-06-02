@@ -9,7 +9,7 @@
         /// <summary>
         /// Exit Command
         /// </summary>
-        Exit = 1,
+        Quit = 1,
 
         /// <summary>
         /// Connect Command

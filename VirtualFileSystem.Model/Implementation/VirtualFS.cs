@@ -24,6 +24,61 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid directory name."), nameof(name));
         }
 
+        public string MakeDirectory(string currentDirectory, string newDirectory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ChangeDirectory(string currentDirectory, string directory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveDirectory(string currentDirectory, string directory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DeleteTree(string currentDirectory, string directory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string MakeFile(string currentDirectory, string newFileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DeleteFile(string currentDirectory, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string LockFile(string currentDirectory, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string UnlockFile(string currentDirectory, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Copy(string currentDirectory, string sourcePath, string destPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Move(string currentDirectory, string sourcePath, string destPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Print(string currentDirectory)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>

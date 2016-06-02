@@ -86,6 +86,30 @@ namespace VirtualFileSystem.Model
 
         public static bool IsValidFileName(string name) => (object)name != null && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
+        public static string CombinePath(string path1, string relativePath2)
+        {
+            if ((object)relativePath2 != null && IsValidVolumeName(relativePath2.Substring(0, 2)))
+                return relativePath2;
+
+            if ((object)path1 != null)
+                path1 = path1.TrimEnd(PathSeparator, AltPathSeparator);
+
+            if ((object)relativePath2 != null)
+                relativePath2 = relativePath2.TrimStart(PathSeparator, AltPathSeparator);
+
+            if (string.IsNullOrWhiteSpace(path1) && string.IsNullOrWhiteSpace(relativePath2))
+                return string.Empty;
+
+            if (string.IsNullOrWhiteSpace(path1))
+                return relativePath2;
+
+            if (string.IsNullOrWhiteSpace(relativePath2))
+                return path1;
+
+            return path1 + PathSeparator + relativePath2;
+                
+        }
+
         /// <summary>
         /// Static constructor
         /// </summary>

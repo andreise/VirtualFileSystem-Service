@@ -9,7 +9,27 @@ namespace VirtualFileSystem.Model
     public interface IVirtualFS : IFSItem
     {
 
-        
+        string MakeDirectory(string currentDirectory, string newDirectory);
+
+        string ChangeDirectory(string currentDirectory, string directory);
+
+        string RemoveDirectory(string currentDirectory, string directory);
+
+        string DeleteTree(string currentDirectory, string directory);
+
+        string MakeFile(string currentDirectory, string newFileName);
+
+        string DeleteFile(string currentDirectory, string fileName);
+
+        string LockFile(string currentDirectory, string fileName);
+
+        string UnlockFile(string currentDirectory, string fileName);
+
+        string Copy(string currentDirectory, string sourcePath, string destPath);
+
+        string Move(string currentDirectory, string sourcePath, string destPath);
+
+        string Print(string currentDirectory);
 
         ///// <summary>
         ///// Current Volume. Returns empty string if a current volume is not set in the file system

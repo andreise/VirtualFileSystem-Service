@@ -10,7 +10,7 @@ namespace VFSCommon
     /// <summary>
     /// Console Command
     /// </summary>
-    public class ConsoleCommand
+    public class BaseConsoleCommand
     {
         /// <summary>
         /// Command
@@ -29,7 +29,7 @@ namespace VFSCommon
         /// <param name="parameters">Command Parameters</param>
         /// <exception cref="ArgumentNullException">Trows if the command is null</exception>
         /// <exception cref="ArgumentException">Trows if the command is empty or any command parameter is null or empty</exception>
-        public ConsoleCommand(string command, string[] parameters = null)
+        public BaseConsoleCommand(string command, string[] parameters = null)
         {
             if ((object)command == null)
                 throw new ArgumentNullException(paramName: nameof(command));
@@ -53,7 +53,7 @@ namespace VFSCommon
         /// <returns>A client command instance</returns>
         /// <exception cref="ArgumentNullException">Throws if the command is null</exception>
         /// <exception cref="ArgumentException">Throws if the command is empty</exception>
-        public static ConsoleCommand Parse(string commandLine)
+        public static BaseConsoleCommand Parse(string commandLine)
         {
             if ((object)commandLine == null)
                 throw new ArgumentNullException(paramName: nameof(commandLine));
@@ -77,7 +77,7 @@ namespace VFSCommon
                 count: items.Count - 1
             );
 
-            return new ConsoleCommand(command, parameters);
+            return new BaseConsoleCommand(command, parameters);
         }
 
         /// <summary>

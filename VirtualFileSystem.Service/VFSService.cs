@@ -16,6 +16,8 @@ namespace VirtualFileSystem.Service
 
         public byte[] Token { get; }
 
+        public string CurrentDirectory { get; set; }
+
         public UserSessionInfo(DateTime lastActivityTime, byte[] token)
         {
             this.LastActivityTime = lastActivityTime;
@@ -248,6 +250,8 @@ namespace VirtualFileSystem.Service
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.ChangeDirectory:
+                        this.connectedUsers[request.UserName].CurrentDirectory =
+                            vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[1]);
                         break;
                     case ConsoleCommandCode.Copy:
                         break;
