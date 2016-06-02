@@ -76,6 +76,8 @@ namespace VirtualFileSystem.Model
 
         public static bool IsValidVolumeName(string name) => (object)name != null && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
+        public static bool IsAbsolutePath(string path) => (object)path != null && path.Length >= 2 && IsValidVolumeName(path.Substring(0, 2));
+
         public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => c != item);
 
         public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => c != item);
@@ -86,11 +88,6 @@ namespace VirtualFileSystem.Model
 
         public static bool IsValidFileName(string name) => (object)name != null && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
-        public static bool IsAbsolutePath(string path)
-        {
-            if (object)
-        }
-
         public static string CombinePath(string path1, string relativePath2)
         {
             if ((object)path1 == null)
@@ -99,12 +96,11 @@ namespace VirtualFileSystem.Model
             if ((object)relativePath2 == null)
                 relativePath2 = string.Empty;
 
-            path1 = path1.Trim().TrimEnd(PathSeparator, AltPathSeparator);
-
             relativePath2 = relativePath2.Trim().TrimStart(PathSeparator, AltPathSeparator);
-
-            if (relativePath2.Length >= 2 && IsValidVolumeName(relativePath2.Substring(0, 2)))
+            if (IsAbsolutePath(relativePath2))
                 return relativePath2;
+
+            path1 = path1.Trim().TrimEnd(PathSeparator, AltPathSeparator);
 
             if (path1.Length == 0 && relativePath2.Length == 0)
                 return string.Empty;
@@ -133,8 +129,6 @@ namespace VirtualFileSystem.Model
 
             return items.ToArray();
         }
-
-        //public static bool IsAbsolutePath(string path) => (object)path != null && path.StartsWith()
 
         /// <summary>
         /// Static constructor
