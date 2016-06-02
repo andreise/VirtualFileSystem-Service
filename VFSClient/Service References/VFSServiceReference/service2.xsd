@@ -80,4 +80,11 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="FSCommandFault" nillable="true" type="tns:FSCommandFault" />
+  <xs:complexType name="FileSystemChangedData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileSystemChangedData" nillable="true" type="tns:FileSystemChangedData" />
 </xs:schema>

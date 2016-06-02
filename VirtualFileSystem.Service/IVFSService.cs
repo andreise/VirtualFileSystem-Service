@@ -9,8 +9,10 @@ namespace VirtualFileSystem.Service
     /// <summary>
     /// Virtual File System Service
     /// </summary>
-    //[ServiceContract(SessionMode = SessionMode.Required)]
-    [ServiceContract()]
+    [ServiceContract(
+        CallbackContract = typeof(IVFSServiceCallback)
+        //, SessionMode = SessionMode.Required
+    )]
     public interface IVFSService
     {
         [OperationContract]

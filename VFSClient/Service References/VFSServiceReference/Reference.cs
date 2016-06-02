@@ -528,8 +528,69 @@ namespace VFSClient.VFSServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemChangedData", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class FileSystemChangedData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommandLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommandLine {
+            get {
+                return this.CommandLineField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
+                    this.CommandLineField = value;
+                    this.RaisePropertyChanged("CommandLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService", CallbackContract=typeof(VFSClient.VFSServiceReference.IVFSServiceCallback))]
     public interface IVFSService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
@@ -555,30 +616,38 @@ namespace VFSClient.VFSServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IVFSServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IVFSService/FileSystemChangedNotify")]
+        void FileSystemChangedNotify(VFSClient.VFSServiceReference.FileSystemChangedData data);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IVFSServiceChannel : VFSClient.VFSServiceReference.IVFSService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class VFSServiceClient : System.ServiceModel.ClientBase<VFSClient.VFSServiceReference.IVFSService>, VFSClient.VFSServiceReference.IVFSService {
+    public partial class VFSServiceClient : System.ServiceModel.DuplexClientBase<VFSClient.VFSServiceReference.IVFSService>, VFSClient.VFSServiceReference.IVFSService {
         
-        public VFSServiceClient() {
+        public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public VFSServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public VFSServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public VFSServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public VFSServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public VFSClient.VFSServiceReference.ConnectResponse Connect(VFSClient.VFSServiceReference.ConnectRequest request) {

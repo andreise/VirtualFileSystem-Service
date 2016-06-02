@@ -26,7 +26,13 @@ namespace VFSClient
         }
     }
 
-
+    sealed class VFSServiceCallbackHandler : IVFSServiceCallback
+    {
+        public void FileSystemChangedNotify(FileSystemChangedData data)
+        {
+            Console.WriteLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}."));
+        }
+    }
 
     static class Program
     {
@@ -51,7 +57,7 @@ namespace VFSClient
 
             string commandLine;
             ConsoleCommand command;
-            VFSServiceClient service = new VFSServiceClient();
+            VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler()));
             UserInfo userInfo = null;
 
             while (

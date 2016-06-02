@@ -71,10 +71,15 @@ namespace VirtualFileSystem.Service
     /// <summary>
     /// Virtual File System Service
     /// </summary>
-    [ServiceBehavior(AutomaticSessionShutdown = false, InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
-    //[ServiceBehavior()]
+    [ServiceBehavior(
+        AutomaticSessionShutdown = false,
+        ConcurrencyMode = ConcurrencyMode.Single,
+        InstanceContextMode = InstanceContextMode.Single
+    )]
     public class VFSService : IVFSService
     {
+
+        private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>();
 
@@ -221,6 +226,8 @@ namespace VirtualFileSystem.Service
             }
 
             this.connectedUsers[request.UserName].LastActivityTime = DateTime.Now;
+
+            this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
             throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented exception.");
         }
