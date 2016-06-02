@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static System.FormattableString;
 
-namespace VFSClient.Model
+namespace VirtualFileSystem.Model
 {
 
     /// <summary>

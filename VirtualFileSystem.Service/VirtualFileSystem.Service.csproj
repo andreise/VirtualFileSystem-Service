@@ -62,6 +62,16 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
+      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
+      <Name>VFSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualFileSystem.Model\VirtualFileSystem.Model.csproj">
+      <Project>{4bec7ad9-8dce-46ba-b78e-64ced6785573}</Project>
+      <Name>VirtualFileSystem.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VFSClient.Model
+namespace VirtualFileSystem.Model
 {
 
     /// <summary>

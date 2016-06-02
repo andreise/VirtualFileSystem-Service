@@ -1,7 +1,7 @@
 ﻿using System;
 using static System.FormattableString;
 
-namespace VFSClient.Model.Implementation
+namespace VirtualFileSystem.Model
 {
 
     /// <summary>

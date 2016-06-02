@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ConsoleCommand.cs" />
+    <Compile Include="Common\ConsoleCommandCodes.cs" />
     <Compile Include="Common\FSItemComparer.cs" />
     <Compile Include="Common\FSItemEqualityComparer.cs" />
     <Compile Include="Common\FSItemKind.cs" />
@@ -54,6 +56,12 @@
     <Compile Include="Interfaces\IVirtualFS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VirtualFSFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
+      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
+      <Name>VFSCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

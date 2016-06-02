@@ -8,6 +8,7 @@ using static System.FormattableString;
 
 namespace VirtualFileSystem.Service
 {
+    using Model;
 
     internal sealed class UserSessionInfo
     {
@@ -227,9 +228,46 @@ namespace VirtualFileSystem.Service
 
             this.connectedUsers[request.UserName].LastActivityTime = DateTime.Now;
 
+            ConsoleCommand command;
+
+            try
+            {
+                command = ConsoleCommand.Parse(request.CommandLine);
+            }
+            catch (ArgumentException e)
+            {
+                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
+            }
+
+            switch (command.CommandCode)
+            {
+                case ConsoleCommandCode.ChangeDirectory:
+                    break;
+                case ConsoleCommandCode.Copy:
+                    break;
+                case ConsoleCommandCode.DeleteFile:
+                    break;
+                case ConsoleCommandCode.DeleteTree:
+                    break;
+                case ConsoleCommandCode.LockFile:
+                    break;
+                case ConsoleCommandCode.MakeDirectory:
+                    break;
+                case ConsoleCommandCode.MakeFile:
+                    break;
+                case ConsoleCommandCode.Move:
+                    break;
+                case ConsoleCommandCode.PrintTree:
+                    break;
+                case ConsoleCommandCode.RemoveDirectory:
+                    break;
+                case ConsoleCommandCode.UnlockFile:
+                    break;
+                default:
+                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Unsupported command code ({command.CommandCode})."));
+            }
+
             this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
-
-
 
             throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented exception.");
         }
