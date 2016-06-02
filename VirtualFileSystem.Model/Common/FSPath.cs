@@ -111,7 +111,7 @@ namespace VirtualFileSystem.Model
             if (relativePath2.Length == 0)
                 return path1;
 
-            return path1 + PathSeparator + relativePath2;
+            return path1 + new string(PathSeparator, 1) + relativePath2;
         }
 
         public static string[] SplitPath(string path)
