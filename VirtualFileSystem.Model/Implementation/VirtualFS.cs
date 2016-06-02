@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -24,60 +25,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid directory name."), nameof(name));
         }
 
-        public string MakeDirectory(string currentDirectory, string newDirectory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ChangeDirectory(string currentDirectory, string directory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveDirectory(string currentDirectory, string directory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string DeleteTree(string currentDirectory, string directory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string MakeFile(string currentDirectory, string newFileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string DeleteFile(string currentDirectory, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string LockFile(string currentDirectory, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UnlockFile(string currentDirectory, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Copy(string currentDirectory, string sourcePath, string destPath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Move(string currentDirectory, string sourcePath, string destPath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string PrintTree(string currentDirectory)
-        {
-            throw new NotImplementedException();
-        }
+        private static readonly string defaultVolumePath = FSPath.ValidVolumeNames[0];
 
         /// <summary>
         /// Constructor
@@ -87,9 +35,19 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
         public VirtualFS(string name) : base(FSItemKind.FileSystem, name)
         {
-            IFSItem defaultVolume = new FSVolume(FSPath.ValidVolumeNames[0]);
+            IFSItem defaultVolume = new FSVolume(defaultVolumePath);
             this.childItemsInternal.Add(defaultVolume);
             //this.currentVolume = defaultVolume;
+        }
+
+        /// <summary>
+        /// Static constructor
+        /// </summary>
+        /// <remarks>
+        /// Needs for the guaranted static fields initialization in a multithreading work
+        /// </remarks>
+        static VirtualFS()
+        {
         }
 
         /// <summary>
@@ -109,6 +67,84 @@ namespace VirtualFileSystem.Model
                 throw new InvalidOperationException("File system cannot has a parent item.");
             }
 
+        }
+
+        private static string NormalizeCurrentDirectory(string currentDirectory)
+            => string.IsNullOrWhiteSpace(currentDirectory) ? defaultVolumePath : currentDirectory.Trim();
+
+        public string MakeDirectory(string currentDirectory, string newDirectory)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+
+            string[] currentDirectoryItems = FSPath.SplitPath(currentDirectory);
+
+            IFSItem currentItem = this;
+
+            do
+            {
+
+            } while (true);
+
+        }
+
+        public string ChangeDirectory(string currentDirectory, string directory)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string RemoveDirectory(string currentDirectory, string directory)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string DeleteTree(string currentDirectory, string directory)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string MakeFile(string currentDirectory, string newFileName)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string DeleteFile(string currentDirectory, string fileName)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string LockFile(string currentDirectory, string fileName)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string UnlockFile(string currentDirectory, string fileName)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string Copy(string currentDirectory, string sourcePath, string destPath)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string Move(string currentDirectory, string sourcePath, string destPath)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
+        }
+
+        public string PrintTree(string currentDirectory)
+        {
+            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            throw new NotImplementedException();
         }
 
         //    private IFSItem currentVolume;
