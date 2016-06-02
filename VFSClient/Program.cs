@@ -151,6 +151,7 @@ namespace VFSClient
                                 FSCommandResponse response = service.FSCommand(
                                     new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = commandLine }
                                 );
+                                Console.WriteLine(response.ResponseMessage);
                             }
                             catch (FaultException<FSCommandFault> e)
                             {

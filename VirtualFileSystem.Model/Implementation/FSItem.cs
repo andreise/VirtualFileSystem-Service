@@ -89,6 +89,26 @@ namespace VirtualFileSystem.Model
         }
 
         /// <summary>
+        /// Adds child directory
+        /// </summary>
+        /// <param name="name">Directory name</param>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if child directory or file with same name already exists,
+        /// or if the item kind is not volume or directory
+        /// </exception>
+        public void AddChildDirectory(string name)
+        {
+            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item kind is not volume or directory.");
+
+            FSDirectory newDirectory = new FSDirectory(name);
+            if (this.childItemsInternal.Contains(newDirectory))
+                throw new InvalidOperationException("Directory or file with the specified name already exists.");
+
+            this.childItemsInternal.Add(newDirectory);
+        }
+
+        /// <summary>
         /// User list which blocked the item
         /// </summary>
         /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>

@@ -464,6 +464,9 @@ namespace VFSClient.VFSServiceReference {
         private string CommandLineField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentDirectoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ResponseMessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -488,6 +491,19 @@ namespace VFSClient.VFSServiceReference {
                 if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
                     this.CommandLineField = value;
                     this.RaisePropertyChanged("CommandLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentDirectory {
+            get {
+                return this.CurrentDirectoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentDirectoryField, value) != true)) {
+                    this.CurrentDirectoryField = value;
+                    this.RaisePropertyChanged("CurrentDirectory");
                 }
             }
         }

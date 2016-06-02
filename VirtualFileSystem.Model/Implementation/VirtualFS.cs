@@ -5,6 +5,13 @@ using static System.FormattableString;
 namespace VirtualFileSystem.Model
 {
 
+    internal sealed class FSException : Exception
+    {
+        public FSException(string message): base(message)
+        {
+        }
+    }
+
     /// <summary>
     /// Virtual File System
     /// </summary>
@@ -75,22 +82,48 @@ namespace VirtualFileSystem.Model
         public string MakeDirectory(string currentDirectory, string newDirectory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
+            if (!FSPath.IsAbsolutePath(newDirectory))
+                newDirectory = FSPath.CombinePath(currentDirectory, newDirectory);
 
-            string[] currentDirectoryItems = FSPath.SplitPath(currentDirectory);
+            string[] newDirectoryParts = FSPath.SplitPath(newDirectory);
 
             IFSItem currentItem = this;
 
-            do
+            for (int i = 0; i < newDirectoryParts.Length - 1; i++)
             {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, newDirectoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
 
-            } while (true);
+            if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
+                throw new FSException("Destination path is not a directory.");
 
+            currentItem.AddChildDirectory(newDirectoryParts[newDirectoryParts.Length - 1]);
+            return newDirectory;
         }
 
-        public string ChangeDirectory(string currentDirectory, string directory)
+        public string ChangeDirectory(string currentDirectory, string newDirectory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (!FSPath.IsAbsolutePath(newDirectory))
+                newDirectory = FSPath.CombinePath(currentDirectory, newDirectory);
+
+            string[] newDirectoryParts = FSPath.SplitPath(newDirectory);
+
+            IFSItem currentItem = this;
+
+            for (int i = 0; i < newDirectoryParts.Length; i++)
+            {
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, newDirectoryParts[i]));
+                if ((object)currentItem == null)
+                    throw new FSException("Destination path is not exists.");
+            }
+
+            if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
+                throw new FSException("Destination path is not a directory.");
+
+            return newDirectory;
         }
 
         public string RemoveDirectory(string currentDirectory, string directory)

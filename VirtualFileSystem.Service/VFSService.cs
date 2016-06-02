@@ -259,6 +259,7 @@ namespace VirtualFileSystem.Service
                         checkParameterCount(1);
                         this.connectedUsers[request.UserName].CurrentDirectory =
                             vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
                         break;
 
                     case ConsoleCommandCode.Copy:
@@ -283,7 +284,8 @@ namespace VirtualFileSystem.Service
 
                     case ConsoleCommandCode.MakeDirectory:
                         checkParameterCount(1);
-                        vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string newDirectory = vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        responseMessage = Invariant($"Directory '{newDirectory}' created succesfully.");
                         break;
 
                     case ConsoleCommandCode.MakeFile:

@@ -11,6 +11,8 @@ namespace VirtualFileSystem.Model
     internal sealed class FSItemEqualityComparer : IEqualityComparer<IFSItem>
     {
 
+        public static bool EqualNames(string name1, string name2) => string.Equals(name1, name2, FSItemNameCompareRules.NameComparison);
+
         /// <summary>
         /// Compares two items
         /// </summary>
@@ -25,7 +27,7 @@ namespace VirtualFileSystem.Model
             if ((object)x == null || (object)y == null)
                 return false;
 
-            return string.Equals(x.Name, y.Name, FSItemNameCompareRules.NameComparison);
+            return EqualNames(x.Name, y.Name);
         }
 
         /// <summary>

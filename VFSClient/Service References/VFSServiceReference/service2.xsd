@@ -64,6 +64,7 @@
   <xs:complexType name="FSCommandResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentDirectory" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>

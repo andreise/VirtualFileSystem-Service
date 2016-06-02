@@ -52,6 +52,16 @@ namespace VirtualFileSystem.Model
         /// </summary>
         /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
         IReadOnlyCollection<string> LockedBy { get; }
+
+        /// <summary>
+        /// Adds child directory
+        /// </summary>
+        /// <param name="name">Directory name</param>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if child directory or file with same name already exists,
+        /// or if the item kind is not volume or directory
+        /// </exception>
+        void AddChildDirectory(string name);
     }
 
 }
