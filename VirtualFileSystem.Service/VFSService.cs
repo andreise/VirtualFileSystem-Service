@@ -262,7 +262,7 @@ namespace VirtualFileSystem.Service
                         responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
                         break;
 
-                    case ConsoleCommandCode.Copy:
+                    case ConsoleCommandCode.CopyTree:
                         checkParameterCount(2);
                         vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         break;
@@ -307,7 +307,7 @@ namespace VirtualFileSystem.Service
                         }
                         break;
 
-                    case ConsoleCommandCode.Move:
+                    case ConsoleCommandCode.MoveTree:
                         checkParameterCount(2);
                         vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         break;

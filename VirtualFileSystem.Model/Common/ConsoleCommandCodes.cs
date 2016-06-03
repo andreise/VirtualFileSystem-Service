@@ -88,24 +88,24 @@
         UNLOCK = UnlockFile,
 
         /// <summary>
-        /// Copy File or Directory Command
+        /// Copy File or Directory Tree Command
         /// </summary>
-        Copy,
+        CopyTree,
 
         /// <summary>
-        /// Copy File or Directory Command
+        /// Copy File or Directory Tree Command
         /// </summary>
-        COPY = Copy,
+        COPY = CopyTree,
 
         /// <summary>
-        /// Move File or Directory Command
+        /// Move File or Directory Tree Command
         /// </summary>
-        Move,
+        MoveTree,
 
         /// <summary>
-        /// Move File or Directory Command
+        /// Move File or Directory Tree Command
         /// </summary>
-        MOVE = Move,
+        MOVE = MoveTree,
 
         /// <summary>
         /// Print Tree Command

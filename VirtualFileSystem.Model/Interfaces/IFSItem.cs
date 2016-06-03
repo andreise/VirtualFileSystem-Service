@@ -61,7 +61,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
-        void AddChildDirectory(string name);
+        IFSItem AddChildDirectory(string name);
 
         /// <summary>
         /// Removes empty child directory
@@ -91,7 +91,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
-        void AddChildFile(string name);
+        IFSItem AddChildFile(string name);
 
         /// <summary>
         /// Removes child file

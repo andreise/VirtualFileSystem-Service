@@ -106,7 +106,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
-        public void AddChildDirectory(string name)
+        public IFSItem AddChildDirectory(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item kind is not volume or directory.");
@@ -117,6 +117,7 @@ namespace VirtualFileSystem.Model
 
             directory.Parent = this;
             this.childItemsInternal.Add(directory);
+            return directory;
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
-        public void AddChildFile(string name)
+        public IFSItem AddChildFile(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item kind is not volume or directory.");
@@ -138,6 +139,7 @@ namespace VirtualFileSystem.Model
 
             file.Parent = this;
             this.childItemsInternal.Add(file);
+            return file;
         }
 
         /// <summary>

@@ -297,6 +297,25 @@ namespace VirtualFileSystem.Model
             return fileName;
         }
 
+        private static void CopyItemTree(IFSItem item, IFSItem destItem)
+        {
+            if (item.Kind != FSItemKind.Directory && item.Kind != FSItemKind.File)
+                throw new InvalidOperationException(Invariant($"{nameof(item)} is not a directory or a file."));
+
+            if (destItem.Kind != FSItemKind.Volume && destItem.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException(Invariant($"{nameof(destItem)} is not a volume or directory."));
+
+            IFSItem itemCopy;
+
+            if (item.Kind == FSItemKind.Directory)
+                itemCopy = destItem.AddChildDirectory(item.Name);
+            else
+                itemCopy = destItem.AddChildFile(item.Name);
+
+            foreach (IFSItem child in item.ChildItems)
+                CopyItemTree(child, itemCopy);
+        }
+
         public void CopyOrMove(string currentDirectory, string sourcePath, string destPath, bool move)
         {
 
@@ -324,7 +343,7 @@ namespace VirtualFileSystem.Model
 
             if (sourcePathCurrentItem.Kind == FSItemKind.File)
                 if (sourcePathCurrentItem.LockedBy.Count > 0)
-                    throw new FSException(Invariant($"File {nameof(sourcePath)} is locked."));
+                    throw new FSException(Invariant($"File '{sourcePath}' is locked."));
 
             string[] destPathParts = FSPath.SplitPath(destPath);
 
@@ -357,11 +376,18 @@ namespace VirtualFileSystem.Model
                 }
             }
 
+            if (HasLocks(sourcePathCurrentItem))
+                throw new FSException("Source path contains one or more locked files and cannot be moved.");
+
             if (move)
             {
                 sourcePathCurrentItem.Parent.RemoveChild(sourcePathCurrentItem);
                 sourcePathCurrentItem.Parent = null;
                 destPathCurrentItem.AddChild(sourcePathCurrentItem);
+            }
+            else
+            {
+                CopyItemTree(sourcePathCurrentItem, destPathCurrentItem);
             }
         }
 
