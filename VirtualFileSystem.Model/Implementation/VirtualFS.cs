@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -401,10 +402,65 @@ namespace VirtualFileSystem.Model
             CopyOrMove(currentDirectory, sourcePath, destPath, true);
         }
 
-        public string PrintTree(string currentDirectory)
+        private static void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
-            currentDirectory = NormalizeCurrentDirectory(currentDirectory);
-            throw new NotImplementedException();
+            if (item.Kind != FSItemKind.FileSystem)
+            {
+                int itemGeneration = 0;
+
+                IFSItem itemParent = item.Parent;
+                while ((object)itemParent != null)
+                {
+                    itemGeneration++;
+                    itemParent = itemParent.Parent;
+                }
+
+                if (itemGeneration > 0)
+                {
+                    StringBuilder indent = new StringBuilder(2 * itemGeneration);
+                    for (int i = 0; i < itemGeneration; i++)
+                        indent.Append("| ");
+                    indent[indent.Length - 1] = '_';
+                    builder.Append(indent.ToString());
+                }
+                builder.Append(item.Name);
+                if (item.Kind == FSItemKind.Directory)
+                    builder.Append(" [DIR]");
+                else if (item.Kind == FSItemKind.File)
+                {
+                    builder.Append(" [FILE]");
+                    if (item.LockedBy.Count > 0)
+                    {
+                        var lockedBy = item.LockedBy.OrderBy(userName => userName, StringComparer.InvariantCulture);
+                        builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                    }
+                }
+                builder.AppendLine();
+            }
+
+            if (item.Kind == FSItemKind.FileSystem)
+            {
+                var volumes = item.ChildItems.OrderBy(item1 => item1, FSItemComparer.Default);
+                foreach (IFSItem volume in volumes)
+                    PrintTreeHelper(volume, builder);
+            }
+            if (item.Kind == FSItemKind.Volume || item.Kind == FSItemKind.Directory)
+            {
+                var directories = item.ChildItems.Where(item1 => item1.Kind == FSItemKind.Directory).OrderBy(item1 => item1, FSItemComparer.Default);
+                foreach (IFSItem directory in directories)
+                    PrintTreeHelper(directory, builder);
+
+                var files = item.ChildItems.Where(item1 => item1.Kind == FSItemKind.File).OrderBy(item1 => item1, FSItemComparer.Default);
+                foreach (IFSItem file in files)
+                    PrintTreeHelper(file, builder);
+            }
+        }
+
+        public string PrintTree()
+        {
+            StringBuilder builder = new StringBuilder();
+            PrintTreeHelper(this, builder);
+            return builder.ToString();
         }
 
         //    private IFSItem currentVolume;

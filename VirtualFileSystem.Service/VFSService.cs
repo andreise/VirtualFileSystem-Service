@@ -314,7 +314,7 @@ namespace VirtualFileSystem.Service
 
                     case ConsoleCommandCode.PrintTree:
                         checkParameterCount(0);
-                        responseMessage = vfs.PrintTree(this.connectedUsers[request.UserName].CurrentDirectory);
+                        responseMessage = vfs.PrintTree();
                         break;
 
                     case ConsoleCommandCode.RemoveDirectory:

@@ -29,7 +29,7 @@ namespace VirtualFileSystem.Model
 
         void Move(string currentDirectory, string sourcePath, string destPath);
 
-        string PrintTree(string currentDirectory);
+        string PrintTree();
 
         ///// <summary>
         ///// Current Volume. Returns empty string if a current volume is not set in the file system
