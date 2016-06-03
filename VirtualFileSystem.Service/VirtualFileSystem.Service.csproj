@@ -57,7 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="InstallService.cmd" />
+    <None Include="InstallService_DEBUG.cmd" />
+    <None Include="InstallService_RELEASE.cmd" />
+    <None Include="UninstallService_DEBUG.cmd" />
+    <None Include="UninstallService_RELEASE.cmd" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static System.FormattableString;
 
@@ -151,6 +152,23 @@ namespace VirtualFileSystem.Model
             return directory;
         }
 
+        private static bool IsLockedItem(IFSItem item)
+        {
+            return item.Kind == FSItemKind.File && item.LockedBy.Count > 0;
+        }
+
+        private static bool HasLocks(IFSItem item)
+        {
+            if (IsLockedItem(item))
+                return true;
+
+            foreach (IFSItem child in item.ChildItems)
+                if (HasLocks(child))
+                    return true;
+
+            return false;
+        }
+
         public string DeleteTree(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
@@ -170,6 +188,10 @@ namespace VirtualFileSystem.Model
 
             if (currentItem.Kind != FSItemKind.Directory)
                 throw new FSException("Destination path is not a directory.");
+
+
+            if (HasLocks(currentItem))
+                throw new FSException("Directory or its subdirectories contains one or more locked files.");
 
             currentItem.Parent.RemoveChildDirectoryWithTree(currentItem.Name);
 
@@ -320,6 +342,20 @@ namespace VirtualFileSystem.Model
 
             if (sourcePathCurrentItem == destPathCurrentItem)
                 throw new FSException("Source path and destination path should be not equal.");
+
+            if (sourcePathCurrentItem.Parent == destPathCurrentItem)
+                throw new FSException("Source path cannot be copied or moved to its parent.");
+
+            if (sourcePathCurrentItem.Kind == FSItemKind.Directory)
+            {
+                IFSItem destPathCurrentItemParent = destPathCurrentItem.Parent;
+                while ((object)destPathCurrentItemParent != null)
+                {
+                    if (destPathCurrentItemParent == sourcePathCurrentItem)
+                        throw new FSException("Source directory cannot be parent of the dest directory.");
+                    destPathCurrentItemParent = destPathCurrentItemParent.Parent;
+                }
+            }
 
             if (move)
             {
