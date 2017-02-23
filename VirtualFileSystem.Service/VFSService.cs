@@ -12,7 +12,13 @@ namespace VirtualFileSystem.Service
 
     internal sealed class UserSessionInfo
     {
-        public DateTime LastActivityTime { get; set; }
+        private DateTime lastActivityTimeUtc;
+
+        public DateTime LastActivityTimeUtc
+        {
+            get { return this.lastActivityTimeUtc; }
+            set { this.lastActivityTimeUtc = value.ToUniversalTime(); }
+        }
 
         public byte[] Token { get; }
 
@@ -20,7 +26,7 @@ namespace VirtualFileSystem.Service
 
         public UserSessionInfo(DateTime lastActivityTime, byte[] token)
         {
-            this.LastActivityTime = lastActivityTime;
+            this.LastActivityTimeUtc = lastActivityTime;
             this.Token = token;
         }
     }
@@ -68,7 +74,6 @@ namespace VirtualFileSystem.Service
 
             return true;
         }
-
     }
 
     /// <summary>
@@ -81,7 +86,6 @@ namespace VirtualFileSystem.Service
     )]
     public class VFSService : IVFSService
     {
-
         private readonly IVirtualFS vfs = VirtualFSFactory.Default;
 
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
@@ -103,16 +107,17 @@ namespace VirtualFileSystem.Service
 
         private bool IsActualUserSession(string userName)
         {
-            DateTime lastActivityTime = connectedUsers[userName].LastActivityTime;
+            DateTime lastActivityTimeUtc = connectedUsers[userName].LastActivityTimeUtc;
 
             TimeSpan userSessionTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerSecond *
                 XmlConvert.ToInt32(WebConfigurationManager.AppSettings["vfsservice:UserSessionTimeoutSeconds"])
             );
 
-            DateTime now = DateTime.Now;
-
-            return (now >= lastActivityTime) && (now - lastActivityTime <= userSessionTimeout);
+            DateTime nowUtc = DateTime.UtcNow;
+            return
+                nowUtc >= lastActivityTimeUtc &&
+                nowUtc - lastActivityTimeUtc <= userSessionTimeout;
         }
 
         private void AuthenticateUser(string userName, byte[] token)
@@ -164,7 +169,7 @@ namespace VirtualFileSystem.Service
 
             byte[] token = this.tokenProvider.GenerateToken();
 
-            this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.Now, token));
+            this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
 
             return new ConnectResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
         }
@@ -230,7 +235,7 @@ namespace VirtualFileSystem.Service
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
-            this.connectedUsers[request.UserName].LastActivityTime = DateTime.Now;
+            this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
             ConsoleCommand command;
 
