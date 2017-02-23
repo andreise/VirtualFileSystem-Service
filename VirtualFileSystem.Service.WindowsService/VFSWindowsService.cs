@@ -15,7 +15,7 @@ namespace VirtualFileSystem.Service.WindowsService
             this.ServiceName = serviceName;
         }
 
-        public VFSWindowsService() : this(serviceName: CommonData.DefaultServiceName)
+        public VFSWindowsService() : this(serviceName: VFSWindowsServiceConfiguration.ServiceName)
         {
         }
 

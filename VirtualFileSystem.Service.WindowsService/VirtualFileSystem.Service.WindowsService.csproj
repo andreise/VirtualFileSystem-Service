@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -41,7 +42,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonData.cs" />
+    <Compile Include="VFSWindowsServiceConfiguration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="VFSWindowsServiceInstaller.cs">
       <SubType>Component</SubType>

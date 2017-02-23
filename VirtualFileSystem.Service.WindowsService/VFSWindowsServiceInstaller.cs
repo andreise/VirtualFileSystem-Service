@@ -19,8 +19,8 @@ namespace VirtualFileSystem.Service.WindowsService
         }
 
         public VFSWindowsServiceInstaller() : this(
-            account: CommonData.DefaultServiceAccount,
-            serviceName: CommonData.DefaultServiceName
+            account: VFSWindowsServiceConfiguration.ServiceAccount,
+            serviceName: VFSWindowsServiceConfiguration.ServiceName
         )
         {
         }
