@@ -12,20 +12,10 @@ namespace VirtualFileSystem.Service.WindowsService
     public sealed class VFSWindowsServiceInstaller : Installer
     {
 
-        private readonly ServiceProcessInstaller process;
-
-        private readonly ServiceInstaller service;
-
         private VFSWindowsServiceInstaller(ServiceAccount account, string serviceName)
         {
-            this.process = new ServiceProcessInstaller();
-            this.process.Account = account;
-
-            this.service = new ServiceInstaller();
-            this.service.ServiceName = serviceName;
-
-            this.Installers.Add(process);
-            this.Installers.Add(service);
+            this.Installers.Add(new ServiceProcessInstaller() { Account = account });
+            this.Installers.Add(new ServiceInstaller() { ServiceName = serviceName });
         }
 
         public VFSWindowsServiceInstaller() : this(
