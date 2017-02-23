@@ -55,7 +55,7 @@
     <Compile Include="Interfaces\IFSItem.cs" />
     <Compile Include="Interfaces\IVirtualFS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VirtualFSFactory.cs" />
+    <Compile Include="VirtualFSProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">

@@ -113,7 +113,7 @@ namespace VirtualFileSystem.Service
     )]
     public class VFSService : IVFSService
     {
-        private IVirtualFS Vfs => VirtualFSFactory.Default;
+        private IVirtualFS Vfs => VirtualFSProvider.Default;
 
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 

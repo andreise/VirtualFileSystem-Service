@@ -6,7 +6,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// Virtual File System Factory
     /// </summary>
-    public static class VirtualFSFactory
+    public static class VirtualFSProvider
     {
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
         /// <remarks>
         /// Needs for the guaranted static fields initialization in a multithreading work
         /// </remarks>
-        static VirtualFSFactory()
+        static VirtualFSProvider()
         {
         }
 
