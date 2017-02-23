@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using static System.FormattableString;
@@ -317,9 +316,8 @@ namespace VirtualFileSystem.Model
                 CopyItemTree(child, itemCopy);
         }
 
-        public void CopyOrMove(string currentDirectory, string sourcePath, string destPath, bool move)
+        private void CopyOrMove(string currentDirectory, string sourcePath, string destPath, bool move)
         {
-
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
 
             if (!FSPath.IsAbsolutePath(sourcePath))
@@ -462,83 +460,6 @@ namespace VirtualFileSystem.Model
             PrintTreeHelper(this, builder);
             return builder.ToString();
         }
-
-        //    private IFSItem currentVolume;
-
-        //    private static IFSItem CreateVolume(string volumeName)
-        //    {
-        //        if ((object)volumeName == null)
-        //            throw new ArgumentNullException(paramName: nameof(volumeName), message: Invariant($"The {nameof(volumeName)} to set to current volume is null."));
-
-        //        if (string.IsNullOrWhiteSpace(volumeName))
-        //            throw new ArgumentException(paramName: nameof(volumeName), message: Invariant($"The {nameof(volumeName)} to set to current volume is empty."));
-
-        //        volumeName = volumeName.Trim().TrimEnd(FSPath.PathSeparator, FSPath.AltPathSeparator);
-
-        //        //if (!FSPath.IsValidVolumeName(volumeName))
-        //        //    throw new ArgumentException(paramName: nameof(volumeName), message: Invariant($"The {nameof(volumeName)} to set to current volume is not a valid volume name."));
-
-        //        return new FSVolume(volumeName);
-        //    }
-
-        //    /// <summary>
-        //    /// Current Volume. Returns empty string if a current volume is not set in the file system
-        //    /// </summary>
-        //    /// <exception cref="ArgumentNullException">
-        //    /// Throws if the value to set is null
-        //    /// </exception>
-        //    /// <exception cref="ArgumentException">
-        //    /// Throws if the value to set is empty or is not a valid volume name, or if a volume with a value to set is not present in the file system
-        //    /// </exception>
-        //    public string CurrentVolume
-        //    {
-
-        //        get
-        //        {
-        //            return this.currentVolume?.Name ?? string.Empty;
-        //        }
-
-        //        set
-        //        {
-        //            IFSItem newCurrentVolume = CreateVolume(value);
-
-        //            if (!this.childItemsInternal.Contains(newCurrentVolume))
-        //                throw new ArgumentException(paramName: nameof(value), message: Invariant($"A volume with the specified name is not present in the file system."));
-
-        //            this.currentVolume = newCurrentVolume;
-        //        }
-
-        //    }
-
-        //    /// <summary>
-        //    /// Gets a current directory in a specified volume, including volume name
-        //    /// </summary>
-        //    /// <param name="volumeName">Volume name</param>
-        //    /// <returns>
-        //    /// Returns a current directory in a specified volume, or null if a current directory is not setted in the specified volume.
-        //    /// If the volume name is null, returns a current directory in a current volume
-        //    /// </returns>
-        //    /// <exception cref="ArgumentException">
-        //    /// Throws if the volume name is empty or is not a valid volume name, or if a volume with a set value is not present in the file system
-        //    /// </exception>
-        //    public string GetCurrentDirectory(string volumeName)
-        //    {
-        //        IFSItem volume;
-
-        //        if ((object)volumeName == null)
-        //        {
-        //            if ((object)this.currentVolume == null)
-        //                throw new ArgumentException(paramName: nameof(volumeName), message: "A current volume is not set in the file system.");
-        //            volume = this.currentVolume;
-        //        }
-        //        else
-        //        {
-        //            volume = CreateVolume(volumeName);
-        //        }
-
-        //        return Invariant($"{volume.Name}{FSPath.PathSeparator}");
-
-        //    }
 
     }
 

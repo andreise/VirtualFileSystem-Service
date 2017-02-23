@@ -352,7 +352,6 @@ namespace VirtualFileSystem.Service
                 ResponseMessage = responseMessage ?? "Command performed successfully."
             };
 
-            //throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Not implemented.");
         }
     }
 

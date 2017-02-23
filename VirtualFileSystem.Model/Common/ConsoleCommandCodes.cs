@@ -6,7 +6,6 @@
     /// </summary>
     public enum ConsoleCommandCode
     {
-
         /// <summary>
         /// Make Directory Command
         /// </summary>
