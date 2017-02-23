@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Directory
     /// </summary>
-    internal class FSDirectory : FSItem
+    internal sealed class FSDirectory : FSItem
     {
 
         /// <summary>

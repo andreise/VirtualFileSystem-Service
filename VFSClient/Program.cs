@@ -76,9 +76,13 @@ namespace VFSClient
                     case ConsoleCommandCode.Connect:
                         {
                             if (command.Parameters.Count == 0)
+                            {
                                 Console.WriteLine("Server address and user name are not specified.");
+                            }
                             else if (command.Parameters.Count == 1)
+                            {
                                 Console.WriteLine("User name is not specified.");
+                            }
                             else
                             {
                                 if (
@@ -86,9 +90,11 @@ namespace VFSClient
                                         service.Endpoint.ListenUri.ToString().Replace(service.Endpoint.ListenUri.Authority, command.Parameters[0])
                                     ).ToString() != service.Endpoint.ListenUri.ToString()
                                 )
+                                {
                                     service.Endpoint.ListenUri = new Uri(
                                         service.Endpoint.Address.Uri.ToString().Replace(defaultEndpointAuthority, command.Parameters[0])
                                     );
+                                }
 
                                 try
                                 {
@@ -121,6 +127,7 @@ namespace VFSClient
                                     WriteCommandExecutionTimeoutExpired(command);
                                 else
                                     Console.WriteLine(Invariant($"User '{UserInfo.UserName}' disconnected."));
+
                                 UserInfo = null;
                             }
                             catch (FaultException<DisconnectFault> e)

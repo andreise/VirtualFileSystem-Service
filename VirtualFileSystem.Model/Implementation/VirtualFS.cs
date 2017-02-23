@@ -16,7 +16,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// Virtual File System
     /// </summary>
-    internal class VirtualFS : FSItem, IVirtualFS
+    internal sealed class VirtualFS : FSItem, IVirtualFS
     {
 
         /// <summary>
@@ -45,7 +45,6 @@ namespace VirtualFileSystem.Model
         {
             IFSItem defaultVolume = new FSVolume(defaultVolumePath);
             this.childItemsInternal.Add(defaultVolume);
-            //this.currentVolume = defaultVolume;
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace VirtualFileSystem.Model
                 CopyItemTree(child, itemCopy);
         }
 
-        private void CopyOrMove(string currentDirectory, string sourcePath, string destPath, bool move)
+        private void CopyOrMoveInternal(string currentDirectory, string sourcePath, string destPath, bool move)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
 
@@ -371,6 +370,7 @@ namespace VirtualFileSystem.Model
                 {
                     if (destPathCurrentItemParent == sourcePathCurrentItem)
                         throw new FSException("Source directory cannot be parent of the dest directory.");
+
                     destPathCurrentItemParent = destPathCurrentItemParent.Parent;
                 }
             }
@@ -390,15 +390,13 @@ namespace VirtualFileSystem.Model
             }
         }
 
-        public void Copy(string currentDirectory, string sourcePath, string destPath)
-        {
-            CopyOrMove(currentDirectory, sourcePath, destPath, false);
-        }
+        public void Copy(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
+            currentDirectory, sourcePath, destPath, move: false
+        );
 
-        public void Move(string currentDirectory, string sourcePath, string destPath)
-        {
-            CopyOrMove(currentDirectory, sourcePath, destPath, true);
-        }
+        public void Move(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
+            currentDirectory, sourcePath, destPath, move: true
+        );
 
         private static void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
@@ -423,7 +421,9 @@ namespace VirtualFileSystem.Model
                 }
                 builder.Append(item.Name);
                 if (item.Kind == FSItemKind.Directory)
+                {
                     builder.Append(" [DIR]");
+                }
                 else if (item.Kind == FSItemKind.File)
                 {
                     builder.Append(" [FILE]");
@@ -456,7 +456,7 @@ namespace VirtualFileSystem.Model
 
         public string PrintTree()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             PrintTreeHelper(this, builder);
             return builder.ToString();
         }

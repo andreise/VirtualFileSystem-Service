@@ -8,7 +8,7 @@ namespace VFSClient.Model
     /// <summary>
     /// Console Command
     /// </summary>
-    public class ConsoleCommand: BaseConsoleCommand
+    public class ConsoleCommand : BaseConsoleCommand
     {
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace VFSClient.Model
         /// <param name="parameters">Command Parameters</param>
         /// <exception cref="ArgumentNullException">Trows if the command is null</exception>
         /// <exception cref="ArgumentException">Trows if the command is empty or any command parameter is null or empty</exception>
-        public ConsoleCommand(string command, string[] parameters = null): base (command, parameters)
+        public ConsoleCommand(string command, string[] parameters = null) : base(command, parameters)
         {
             ConsoleCommandCode commandCode;
             if (Enum.TryParse(value: this.Command, ignoreCase: true, result: out commandCode))
