@@ -9,14 +9,14 @@ namespace VirtualFileSystem.Service.WindowsService
     /// Class which allows the service to be installed by the InstallUtil.exe tool
     /// </summary>
     [RunInstaller(true)]
-    public sealed class ProjectInstaller : Installer
+    public sealed class VFSWindowsServiceInstaller : Installer
     {
 
         private readonly ServiceProcessInstaller process;
 
         private readonly ServiceInstaller service;
 
-        private ProjectInstaller(ServiceAccount account, string serviceName)
+        private VFSWindowsServiceInstaller(ServiceAccount account, string serviceName)
         {
             this.process = new ServiceProcessInstaller();
             this.process.Account = account;
@@ -28,7 +28,7 @@ namespace VirtualFileSystem.Service.WindowsService
             this.Installers.Add(service);
         }
 
-        public ProjectInstaller() : this(
+        public VFSWindowsServiceInstaller() : this(
             account: CommonData.DefaultServiceAccount,
             serviceName: CommonData.DefaultServiceName
         )

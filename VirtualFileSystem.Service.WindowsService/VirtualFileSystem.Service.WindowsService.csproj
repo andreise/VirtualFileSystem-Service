@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="CommonData.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectInstaller.cs">
+    <Compile Include="VFSWindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
