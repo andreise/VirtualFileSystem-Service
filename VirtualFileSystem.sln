@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSCommon", "VFSCommon\VFSC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.Model", "VirtualFileSystem.Service.Model\VirtualFileSystem.Service.Model.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.WindowsService", "VirtualFileSystem.Service.WindowsService\VirtualFileSystem.Service.WindowsService.csproj", "{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
