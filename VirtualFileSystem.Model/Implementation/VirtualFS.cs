@@ -435,6 +435,7 @@ namespace VirtualFileSystem.Model
                         builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
                     }
                 }
+
                 builder.AppendLine();
             }
 
