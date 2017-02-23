@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="InstallScripts\SetVariables.cmd" />
     <None Include="InstallScripts\InstallService_DEBUG.cmd" />
     <None Include="InstallScripts\InstallService_RELEASE.cmd" />
     <None Include="InstallScripts\UninstallService_DEBUG.cmd" />

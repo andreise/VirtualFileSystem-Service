@@ -1,1 +1,2 @@
-C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /u ..\bin\Debug\VirtualFileSystem.Service.WindowsService.exe
+@CALL SetVariables
+%INSTALL_UTIL% %UNINST_KEY% %VFS_SERVICE_PATH_RELEASE%
