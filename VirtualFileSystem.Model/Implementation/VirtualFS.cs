@@ -411,6 +411,9 @@ namespace VirtualFileSystem.Model
                     itemParent = itemParent.Parent;
                 }
 
+                if (builder.Length > 0)
+                    builder.AppendLine();
+
                 if (itemGeneration > 0)
                 {
                     var indent = new StringBuilder(2 * itemGeneration);
@@ -435,8 +438,6 @@ namespace VirtualFileSystem.Model
                         builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
                     }
                 }
-
-                builder.AppendLine();
             }
 
             if (item.Kind == FSItemKind.FileSystem)
