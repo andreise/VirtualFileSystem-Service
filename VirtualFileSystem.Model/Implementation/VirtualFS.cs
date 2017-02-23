@@ -413,13 +413,15 @@ namespace VirtualFileSystem.Model
 
                 if (itemGeneration > 0)
                 {
-                    StringBuilder indent = new StringBuilder(2 * itemGeneration);
+                    var indent = new StringBuilder(2 * itemGeneration);
                     for (int i = 0; i < itemGeneration; i++)
                         indent.Append("| ");
                     indent[indent.Length - 1] = '_';
                     builder.Append(indent.ToString());
                 }
+
                 builder.Append(item.Name);
+
                 if (item.Kind == FSItemKind.Directory)
                 {
                     builder.Append(" [DIR]");
@@ -442,7 +444,7 @@ namespace VirtualFileSystem.Model
                 foreach (IFSItem volume in volumes)
                     PrintTreeHelper(volume, builder);
             }
-            if (item.Kind == FSItemKind.Volume || item.Kind == FSItemKind.Directory)
+            else if (item.Kind == FSItemKind.Volume || item.Kind == FSItemKind.Directory)
             {
                 var directories = item.ChildItems.Where(item1 => item1.Kind == FSItemKind.Directory).OrderBy(item1 => item1, FSItemComparer.Default);
                 foreach (IFSItem directory in directories)
