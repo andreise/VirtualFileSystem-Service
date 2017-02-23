@@ -61,7 +61,7 @@ namespace VFSCommon
             if (string.IsNullOrWhiteSpace(commandLine))
                 throw new ArgumentException(paramName: nameof(commandLine), message: Invariant($"{nameof(commandLine)} is empty."));
 
-            string[] tempItems = commandLine.Split(new char[] { '\u0020', '\u0009' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] tempItems = commandLine.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
             List<string> items = new List<string>(tempItems.Length);
             for (int i = 0; i < tempItems.Length; i++)
