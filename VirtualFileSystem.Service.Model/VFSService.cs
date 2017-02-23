@@ -263,7 +263,6 @@ namespace VirtualFileSystem.Service.Model
                         {
                             checkParameterCount(0);
                             responseMessage = Vfs.PrintTree();
-                            responseMessage = defaultResponseMessage;
                         }
                         break;
 
