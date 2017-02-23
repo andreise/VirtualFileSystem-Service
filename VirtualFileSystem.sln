@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Model", "VirtualFileSystem.Model\VirtualFileSystem.Model.csproj", "{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service", "VirtualFileSystem.Service\VirtualFileSystem.Service.csproj", "{E52ED260-44A2-4545-A82B-95ECC46C8F25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSCommon", "VFSCommon\VFSCommon.csproj", "{8C825BFE-1E4B-458E-A5EE-06357A3DD345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.Model", "VirtualFileSystem.Service.Model\VirtualFileSystem.Service.Model.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
