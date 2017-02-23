@@ -58,10 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="InstallService_DEBUG.cmd" />
-    <None Include="InstallService_RELEASE.cmd" />
-    <None Include="UninstallService_DEBUG.cmd" />
-    <None Include="UninstallService_RELEASE.cmd" />
+    <None Include="InstallScripts\InstallService_DEBUG.cmd" />
+    <None Include="InstallScripts\InstallService_RELEASE.cmd" />
+    <None Include="InstallScripts\UninstallService_DEBUG.cmd" />
+    <None Include="InstallScripts\UninstallService_RELEASE.cmd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtualFileSystem.Service.Model\VirtualFileSystem.Service.Model.csproj">
