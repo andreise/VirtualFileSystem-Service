@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Web.Configuration;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Cryptography;
 using System.ServiceModel;
+using System.Web.Configuration;
 using System.Xml;
 using VirtualFileSystem.Model;
 using static System.FormattableString;
@@ -38,39 +40,64 @@ namespace VirtualFileSystem.Service
         }
     }
 
-    internal sealed class TokenProvider
+    internal static class TokenProvider
     {
-        private readonly RandomNumberGenerator tokenGenerator = RandomNumberGenerator.Create();
+        public const int TokenLength512 = 64;
 
-        public const int TokenLength = 64;
+        public static IReadOnlyList<int> TokenLengths = new ReadOnlyCollection<int>(
+            new int[]
+            {
+                TokenLength512
+            }
+        );
 
-        public byte[] GenerateToken()
+        /// <summary>
+        /// Static constructor
+        /// </summary>
+        /// <remarks>
+        /// Needs for the guaranted static fields initialization in a multithreading work
+        /// </remarks>
+        static TokenProvider()
         {
-            byte[] token = new byte[TokenLength];
-            this.tokenGenerator.GetBytes(token);
+        }
+
+        public static void ValidateToken(byte[] token)
+        {
+            if ((object)token == null)
+                throw new ArgumentNullException(paramName: nameof(token));
+
+            if (token.Length == 0)
+                throw new ArgumentException(paramName: nameof(token), message: "Token is empty.");
+
+            if (!TokenLengths.Contains(token.Length))
+                throw new ArgumentException(paramName: nameof(token), message: "Token has an invalid length.");
+        }
+
+        public static byte[] GenerateToken()
+        {
+            byte[] token = new byte[TokenLength512];
+
+            using (RandomNumberGenerator tokenGenerator = RandomNumberGenerator.Create())
+            {
+                tokenGenerator.GetBytes(token);
+            }
+
             return token;
         }
 
         public static bool IsEqualTokens(byte[] token1, byte[] token2)
         {
-            Action<byte[], string> checkToken = (token, tokenName) =>
-            {
-                if ((object)token == null)
-                    throw new ArgumentNullException(paramName: tokenName);
+            ValidateToken(token1);
+            ValidateToken(token2);
 
-                if (token.Length == 0)
-                    throw new ArgumentException(paramName: tokenName, message: "Token is empty.");
-
-                if (token.Length != TokenLength)
-                    throw new ArgumentException(paramName: tokenName, message: "Token is an invalid token (token has an invalid length).");
-            };
-
-            checkToken(token1, nameof(token1));
-            checkToken(token2, nameof(token2));
+            if (token1.Length != token2.Length)
+                return false;
 
             for (int i = 0; i < token1.Length; i++)
+            {
                 if (token1[i] != token2[i])
                     return false;
+            }
 
             return true;
         }
@@ -91,10 +118,6 @@ namespace VirtualFileSystem.Service
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>();
-
-        private const int TokenLength = 64;
-
-        private readonly TokenProvider tokenProvider = new TokenProvider();
 
         private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
@@ -167,7 +190,7 @@ namespace VirtualFileSystem.Service
                     this.connectedUsers.Remove(request.UserName);
             }
 
-            byte[] token = this.tokenProvider.GenerateToken();
+            byte[] token = TokenProvider.GenerateToken();
 
             this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
 
