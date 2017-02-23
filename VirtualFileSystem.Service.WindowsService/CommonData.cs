@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Service.WindowsService
     {
         public const ServiceAccount DefaultServiceAccount = ServiceAccount.LocalSystem;
 
-        public const string DefaultServiceName = "Virtual File System Windows Service @ ASergeev";
+        public const string DefaultServiceName = "Virtual File System Windows Service";
     }
 
 }
