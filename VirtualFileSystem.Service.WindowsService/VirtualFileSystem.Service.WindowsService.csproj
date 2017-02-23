@@ -57,7 +57,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="InstallScripts\SetVariables.cmd" />
     <None Include="InstallScripts\InstallService_DEBUG.cmd" />
     <None Include="InstallScripts\InstallService_RELEASE.cmd" />
