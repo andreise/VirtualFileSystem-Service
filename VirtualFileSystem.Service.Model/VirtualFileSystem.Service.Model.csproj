@@ -50,6 +50,9 @@
     <Compile Include="IVFSService.cs" />
     <Compile Include="IVFSServiceCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AuthenticateUserException.cs" />
+    <Compile Include="Security.Cryptography\TokenProvider.cs" />
+    <Compile Include="Security\UserSessionInfo.cs" />
     <Compile Include="VFSService.cs" />
   </ItemGroup>
   <ItemGroup>
