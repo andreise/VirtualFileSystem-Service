@@ -29,7 +29,7 @@ namespace VirtualFileSystem.Service.WindowsService
         }
 
         public ProjectInstaller() : this(
-            account: ServiceAccount.LocalSystem,
+            account: CommonData.DefaultServiceAccount,
             serviceName: CommonData.DefaultServiceName
         )
         {
