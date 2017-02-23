@@ -249,22 +249,28 @@ namespace VirtualFileSystem.Service
                     throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
             };
 
-            string responseMessage = null;
+            const string defaultResponseMessage = "Command performed successfully.";
+            string responseMessage;
 
             try
             {
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.ChangeDirectory:
-                        checkParameterCount(1);
-                        this.connectedUsers[request.UserName].CurrentDirectory =
-                            vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                        responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
+                        {
+                            checkParameterCount(1);
+                            this.connectedUsers[request.UserName].CurrentDirectory =
+                                vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
+                        }
                         break;
 
                     case ConsoleCommandCode.CopyTree:
-                        checkParameterCount(2);
-                        vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        {
+                            checkParameterCount(2);
+                            vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                            responseMessage = defaultResponseMessage;
+                        }
                         break;
 
                     case ConsoleCommandCode.DeleteFile:
@@ -308,13 +314,19 @@ namespace VirtualFileSystem.Service
                         break;
 
                     case ConsoleCommandCode.MoveTree:
-                        checkParameterCount(2);
-                        vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        {
+                            checkParameterCount(2);
+                            vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                            responseMessage = defaultResponseMessage;
+                        }
                         break;
 
                     case ConsoleCommandCode.PrintTree:
-                        checkParameterCount(0);
-                        responseMessage = vfs.PrintTree();
+                        {
+                            checkParameterCount(0);
+                            responseMessage = vfs.PrintTree();
+                            responseMessage = defaultResponseMessage;
+                        }
                         break;
 
                     case ConsoleCommandCode.RemoveDirectory:
@@ -349,7 +361,7 @@ namespace VirtualFileSystem.Service
                 UserName = request.UserName,
                 CurrentDirectory = this.connectedUsers[request.UserName].CurrentDirectory,
                 CommandLine = request.CommandLine,
-                ResponseMessage = responseMessage ?? "Command performed successfully."
+                ResponseMessage = responseMessage
             };
 
         }
