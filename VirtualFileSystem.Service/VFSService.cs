@@ -113,7 +113,7 @@ namespace VirtualFileSystem.Service
     )]
     public class VFSService : IVFSService
     {
-        private readonly IVirtualFS vfs = VirtualFSFactory.Default;
+        private IVirtualFS Vfs => VirtualFSFactory.Default;
 
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
@@ -288,7 +288,7 @@ namespace VirtualFileSystem.Service
                         {
                             checkParameterCount(1);
                             this.connectedUsers[request.UserName].CurrentDirectory =
-                                vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                                Vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
                         }
                         break;
@@ -296,7 +296,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.CopyTree:
                         {
                             checkParameterCount(2);
-                            vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                            Vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                             responseMessage = defaultResponseMessage;
                         }
                         break;
@@ -304,7 +304,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.DeleteFile:
                         {
                             checkParameterCount(1);
-                            string fileName = vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string fileName = Vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"File '{fileName}' deleted succesfully.");
                         }
                         break;
@@ -312,7 +312,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.DeleteTree:
                         {
                             checkParameterCount(1);
-                            string directory = vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string directory = Vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"Tree '{directory}' removed succesfully.");
                         }
                         break;
@@ -320,7 +320,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.LockFile:
                         {
                             checkParameterCount(1);
-                            string fileName = vfs.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string fileName = Vfs.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
                         }
                         break;
@@ -328,7 +328,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.MakeDirectory:
                         {
                             checkParameterCount(1);
-                            string directory = vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string directory = Vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"Directory '{directory}' created succesfully.");
                         }
                         break;
@@ -336,7 +336,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.MakeFile:
                         {
                             checkParameterCount(1);
-                            string fileName = vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string fileName = Vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"File '{fileName}' created succesfully.");
                         }
                         break;
@@ -344,7 +344,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.MoveTree:
                         {
                             checkParameterCount(2);
-                            vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                            Vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                             responseMessage = defaultResponseMessage;
                         }
                         break;
@@ -352,7 +352,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.PrintTree:
                         {
                             checkParameterCount(0);
-                            responseMessage = vfs.PrintTree();
+                            responseMessage = Vfs.PrintTree();
                             responseMessage = defaultResponseMessage;
                         }
                         break;
@@ -360,7 +360,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.RemoveDirectory:
                         {
                             checkParameterCount(1);
-                            string directory = vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string directory = Vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"Directory '{directory}' removed succesfully.");
                         }
                         break;
@@ -368,7 +368,7 @@ namespace VirtualFileSystem.Service
                     case ConsoleCommandCode.UnlockFile:
                         {
                             checkParameterCount(1);
-                            string fileName = vfs.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            string fileName = Vfs.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                             responseMessage = Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
                         }
                         break;
