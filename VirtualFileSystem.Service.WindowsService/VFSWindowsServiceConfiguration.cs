@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 
 namespace VirtualFileSystem.Service.WindowsService
 {
@@ -8,55 +6,13 @@ namespace VirtualFileSystem.Service.WindowsService
     static class VFSWindowsServiceConfiguration
     {
 
-        private static string GetSetting(string name)
-        {
-            try
-            {
-                return ConfigurationManager.AppSettings[name];
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        private const ServiceAccount DefaultServiceAccount = ServiceAccount.LocalSystem;
 
-        public static ServiceAccount ServiceAccount
-        {
-            get
-            {
-                const ServiceAccount DefaultServiceAccount = ServiceAccount.LocalSystem;
-                try
-                {
-                    var result = (ServiceAccount)Enum.Parse(
-                        typeof(ServiceAccount),
-                        GetSetting("vfsservice:windowsservice:ServiceAccount"),
-                        ignoreCase: true
-                    );
-                    return typeof(ServiceAccount).IsEnumDefined(result) ? result : DefaultServiceAccount;
-                }
-                catch
-                {
-                    return DefaultServiceAccount;
-                }
-            }
-        }
+        private const string DefaultServiceName = "Virtual File System Windows Service";
 
-        public static string ServiceName
-        {
-            get
-            {
-                const string DefaultServiceName = "Virtual File System Windows Service";
-                try
-                {
-                    var result = GetSetting("vfsservice:windowsservice:DefaultServiceName");
-                    return !string.IsNullOrWhiteSpace(result) ? result.Trim() : DefaultServiceName;
-                }
-                catch
-                {
-                    return DefaultServiceName;
-                }
-            }
-        }
+        public static ServiceAccount ServiceAccount => DefaultServiceAccount;
+
+        public static string ServiceName => DefaultServiceName;
 
     }
 
