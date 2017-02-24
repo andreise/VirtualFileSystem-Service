@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using VFSCommon;
 using static System.FormattableString;
 
-namespace VFSClient
+namespace VFSClient.Model
 {
-    using Model;
+    using Security;
     using VFSServiceReference;
 
-    internal sealed class VFSClientModel
+    internal sealed class VFSClient
     {
         public UserInfo UserInfo { get; private set; }
 

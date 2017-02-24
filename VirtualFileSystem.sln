@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Model", "VirtualFileSystem.Model\VirtualFileSystem.Model.csproj", "{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSClient.Model", "VFSClient.Model\VFSClient.Model.csproj", "{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSClient", "VFSClient\VFSClient.csproj", "{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}"
 	ProjectSection(ProjectDependencies) = postProject
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA} = {ABD16C53-55D0-46A5-B19B-D8283C28CFAA}
@@ -28,10 +26,6 @@ Global
 		{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Release|Any CPU.ActiveCfg = Release|Any CPU

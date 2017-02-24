@@ -1,4 +1,4 @@
-﻿namespace VFSClient
+﻿namespace VFSClient.Model.Security
 {
 
     internal sealed class UserInfo

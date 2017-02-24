@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ConsoleCommandCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\VFSServiceReference\Reference.cs">
@@ -50,9 +51,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="UserInfo.cs" />
-    <Compile Include="VFSClientModel.cs" />
-    <Compile Include="VFSServiceCallbackHandler.cs" />
+    <Compile Include="Model.Security\UserInfo.cs" />
+    <Compile Include="Model\VFSClient.cs" />
+    <Compile Include="Model\VFSServiceCallbackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -79,10 +80,6 @@
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VFSClient.Model\VFSClient.Model.csproj">
-      <Project>{2bd4316f-b7c1-4f81-9526-52acd1f64e9d}</Project>
-      <Name>VFSClient.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
       <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
       <Name>VFSCommon</Name>

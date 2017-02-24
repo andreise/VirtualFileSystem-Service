@@ -1,16 +1,16 @@
 ﻿using System;
 using static System.FormattableString;
 
-namespace VFSClient
+namespace VFSClient.Model
 {
     using VFSServiceReference;
 
     internal sealed class VFSServiceCallbackHandler : IVFSServiceCallback
     {
 
-        public VFSClientModel Owner { get; }
+        public VFSClient Owner { get; }
 
-        public VFSServiceCallbackHandler(VFSClientModel owner)
+        public VFSServiceCallbackHandler(VFSClient owner)
         {
             this.Owner = owner;
         }
