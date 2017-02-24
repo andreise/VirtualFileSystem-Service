@@ -39,16 +39,13 @@ namespace VFSClient
 
         public static UserInfo UserInfo { get; private set; }
 
-        static ConsoleCommand<ConsoleCommandCode> ParseCommandLine(string commandLine) =>
-            string.IsNullOrWhiteSpace(commandLine) ? null : ConsoleCommand<ConsoleCommandCode>.Parse(commandLine);
-
         static void WriteCommandExecutionTimeoutExpired(ConsoleCommand<ConsoleCommandCode> command) =>
             Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.Command})."));
 
         static void Run()
         {
             Console.WriteLine("Virtual File System Client");
-            Console.WriteLine(Invariant($"Put command to work with the file system, or type {nameof(ConsoleCommandCode.Quit)} to exit"));
+            Console.WriteLine(Invariant($"Connect to host and send commands to the file system, or type {nameof(ConsoleCommandCode.Quit)} to exit"));
 
             string defaultEndpointAuthority = ConfigurationManager.AppSettings["DefaultEndpointAuthority"];
 
@@ -57,22 +54,16 @@ namespace VFSClient
                 XmlConvert.ToInt32(ConfigurationManager.AppSettings["TaskTimeoutMilliseconds"])
             );
 
-            string commandLine;
-            ConsoleCommand<ConsoleCommandCode> command;
             VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler()));
             UserInfo = null;
 
+            ConsoleCommand<ConsoleCommandCode> command;
             while (
-                (
-                    (object)(commandLine = Console.ReadLine()) != null
-                ) &&
-                (
-                    (object)(command = ParseCommandLine(commandLine)) == null ||
-                    command.CommandCode != ConsoleCommandCode.Exit
-                )
+                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(Console.ReadLine(), isCaseSensitive: false)) != null &&
+                command.CommandCode != ConsoleCommandCode.Exit
             )
             {
-                if ((object)command == null)
+                if (string.IsNullOrWhiteSpace(command.CommandLine))
                     continue;
 
                 switch (command.CommandCode)
@@ -149,14 +140,14 @@ namespace VFSClient
                         {
                             if ((object)UserInfo == null)
                             {
-                                Console.WriteLine("Current user is undefined.");
+                                Console.WriteLine("Please connect to the host before sending to it any other commands.");
                                 break;
                             }
 
                             try
                             {
                                 FSCommandResponse response = service.FSCommand(
-                                    new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = commandLine }
+                                    new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = command.CommandLine }
                                 );
                                 Console.WriteLine(response.ResponseMessage);
                             }

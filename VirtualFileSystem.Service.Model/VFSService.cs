@@ -175,7 +175,7 @@ namespace VirtualFileSystem.Service.Model
 
             try
             {
-                command = ConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine);
+                command = ConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine, isCaseSensitive: false);
             }
             catch (ArgumentException e)
             {

@@ -54,12 +54,9 @@ namespace VFSCommon
         /// <param name="commandLine">Command Line</param>
         /// <param name="isCaseSensitive">Is command a case sensitive</param>
         /// <returns>Parsed command instance</returns>
-        /// <exception cref="ArgumentNullException">Throws if the command line is null</exception>
-        public static ConsoleCommand Parse(string commandLine, bool isCaseSensitive = false)
+        /// <exception cref="NullReferenceException">Throws if the command line is null</exception>
+        protected static ConsoleCommand ParseInternal(string commandLine, bool isCaseSensitive)
         {
-            if ((object)commandLine == null)
-                throw new ArgumentNullException(nameof(commandLine));
-
             var commandLineItems = commandLine.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             return new ConsoleCommand(
                 commandLine,
@@ -67,6 +64,35 @@ namespace VFSCommon
                 commandLineItems.FirstOrDefault() ?? string.Empty,
                 commandLineItems.Skip(1)
             );
+        }
+
+        /// <summary>
+        /// Parses the command from a command line
+        /// </summary>
+        /// <param name="commandLine">Command Line</param>
+        /// <param name="isCaseSensitive">Is command a case sensitive</param>
+        /// <returns>A parsed command instance</returns>
+        /// <exception cref="ArgumentNullException">Throws if the command line is null</exception>
+        public static ConsoleCommand Parse(string commandLine, bool isCaseSensitive)
+        {
+            if ((object)commandLine == null)
+                throw new ArgumentNullException(nameof(commandLine));
+
+            return ParseInternal(commandLine, isCaseSensitive);
+        }
+
+        /// <summary>
+        /// Parses the command from a command line
+        /// </summary>
+        /// <param name="commandLine">Command Line</param>
+        /// <param name="isCaseSensitive">Is command a case sensitive</param>
+        /// <returns>A parsed command instance or null if the command line is null</returns>
+        public static ConsoleCommand ParseNullable(string commandLine, bool isCaseSensitive)
+        {
+            if ((object)commandLine == null)
+                return null;
+
+            return ParseInternal(commandLine, isCaseSensitive);
         }
 
         /// <summary>
