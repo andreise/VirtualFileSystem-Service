@@ -43,12 +43,12 @@ namespace VFSClient
             string.IsNullOrWhiteSpace(commandLine) ? null : BaseConsoleCommand<ConsoleCommandCode>.Parse(commandLine);
 
         static void WriteCommandExecutionTimeoutExpired(BaseConsoleCommand<ConsoleCommandCode> command) =>
-            Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.CommandCode?.ToString() ?? command.Command})."));
+            Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.Command})."));
 
         static void Run()
         {
             Console.WriteLine("Virtual File System Client");
-            Console.WriteLine(Invariant($"Put command to work with the file system, or type {ConsoleCommandCode.Quit} to exit"));
+            Console.WriteLine(Invariant($"Put command to work with the file system, or type {nameof(ConsoleCommandCode.Quit)} to exit"));
 
             string defaultEndpointAuthority = ConfigurationManager.AppSettings["DefaultEndpointAuthority"];
 
@@ -68,7 +68,7 @@ namespace VFSClient
                 ) &&
                 (
                     (object)(command = ParseCommandLine(commandLine)) == null ||
-                    command.CommandCode != ConsoleCommandCode.Quit
+                    command.CommandCode != ConsoleCommandCode.Exit
                 )
             )
             {

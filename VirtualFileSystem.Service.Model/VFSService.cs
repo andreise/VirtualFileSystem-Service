@@ -287,7 +287,7 @@ namespace VirtualFileSystem.Service.Model
                         throw CreateFSCommandFaultException(
                             request.UserName,
                             request.CommandLine,
-                            Invariant($"Unsupported command code ({command.CommandCode?.ToString() ?? command.Command}).")
+                            Invariant($"Unsupported command ({command.Command}).")
                         );
                 }
             }

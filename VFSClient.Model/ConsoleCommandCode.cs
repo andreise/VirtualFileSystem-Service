@@ -9,12 +9,12 @@
         /// <summary>
         /// Exit Command
         /// </summary>
-        Quit = 1,
+        Exit = 1,
 
         /// <summary>
         /// Exit Command
         /// </summary>
-        Exit = Quit,
+        Quit = Exit,
 
         /// <summary>
         /// Connect Command
