@@ -72,7 +72,7 @@ namespace VFSClient
                 )
             )
             {
-                switch (command.CommandCode)
+                switch (command?.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
                         {
