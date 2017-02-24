@@ -27,8 +27,8 @@ namespace VFSCommon
         /// </summary>
         /// <param name="command">Command</param>
         /// <param name="parameters">Command Parameters</param>
-        /// <exception cref="ArgumentNullException">Trows if the command is null</exception>
-        /// <exception cref="ArgumentException">Trows if the command is empty or any command parameter is null or empty</exception>
+        /// <exception cref="ArgumentNullException">Throws if the command is null</exception>
+        /// <exception cref="ArgumentException">Throws if the command is empty or any command parameter is null or empty</exception>
         public BaseConsoleCommand(string command, string[] parameters = null)
         {
             if ((object)command == null)

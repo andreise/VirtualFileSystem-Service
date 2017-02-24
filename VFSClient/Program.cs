@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.ServiceModel;
 using System.Xml;
+using VFSCommon;
 using static System.FormattableString;
 
 namespace VFSClient
@@ -38,11 +39,11 @@ namespace VFSClient
 
         public static UserInfo UserInfo { get; private set; }
 
-        static ConsoleCommand ParseCommandLine(string commandLine) =>
-            string.IsNullOrWhiteSpace(commandLine) ? null : ConsoleCommand.Parse(commandLine);
+        static BaseConsoleCommand<ConsoleCommandCode> ParseCommandLine(string commandLine) =>
+            string.IsNullOrWhiteSpace(commandLine) ? null : BaseConsoleCommand<ConsoleCommandCode>.Parse(commandLine);
 
-        static void WriteCommandExecutionTimeoutExpired(ConsoleCommand command) =>
-            Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.CommandCode})."));
+        static void WriteCommandExecutionTimeoutExpired(BaseConsoleCommand<ConsoleCommandCode> command) =>
+            Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.CommandCode?.ToString() ?? command.Command})."));
 
         static void Run()
         {
@@ -57,7 +58,7 @@ namespace VFSClient
             );
 
             string commandLine;
-            ConsoleCommand command;
+            BaseConsoleCommand<ConsoleCommandCode> command;
             VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler()));
             UserInfo = null;
 
@@ -141,7 +142,7 @@ namespace VFSClient
                         }
                         break;
 
-                    case 0:
+                    default:
                         {
                             if ((object)UserInfo == null)
                             {

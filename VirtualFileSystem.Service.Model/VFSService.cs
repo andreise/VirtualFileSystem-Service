@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Web.Configuration;
 using System.Xml;
+using VFSCommon;
 using VirtualFileSystem.Model;
 using static System.FormattableString;
 
@@ -170,11 +171,11 @@ namespace VirtualFileSystem.Service.Model
 
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
-            ConsoleCommand command;
+            BaseConsoleCommand<ConsoleCommandCode> command;
 
             try
             {
-                command = ConsoleCommand.Parse(request.CommandLine);
+                command = BaseConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine);
             }
             catch (ArgumentException e)
             {
@@ -283,7 +284,11 @@ namespace VirtualFileSystem.Service.Model
                         break;
 
                     default:
-                        throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Unsupported command code ({command.CommandCode})."));
+                        throw CreateFSCommandFaultException(
+                            request.UserName,
+                            request.CommandLine,
+                            Invariant($"Unsupported command code ({command.CommandCode?.ToString() ?? command.Command}).")
+                        );
                 }
             }
             catch (Exception e)
