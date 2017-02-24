@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Configuration;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Xml;
 using VFSCommon;
 using static System.FormattableString;
 
@@ -20,10 +18,9 @@ namespace VFSClient
             Console.WriteLine("Virtual File System Client");
             Console.WriteLine(Invariant($"Connect to host and send commands to the file system, or type {nameof(ConsoleCommandCode.Quit)} to exit"));
 
-            string defaultEndpointAuthority = ConfigurationManager.AppSettings["DefaultEndpointAuthority"];
+            UserInfo = null;
 
             VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler(this)));
-            UserInfo = null;
 
             ConsoleCommand<ConsoleCommandCode> command;
             while (
@@ -48,17 +45,6 @@ namespace VFSClient
                             }
                             else
                             {
-                                if (
-                                    new Uri(
-                                        service.Endpoint.ListenUri.ToString().Replace(service.Endpoint.ListenUri.Authority, command.Parameters[0])
-                                    ).ToString() != service.Endpoint.ListenUri.ToString()
-                                )
-                                {
-                                    service.Endpoint.ListenUri = new Uri(
-                                        service.Endpoint.Address.Uri.ToString().Replace(defaultEndpointAuthority, command.Parameters[0])
-                                    );
-                                }
-
                                 try
                                 {
                                     var response = await service.ConnectAsync(
