@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8c1a9422-a99a-41c9-9c83-dafaf68e222d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="991b735f-fa1b-4916-aba5-45cd2933c82a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8000/VFSService/service" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.disco" MetadataType="Disco" ID="c8792332-7467-4bdc-b799-65a4ecce1948" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?disco" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="6709d90e-27c4-41f3-bfc9-1284e7a5dcd5" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd2" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="591615d9-851e-4870-8987-7c7ed44c3b4b" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd1" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="bc27f498-3cdf-4695-94d1-f596391bf725" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?xsd=xsd0" />
-    <MetadataFile FileName="VFSService.wsdl" MetadataType="Wsdl" ID="a96cb17f-b5c2-4159-97e4-0c4dc3622927" SourceId="1" SourceUrl="http://localhost:8000/VFSService/service?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="e65fb4e0-8751-4b9b-b4d9-b5134d00d56a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="00a0fce6-da42-4746-8b07-17d7dc7a3d4f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd1" />
+    <MetadataFile FileName="VFSService.wsdl" MetadataType="Wsdl" ID="003cb034-b046-4b44-804a-a1a690ad1bac" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="53a32508-8b51-4276-bce0-1161a1804abe" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?disco" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="033441f6-df42-44ff-be59-b4e035b453ec" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

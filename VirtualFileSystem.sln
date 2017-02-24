@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSClient.Model", "VFSClient.Model\VFSClient.Model.csproj", "{2BD4316F-B7C1-4F81-9526-52ACD1F64E9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSClient", "VFSClient\VFSClient.csproj", "{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA} = {ABD16C53-55D0-46A5-B19B-D8283C28CFAA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSCommon", "VFSCommon\VFSCommon.csproj", "{8C825BFE-1E4B-458E-A5EE-06357A3DD345}"
 EndProject

@@ -55,13 +55,13 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\service.xsd">
+    <None Include="Service References\VFSServiceReference\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\service1.xsd">
+    <None Include="Service References\VFSServiceReference\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\service2.xsd">
+    <None Include="Service References\VFSServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.ConnectResponse.datasource">
@@ -92,7 +92,7 @@
     <WCFMetadataStorage Include="Service References\VFSServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\VFSServiceReference\service.disco" />
+    <None Include="Service References\VFSServiceReference\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\VFSServiceReference\configuration91.svcinfo" />

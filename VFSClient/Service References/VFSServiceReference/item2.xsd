@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8000/VFSService/service?xsd=xsd2" namespace="http://andrey.sergeev.vfsservice" />
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd2" namespace="http://andrey.sergeev.vfsservice" />
   <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
