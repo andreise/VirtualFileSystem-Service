@@ -42,8 +42,7 @@ namespace VFSCommon
         /// </summary>
         /// <param name="commandLine">Command Line</param>
         /// <param name="isCaseSensitive">Is command a case sensitive</param>
-        /// <returns>A parsed command instance</returns>
-        /// <exception cref="ArgumentNullException">Throws if the command line is null</exception>
+        /// <returns>A parsed command instance or null if the command line is null</returns>
         new public static ConsoleCommand<TCommandCodeEnum> ParseNullable(string commandLine, bool isCaseSensitive) =>
             (object)commandLine == null ? null :
             CreateInternal(ParseInternal(commandLine, isCaseSensitive));
