@@ -72,7 +72,10 @@ namespace VFSClient
                 )
             )
             {
-                switch (command?.CommandCode)
+                if ((object)command == null)
+                    continue;
+
+                switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
                         {
