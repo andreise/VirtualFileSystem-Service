@@ -39,10 +39,10 @@ namespace VFSClient
 
         public static UserInfo UserInfo { get; private set; }
 
-        static BaseConsoleCommand<ConsoleCommandCode> ParseCommandLine(string commandLine) =>
-            string.IsNullOrWhiteSpace(commandLine) ? null : BaseConsoleCommand<ConsoleCommandCode>.Parse(commandLine);
+        static ConsoleCommand<ConsoleCommandCode> ParseCommandLine(string commandLine) =>
+            string.IsNullOrWhiteSpace(commandLine) ? null : ConsoleCommand<ConsoleCommandCode>.Parse(commandLine);
 
-        static void WriteCommandExecutionTimeoutExpired(BaseConsoleCommand<ConsoleCommandCode> command) =>
+        static void WriteCommandExecutionTimeoutExpired(ConsoleCommand<ConsoleCommandCode> command) =>
             Console.WriteLine(Invariant($"Command execution timeout expired (command: {command.Command})."));
 
         static void Run()
@@ -58,7 +58,7 @@ namespace VFSClient
             );
 
             string commandLine;
-            BaseConsoleCommand<ConsoleCommandCode> command;
+            ConsoleCommand<ConsoleCommandCode> command;
             VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler()));
             UserInfo = null;
 

@@ -171,11 +171,11 @@ namespace VirtualFileSystem.Service.Model
 
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
-            BaseConsoleCommand<ConsoleCommandCode> command;
+            ConsoleCommand<ConsoleCommandCode> command;
 
             try
             {
-                command = BaseConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine);
+                command = ConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine);
             }
             catch (ArgumentException e)
             {

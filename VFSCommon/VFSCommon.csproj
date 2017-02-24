@@ -36,8 +36,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseConsoleCommand.cs" />
-    <Compile Include="BaseConsoleCommandOfT.cs" />
+    <Compile Include="ConsoleCommand.cs" />
+    <Compile Include="ConsoleCommandOfT.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
