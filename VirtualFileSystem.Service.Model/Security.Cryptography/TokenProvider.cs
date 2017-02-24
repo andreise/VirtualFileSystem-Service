@@ -22,7 +22,7 @@ namespace VirtualFileSystem.Service.Model.Security.Cryptography
         {
         }
 
-        private static Lazy<TokenProvider> defaultInstance = new Lazy<TokenProvider>(() => new TokenProvider());
+        private static readonly Lazy<TokenProvider> defaultInstance = new Lazy<TokenProvider>(() => new TokenProvider());
 
         public static TokenProvider Default => defaultInstance.Value;
 
