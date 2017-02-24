@@ -50,6 +50,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="UserInfo.cs" />
+    <Compile Include="VFSClientModel.cs" />
+    <Compile Include="VFSServiceCallbackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
