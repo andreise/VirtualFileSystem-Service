@@ -12,11 +12,17 @@ namespace VFSClient.Model
 
         public VFSServiceCallbackHandler(VFSClient owner)
         {
+            if ((object)owner == null)
+                throw new ArgumentNullException(nameof(owner));
+
             this.Owner = owner;
         }
 
         public void FileSystemChangedNotify(FileSystemChangedData data)
         {
+            if ((object)data == null)
+                return;
+
             if (data.UserName == this.Owner.UserInfo.UserName)
                 return;
 
