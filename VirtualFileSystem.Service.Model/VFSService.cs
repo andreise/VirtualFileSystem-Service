@@ -39,13 +39,33 @@ namespace VirtualFileSystem.Service.Model
                 throw new AuthenticateUserException("User token is invalid.");
         }
 
+        private static int GetUserSessionTimeoutSecondsSetting()
+        {
+            const int defaultValue = 120;
+
+            string valueStr = WebConfigurationManager.AppSettings["vfsservice:UserSessionTimeoutSeconds"];
+
+            if (string.IsNullOrWhiteSpace(valueStr))
+                return defaultValue;
+
+            try
+            {
+                int result = XmlConvert.ToInt32(valueStr);
+                return result < 0 ? defaultValue : result;
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
         private bool IsActualUserSession(string userName)
         {
             DateTime lastActivityTimeUtc = connectedUsers[userName].LastActivityTimeUtc;
 
             TimeSpan userSessionTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerSecond *
-                XmlConvert.ToInt32(WebConfigurationManager.AppSettings["vfsservice:UserSessionTimeoutSeconds"])
+                GetUserSessionTimeoutSecondsSetting()
             );
 
             DateTime nowUtc = DateTime.UtcNow;
