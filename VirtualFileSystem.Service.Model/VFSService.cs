@@ -20,7 +20,7 @@ namespace VirtualFileSystem.Service.Model
         ConcurrencyMode = ConcurrencyMode.Single,
         InstanceContextMode = InstanceContextMode.Single
     )]
-    public sealed class VFSService : IVFSService
+    public class VFSService : IVFSService
     {
         private IVirtualFS Vfs => VirtualFSProvider.Default;
 
