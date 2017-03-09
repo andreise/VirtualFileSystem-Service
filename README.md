@@ -1,2 +1,2 @@
 # VirtualFileSystem
-Virtual File System Project
+Virtual File System with WCF Service and Client
