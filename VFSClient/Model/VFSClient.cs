@@ -16,7 +16,8 @@ namespace VFSClient.Model
         public async Task Run()
         {
             Console.WriteLine("Virtual File System Client");
-            Console.WriteLine(Invariant($"Connect to host and send commands to the file system, or type {nameof(ConsoleCommandCode.Quit)} to exit"));
+            Console.WriteLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
+            Console.WriteLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
             UserInfo = null;
 
@@ -37,21 +38,18 @@ namespace VFSClient.Model
                         {
                             if (command.Parameters.Count == 0)
                             {
-                                Console.WriteLine("Server address and user name are not specified.");
-                            }
-                            else if (command.Parameters.Count == 1)
-                            {
-                                Console.WriteLine("User name is not specified.");
+                                Console.WriteLine("User name not specified.");
                             }
                             else
                             {
+                                string userName = command.Parameters[0];
                                 try
                                 {
                                     var response = await service.ConnectAsync(
-                                        new ConnectRequest() { UserName = command.Parameters[1] }
+                                        new ConnectRequest() { UserName = userName }
                                     );
 
-                                    UserInfo = new UserInfo(command.Parameters[1], response?.Token);
+                                    UserInfo = new UserInfo(userName, response?.Token);
 
                                     Console.WriteLine(Invariant($"User '{response?.UserName}' connected successfully."));
                                     Console.WriteLine(Invariant($"Total users: {response?.TotalUsers}."));
