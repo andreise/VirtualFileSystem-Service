@@ -33,7 +33,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItemsInternal;
 
-        private HashSet<string> lockedBy = new HashSet<string>();
+        private readonly HashSet<string> lockedBy = new HashSet<string>();
 
         /// <summary>
         /// Validates name
