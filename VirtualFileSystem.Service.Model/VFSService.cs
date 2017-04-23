@@ -161,6 +161,106 @@ namespace VirtualFileSystem.Service.Model
             return new DisconnectResponse() { UserName = request.UserName };
         }
 
+        private string ProcessRequestCommand(FSCommandRequest request, ConsoleCommand<ConsoleCommandCode> command)
+        {
+            const string defaultResponseMessage = "Command performed successfully.";
+
+            Action<int> checkParameterCount = estimatedCount =>
+            {
+                if (command.Parameters.Count < estimatedCount)
+                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
+            };
+
+            switch (command.CommandCode)
+            {
+                case ConsoleCommandCode.ChangeDirectory:
+                    {
+                        checkParameterCount(1);
+                        this.connectedUsers[request.UserName].CurrentDirectory =
+                            this.Vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
+                    }
+
+                case ConsoleCommandCode.CopyTree:
+                    {
+                        checkParameterCount(2);
+                        this.Vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        return defaultResponseMessage;
+                    }
+
+                case ConsoleCommandCode.DeleteFile:
+                    {
+                        checkParameterCount(1);
+                        string fileName = this.Vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"File '{fileName}' deleted succesfully.");
+                    }
+
+                case ConsoleCommandCode.DeleteTree:
+                    {
+                        checkParameterCount(1);
+                        string directory = this.Vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"Tree '{directory}' removed succesfully.");
+                    }
+
+                case ConsoleCommandCode.LockFile:
+                    {
+                        checkParameterCount(1);
+                        string fileName = this.Vfs.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
+                    }
+
+                case ConsoleCommandCode.MakeDirectory:
+                    {
+                        checkParameterCount(1);
+                        string directory = this.Vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"Directory '{directory}' created succesfully.");
+                    }
+
+                case ConsoleCommandCode.MakeFile:
+                    {
+                        checkParameterCount(1);
+                        string fileName = this.Vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"File '{fileName}' created succesfully.");
+                    }
+
+                case ConsoleCommandCode.MoveTree:
+                    {
+                        checkParameterCount(2);
+                        this.Vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        return defaultResponseMessage;
+                    }
+
+                case ConsoleCommandCode.PrintTree:
+                    {
+                        checkParameterCount(0);
+                        return this.Vfs.PrintTree();
+                    }
+
+                case ConsoleCommandCode.RemoveDirectory:
+                    {
+                        checkParameterCount(1);
+                        string directory = this.Vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"Directory '{directory}' removed succesfully.");
+                    }
+
+                case ConsoleCommandCode.UnlockFile:
+                    {
+                        checkParameterCount(1);
+                        string fileName = this.Vfs.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
+                    }
+
+                default:
+                    {
+                        throw CreateFSCommandFaultException(
+                            request.UserName,
+                            request.CommandLine,
+                            Invariant($"Unsupported command ({command.Command}).")
+                        );
+                    }
+            }
+        }
+
         public FSCommandResponse FSCommand(FSCommandRequest request)
         {
             if ((object)request == null)
@@ -192,7 +292,6 @@ namespace VirtualFileSystem.Service.Model
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
             ConsoleCommand<ConsoleCommandCode> command;
-
             try
             {
                 command = ConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine, isCaseSensitive: false);
@@ -202,114 +301,10 @@ namespace VirtualFileSystem.Service.Model
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
-            Action<int> checkParameterCount = estimatedCount =>
-            {
-                if (command.Parameters.Count < estimatedCount)
-                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
-            };
-
-            const string defaultResponseMessage = "Command performed successfully.";
             string responseMessage;
-
             try
             {
-                switch (command.CommandCode)
-                {
-                    case ConsoleCommandCode.ChangeDirectory:
-                        {
-                            checkParameterCount(1);
-                            this.connectedUsers[request.UserName].CurrentDirectory =
-                                Vfs.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.CopyTree:
-                        {
-                            checkParameterCount(2);
-                            Vfs.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
-                            responseMessage = defaultResponseMessage;
-                        }
-                        break;
-
-                    case ConsoleCommandCode.DeleteFile:
-                        {
-                            checkParameterCount(1);
-                            string fileName = Vfs.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"File '{fileName}' deleted succesfully.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.DeleteTree:
-                        {
-                            checkParameterCount(1);
-                            string directory = Vfs.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"Tree '{directory}' removed succesfully.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.LockFile:
-                        {
-                            checkParameterCount(1);
-                            string fileName = Vfs.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.MakeDirectory:
-                        {
-                            checkParameterCount(1);
-                            string directory = Vfs.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"Directory '{directory}' created succesfully.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.MakeFile:
-                        {
-                            checkParameterCount(1);
-                            string fileName = Vfs.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"File '{fileName}' created succesfully.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.MoveTree:
-                        {
-                            checkParameterCount(2);
-                            Vfs.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
-                            responseMessage = defaultResponseMessage;
-                        }
-                        break;
-
-                    case ConsoleCommandCode.PrintTree:
-                        {
-                            checkParameterCount(0);
-                            responseMessage = Vfs.PrintTree();
-                        }
-                        break;
-
-                    case ConsoleCommandCode.RemoveDirectory:
-                        {
-                            checkParameterCount(1);
-                            string directory = Vfs.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"Directory '{directory}' removed succesfully.");
-                        }
-                        break;
-
-                    case ConsoleCommandCode.UnlockFile:
-                        {
-                            checkParameterCount(1);
-                            string fileName = Vfs.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                            responseMessage = Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
-                        }
-                        break;
-
-                    default:
-                        throw CreateFSCommandFaultException(
-                            request.UserName,
-                            request.CommandLine,
-                            Invariant($"Unsupported command ({command.Command}).")
-                        );
-                }
+                responseMessage = this.ProcessRequestCommand(request, command);
             }
             catch (Exception e)
             {
