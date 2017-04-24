@@ -28,6 +28,13 @@ namespace VirtualFileSystem.Model
         /// <returns>Returns a normalized item name</returns>
         public static string NormalizeName(string name) => name?.ToUpperInvariant();
 
+        /// <summary>
+        /// Returns item name hash code
+        /// </summary>
+        /// <param name="name">Item Name</param>
+        /// <returns>Returns item name hash code</returns>
+        public static int GetHashCode(string name) => NormalizeName(name)?.GetHashCode() ?? 0;
+
     }
 
 }

@@ -43,7 +43,7 @@ namespace VirtualFileSystem.Model
             if ((object)obj.Name == null)
                 throw new ArgumentException(Invariant($"{nameof(obj.Name)} is null."), nameof(obj));
 
-            return FSItemNameCompareRules.NormalizeName(obj.Name).GetHashCode();
+            return FSItemNameCompareRules.GetHashCode(obj.Name);
         }
 
         private static readonly Lazy<FSItemEqualityComparer> defaultInstance = new Lazy<FSItemEqualityComparer>(() => new FSItemEqualityComparer());
