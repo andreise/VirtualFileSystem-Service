@@ -91,7 +91,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -115,7 +115,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -138,7 +138,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -180,7 +180,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -209,7 +209,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -233,7 +233,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -258,7 +258,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -283,7 +283,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, directoryParts[i]));
                 if ((object)currentItem == null)
                     throw new FSException("Destination path is not exists.");
             }
@@ -331,7 +331,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < sourcePathParts.Length; i++)
             {
-                sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, sourcePathParts[i]));
+                sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, sourcePathParts[i]));
                 if ((object)sourcePathCurrentItem == null)
                     throw new FSException("Source path is not exists.");
             }
@@ -349,7 +349,7 @@ namespace VirtualFileSystem.Model
 
             for (int i = 0; i < destPathParts.Length; i++)
             {
-                destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FSItemEqualityComparer.EqualNames(item.Name, destPathParts[i]));
+                destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FSItemNameCompareRules.EqualNames(item.Name, destPathParts[i]));
                 if ((object)destPathCurrentItem == null)
                     throw new FSException("Destination path is not exists.");
             }

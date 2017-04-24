@@ -15,6 +15,14 @@ namespace VirtualFileSystem.Model
         public const StringComparison NameComparison = StringComparison.InvariantCultureIgnoreCase;
 
         /// <summary>
+        /// Determines whether two specified item names are equal
+        /// </summary>
+        /// <param name="name1">First Item Name</param>
+        /// <param name="name2">Second Item Name</param>
+        /// <returns>Returns true if two specified item names are equal, otherwise returns false</returns>
+        public static bool EqualNames(string name1, string name2) => string.Equals(name1, name2, NameComparison);
+
+        /// <summary>
         /// Normalizes Item Name Char
         /// </summary>
         /// <param name="name">Item Name Char</param>
