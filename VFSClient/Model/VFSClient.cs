@@ -21,7 +21,25 @@ namespace VFSClient.Model
 
             UserInfo = null;
 
-            VFSServiceClient service = new VFSServiceClient(new InstanceContext(new VFSServiceCallbackHandler(this)));
+            VFSServiceClient service = new VFSServiceClient(
+                new InstanceContext(
+                    new VFSServiceCallbackHandler(
+                        data =>
+                        {
+                            if ((object)data == null)
+                                return;
+
+                            if ((object)this.UserInfo == null)
+                                return;
+
+                            if (data.UserName == this.UserInfo.UserName)
+                                return;
+
+                            Console.WriteLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
+                        }
+                    )
+                )
+            );
 
             ConsoleCommand<ConsoleCommandCode> command;
             while (

@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.FormattableString;
 
 namespace VFSClient.Model
 {
@@ -10,24 +9,17 @@ namespace VFSClient.Model
 
         public VFSClient Owner { get; }
 
-        public VFSServiceCallbackHandler(VFSClient owner)
-        {
-            if ((object)owner == null)
-                throw new ArgumentNullException(nameof(owner));
+        private readonly Action<FileSystemChangedData> handler;
 
-            this.Owner = owner;
+        public VFSServiceCallbackHandler(Action<FileSystemChangedData> handler)
+        {
+            if ((object)handler == null)
+                throw new ArgumentNullException(nameof(handler));
+
+            this.handler = handler;
         }
 
-        public void FileSystemChangedNotify(FileSystemChangedData data)
-        {
-            if ((object)data == null)
-                return;
-
-            if (data.UserName == this.Owner.UserInfo.UserName)
-                return;
-
-            Console.WriteLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}."));
-        }
+        public void FileSystemChangedNotify(FileSystemChangedData data) => this.handler(data);
 
     }
 
