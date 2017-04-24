@@ -35,7 +35,7 @@ namespace VirtualFileSystem.Service.Model
             if (!this.connectedUsers.ContainsKey(userName))
                 throw new AuthenticateUserException(Invariant($"User '{userName}' is not connected."));
 
-            if (!this.TokenProvider.IsEqualTokens(token, connectedUsers[userName].Token))
+            if (!this.TokenProvider.IsEqualTokens(token, this.connectedUsers[userName].Token))
                 throw new AuthenticateUserException("User token is invalid.");
         }
 
@@ -61,7 +61,7 @@ namespace VirtualFileSystem.Service.Model
 
         private bool IsActualUserSession(string userName)
         {
-            DateTime lastActivityTimeUtc = connectedUsers[userName].LastActivityTimeUtc;
+            DateTime lastActivityTimeUtc = this.connectedUsers[userName].LastActivityTimeUtc;
 
             TimeSpan userSessionTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerSecond *
