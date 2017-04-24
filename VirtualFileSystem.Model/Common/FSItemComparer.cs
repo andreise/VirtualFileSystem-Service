@@ -18,7 +18,7 @@ namespace VirtualFileSystem.Model
         /// <returns>
         /// Returns a positive value if the first item is greater than the second item,
         /// returns zero if the first item and the second item are equal,
-        /// otherwise returns false
+        /// otherwise returns a negative value
         /// </returns>
         public int Compare(IFSItem x, IFSItem y)
         {
@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
             if ((object)y == null)
                 return 1;
 
-            return string.Compare(x.Name, y.Name, FSItemNameCompareRules.NameComparison);
+            return FSItemNameCompareRules.CompareNames(x.Name, y.Name);
         }
 
         private static readonly Lazy<FSItemComparer> defaultInstance = new Lazy<FSItemComparer>(() => new FSItemComparer());

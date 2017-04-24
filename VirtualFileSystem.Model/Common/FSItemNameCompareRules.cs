@@ -23,6 +23,18 @@ namespace VirtualFileSystem.Model
         public static bool EqualNames(string name1, string name2) => string.Equals(name1, name2, NameComparison);
 
         /// <summary>
+        /// Compares two item names
+        /// </summary>
+        /// <param name="x">First Item Name</param>
+        /// <param name="y">Second Item Name</param>
+        /// <returns>
+        /// Returns a positive value if the first item name is greater than the second item name,
+        /// returns zero if the first item name and the second item name are equal,
+        /// otherwise returns a negative value
+        /// </returns>
+        public static int CompareNames(string name1, string name2) => string.Compare(name1, name2, NameComparison);
+
+        /// <summary>
         /// Normalizes Item Name Char
         /// </summary>
         /// <param name="name">Item Name Char</param>
