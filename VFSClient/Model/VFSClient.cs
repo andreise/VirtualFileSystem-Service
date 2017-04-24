@@ -11,13 +11,30 @@ namespace VFSClient.Model
 
     internal sealed class VFSClient
     {
+
+        private readonly Func<string> readLine;
+
+        private readonly Action<string> writeLine;
+
+        public VFSClient(Func<string> readLine, Action<string> writeLine)
+        {
+            if ((object)readLine == null)
+                throw new ArgumentNullException(nameof(readLine));
+
+            if ((object)writeLine == null)
+                throw new ArgumentNullException(nameof(writeLine));
+
+            this.readLine = readLine;
+            this.writeLine = writeLine;
+        }
+
         public UserInfo UserInfo { get; private set; }
 
         public async Task Run()
         {
-            Console.WriteLine("Virtual File System Client");
-            Console.WriteLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
-            Console.WriteLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
+            this.writeLine("Virtual File System Client");
+            this.writeLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
+            this.writeLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
             UserInfo = null;
 
@@ -35,7 +52,7 @@ namespace VFSClient.Model
                             if (data.UserName == this.UserInfo.UserName)
                                 return;
 
-                            Console.WriteLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
+                            this.writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
                         }
                     )
                 )
@@ -43,7 +60,7 @@ namespace VFSClient.Model
 
             ConsoleCommand<ConsoleCommandCode> command;
             while (
-                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(Console.ReadLine(), isCaseSensitive: false)) != null &&
+                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(this.readLine(), isCaseSensitive: false)) != null &&
                 command.CommandCode != ConsoleCommandCode.Exit
             )
             {
@@ -56,7 +73,7 @@ namespace VFSClient.Model
                         {
                             if (command.Parameters.Count == 0)
                             {
-                                Console.WriteLine("User name not specified.");
+                                this.writeLine("User name not specified.");
                             }
                             else
                             {
@@ -69,12 +86,12 @@ namespace VFSClient.Model
 
                                     UserInfo = new UserInfo(userName, response?.Token);
 
-                                    Console.WriteLine(Invariant($"User '{response?.UserName}' connected successfully."));
-                                    Console.WriteLine(Invariant($"Total users: {response?.TotalUsers}."));
+                                    this.writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
+                                    this.writeLine(Invariant($"Total users: {response?.TotalUsers}."));
                                 }
                                 catch (FaultException<ConnectFault> e)
                                 {
-                                    Console.WriteLine(e.Message);
+                                    this.writeLine(e.Message);
                                 }
                             }
                         }
@@ -84,7 +101,7 @@ namespace VFSClient.Model
                         {
                             if ((object)UserInfo == null)
                             {
-                                Console.WriteLine("Current user is undefined.");
+                                this.writeLine("Current user is undefined.");
                                 break;
                             }
 
@@ -96,15 +113,15 @@ namespace VFSClient.Model
 
                                 UserInfo = null;
 
-                                Console.WriteLine(Invariant($"User '{response?.UserName}' disconnected."));
+                                this.writeLine(Invariant($"User '{response?.UserName}' disconnected."));
                             }
                             catch (FaultException<DisconnectFault> e)
                             {
-                                Console.WriteLine(e.Message);
+                                this.writeLine(e.Message);
                             }
                             catch (AggregateException e) when (e.InnerException is FaultException<DisconnectFault>)
                             {
-                                Console.WriteLine(e.InnerException.Message);
+                                this.writeLine(e.InnerException.Message);
                             }
                         }
                         break;
@@ -113,7 +130,7 @@ namespace VFSClient.Model
                         {
                             if ((object)UserInfo == null)
                             {
-                                Console.WriteLine("Please connect to the host before sending to it any other commands.");
+                                this.writeLine("Please connect to the host before sending to it any other commands.");
                                 break;
                             }
 
@@ -123,15 +140,15 @@ namespace VFSClient.Model
                                     new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = command.CommandLine }
                                 );
 
-                                Console.WriteLine(response?.ResponseMessage);
+                                this.writeLine(response?.ResponseMessage);
                             }
                             catch (FaultException<FSCommandFault> e)
                             {
-                                Console.WriteLine(e.Message);
+                                this.writeLine(e.Message);
                             }
                             catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
                             {
-                                Console.WriteLine(e.InnerException.Message);
+                                this.writeLine(e.InnerException.Message);
                             }
                         }
                         break;
