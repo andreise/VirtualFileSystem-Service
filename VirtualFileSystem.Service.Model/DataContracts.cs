@@ -9,10 +9,10 @@ namespace VirtualFileSystem.Service.Model
     internal sealed class FileSystemChangedData
     {
         [DataMember]
-        public string UserName;
+        public string UserName { get; set; }
 
         [DataMember]
-        public string CommandLine;
+        public string CommandLine { get; set; }
     }
 
     // Common
@@ -62,7 +62,7 @@ namespace VirtualFileSystem.Service.Model
         public string UserName { get; set; }
 
         [DataMember]
-        public byte[] Token;
+        public byte[] Token { get; set; }
     }
 
     [DataContract]
@@ -85,29 +85,29 @@ namespace VirtualFileSystem.Service.Model
     public sealed class FSCommandRequest
     {
         [DataMember]
-        public string UserName;
+        public string UserName { get; set; }
 
         [DataMember]
-        public byte[] Token;
+        public byte[] Token { get; set; }
 
         [DataMember]
-        public string CommandLine;
+        public string CommandLine { get; set; }
     }
 
     [DataContract]
     public sealed class FSCommandResponse
     {
         [DataMember]
-        public string UserName;
+        public string UserName { get; set; }
 
         [DataMember]
-        public string CurrentDirectory;
+        public string CurrentDirectory { get; set; }
 
         [DataMember]
-        public string CommandLine;
+        public string CommandLine { get; set; }
 
         [DataMember]
-        public string ResponseMessage;
+        public string ResponseMessage { get; set; }
     }
 
     [DataContract]
@@ -117,7 +117,7 @@ namespace VirtualFileSystem.Service.Model
         public string UserName { get; set; }
 
         [DataMember]
-        public string CommandLine;
+        public string CommandLine { get; set; }
     }
 
 }
