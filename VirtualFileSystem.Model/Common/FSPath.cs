@@ -40,6 +40,8 @@ namespace VirtualFileSystem.Model
             return names;
         }
 
+        private static char[] GetPathSeparators() => new char[] { PathSeparator, AltPathSeparator };
+
         private static readonly Lazy<IReadOnlyList<char>> validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(GetValidVolumeChars()));
 
         private static readonly Lazy<IReadOnlyList<string>> validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(GetValidVolumeNames()));
@@ -48,6 +50,8 @@ namespace VirtualFileSystem.Model
 
         private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
 
+        private static readonly Lazy<IReadOnlyList<char>> pathSeparators = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(GetPathSeparators()));
+
         public static IReadOnlyList<string> ValidVolumeNames => validVolumeNames.Value;
 
         public static IReadOnlyList<char> ValidVolumeChars => validVolumeChars.Value;
@@ -55,6 +59,8 @@ namespace VirtualFileSystem.Model
         public static IReadOnlyList<char> InvalidPathChars => invalidPathChars.Value;
 
         public static IReadOnlyList<char> InvalidFileNameChars => invalidFileNameChars.Value;
+
+        public static IReadOnlyList<char> PathSeparators => pathSeparators.Value;
 
         public const char VolumeSeparator = ':';
 
@@ -70,7 +76,7 @@ namespace VirtualFileSystem.Model
 
         public static bool IsVolumeSeparator(char c) => c == VolumeSeparator;
 
-        public static bool IsPathSeparator(char c) => c == PathSeparator || c == AltPathSeparator;
+        public static bool IsPathSeparator(char c) => PathSeparators.Contains(c);
 
         public static bool IsValidVolumeChar(char c) => (c = FSItemNameCompareRules.NormalizeChar(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
 
@@ -96,11 +102,11 @@ namespace VirtualFileSystem.Model
             if ((object)relativePath2 == null)
                 relativePath2 = string.Empty;
 
-            relativePath2 = relativePath2.Trim().TrimStart(PathSeparator, AltPathSeparator);
+            relativePath2 = relativePath2.Trim().TrimStart(GetPathSeparators());
             if (IsAbsolutePath(relativePath2))
                 return relativePath2;
 
-            path1 = path1.Trim().TrimEnd(PathSeparator, AltPathSeparator);
+            path1 = path1.Trim().TrimEnd(GetPathSeparators());
 
             if (path1.Length == 0 && relativePath2.Length == 0)
                 return string.Empty;
@@ -119,7 +125,7 @@ namespace VirtualFileSystem.Model
             if ((object)path == null)
                 return new string[0];
 
-            string[] tempItems = path.Split(new char[] { PathSeparator, AltPathSeparator }, StringSplitOptions.RemoveEmptyEntries);
+            string[] tempItems = path.Split(GetPathSeparators(), StringSplitOptions.RemoveEmptyEntries);
             List<string> items = new List<string>(tempItems.Length);
             for (int i = 0; i < tempItems.Length; i++)
             {
