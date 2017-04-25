@@ -157,7 +157,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item kind is not volume or directory.");
 
-            IFSItem directory = new FSDirectory(name);
+            IFSItem directory = new FSDirectory(name); // validate name
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(directory.Name, item.Name)).FirstOrDefault();
 
@@ -186,7 +186,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item kind is not volume or directory.");
 
-            IFSItem directory = new FSDirectory(name);
+            IFSItem directory = new FSDirectory(name); // validate name
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(directory.Name, item.Name)).FirstOrDefault();
 
@@ -213,7 +213,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item kind is not volume or directory.");
 
-            IFSItem file = new FSFile(name);
+            IFSItem file = new FSFile(name); // validate name
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(file.Name, item.Name)).FirstOrDefault();
 
