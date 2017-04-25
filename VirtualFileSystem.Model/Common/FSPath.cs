@@ -126,7 +126,9 @@ namespace VirtualFileSystem.Model
                 return new string[0];
 
             string[] tempItems = path.Split(GetPathSeparators(), StringSplitOptions.RemoveEmptyEntries);
+
             List<string> items = new List<string>(tempItems.Length);
+
             for (int i = 0; i < tempItems.Length; i++)
             {
                 if (!string.IsNullOrWhiteSpace(tempItems[i]))
