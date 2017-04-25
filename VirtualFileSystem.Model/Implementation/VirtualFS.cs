@@ -33,7 +33,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid directory name."), nameof(name));
         }
 
-        private static readonly string defaultVolumePath = FSPath.ValidVolumeNames[0];
+        private static string DefaultVolumePath => FSPath.ValidVolumeNames[0];
 
         /// <summary>
         /// Constructor
@@ -43,7 +43,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
         public VirtualFS(string name) : base(FSItemKind.FileSystem, name)
         {
-            IFSItem defaultVolume = new FSVolume(defaultVolumePath);
+            IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
             this.childItemsInternal.Add(defaultVolume);
         }
 
@@ -77,7 +77,7 @@ namespace VirtualFileSystem.Model
         }
 
         private static string NormalizeCurrentDirectory(string currentDirectory)
-            => string.IsNullOrWhiteSpace(currentDirectory) ? defaultVolumePath : currentDirectory.Trim();
+            => string.IsNullOrWhiteSpace(currentDirectory) ? DefaultVolumePath : currentDirectory.Trim();
 
         public string MakeDirectory(string currentDirectory, string directory)
         {
