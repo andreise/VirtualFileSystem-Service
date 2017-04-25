@@ -12,6 +12,8 @@ namespace VFSClient.Model
     internal static class VFSClient
     {
 
+        private static bool EqualUserNames(string name1, string name2) => string.Equals(name1, name2, StringComparison.InvariantCultureIgnoreCase);
+
         private static async Task ProcessConnectCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if (command.Parameters.Count == 0)
@@ -26,7 +28,7 @@ namespace VFSClient.Model
             {
                 string message = Invariant($"User '{user.Credentials.UserName}' already connected.");
 
-                if (!string.Equals(user.Credentials.UserName, userName, StringComparison.InvariantCultureIgnoreCase))
+                if (!EqualUserNames(user.Credentials.UserName, userName))
                     message += " Please disconnect current user before connect new user.";
 
                 writeLine(message);
@@ -112,7 +114,7 @@ namespace VFSClient.Model
             if ((object)user.Credentials == null)
                 return;
 
-            if (data.UserName == user.Credentials.UserName)
+            if (EqualUserNames(data.UserName, user.Credentials.UserName))
                 return;
 
             writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
