@@ -30,13 +30,93 @@ namespace VFSClient.Model
 
         public UserInfo UserInfo { get; private set; }
 
+        private async Task ProcessConnectCommand(VFSServiceClient service, ConsoleCommand<ConsoleCommandCode> command)
+        {
+            if (command.Parameters.Count == 0)
+            {
+                this.writeLine("User name not specified.");
+                return;
+            }
+
+            string userName = command.Parameters[0];
+            try
+            {
+                var response = await service.ConnectAsync(
+                    new ConnectRequest() { UserName = userName }
+                );
+
+                this.UserInfo = new UserInfo(userName, response?.Token);
+
+                this.writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
+                this.writeLine(Invariant($"Total users: {response?.TotalUsers}."));
+            }
+            catch (FaultException<ConnectFault> e)
+            {
+                this.writeLine(e.Message);
+            }
+        }
+
+        private async Task ProcessDisconnectCommand(VFSServiceClient service)
+        {
+            if ((object)this.UserInfo == null)
+            {
+                this.writeLine("Current user is undefined.");
+                return;
+            }
+
+            try
+            {
+                var response = await service.DisconnectAsync(
+                    new DisconnectRequest() { UserName = this.UserInfo.UserName, Token = this.UserInfo.Token }
+                );
+
+                this.UserInfo = null;
+
+                this.writeLine(Invariant($"User '{response?.UserName}' disconnected."));
+            }
+            catch (FaultException<DisconnectFault> e)
+            {
+                this.writeLine(e.Message);
+            }
+            catch (AggregateException e) when (e.InnerException is FaultException<DisconnectFault>)
+            {
+                this.writeLine(e.InnerException.Message);
+            }
+        }
+
+        private async Task ProcessFSCommand(VFSServiceClient service, ConsoleCommand<ConsoleCommandCode> command)
+        {
+            if ((object)this.UserInfo == null)
+            {
+                this.writeLine("Please connect to the host before sending to it any other commands.");
+                return;
+            }
+
+            try
+            {
+                var response = await service.FSCommandAsync(
+                    new FSCommandRequest() { UserName = this.UserInfo.UserName, Token = this.UserInfo.Token, CommandLine = command.CommandLine }
+                );
+
+                this.writeLine(response?.ResponseMessage);
+            }
+            catch (FaultException<FSCommandFault> e)
+            {
+                this.writeLine(e.Message);
+            }
+            catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
+            {
+                this.writeLine(e.InnerException.Message);
+            }
+        }
+
         public async Task Run()
         {
             this.writeLine("Virtual File System Client");
             this.writeLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
             this.writeLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
-            UserInfo = null;
+            this.UserInfo = null;
 
             VFSServiceClient service = new VFSServiceClient(
                 new InstanceContext(
@@ -70,87 +150,15 @@ namespace VFSClient.Model
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
-                        {
-                            if (command.Parameters.Count == 0)
-                            {
-                                this.writeLine("User name not specified.");
-                            }
-                            else
-                            {
-                                string userName = command.Parameters[0];
-                                try
-                                {
-                                    var response = await service.ConnectAsync(
-                                        new ConnectRequest() { UserName = userName }
-                                    );
-
-                                    UserInfo = new UserInfo(userName, response?.Token);
-
-                                    this.writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
-                                    this.writeLine(Invariant($"Total users: {response?.TotalUsers}."));
-                                }
-                                catch (FaultException<ConnectFault> e)
-                                {
-                                    this.writeLine(e.Message);
-                                }
-                            }
-                        }
+                        await this.ProcessConnectCommand(service, command);
                         break;
 
                     case ConsoleCommandCode.Disconnect:
-                        {
-                            if ((object)UserInfo == null)
-                            {
-                                this.writeLine("Current user is undefined.");
-                                break;
-                            }
-
-                            try
-                            {
-                                var response = await service.DisconnectAsync(
-                                    new DisconnectRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token }
-                                );
-
-                                UserInfo = null;
-
-                                this.writeLine(Invariant($"User '{response?.UserName}' disconnected."));
-                            }
-                            catch (FaultException<DisconnectFault> e)
-                            {
-                                this.writeLine(e.Message);
-                            }
-                            catch (AggregateException e) when (e.InnerException is FaultException<DisconnectFault>)
-                            {
-                                this.writeLine(e.InnerException.Message);
-                            }
-                        }
+                        await this.ProcessDisconnectCommand(service);
                         break;
 
                     default:
-                        {
-                            if ((object)UserInfo == null)
-                            {
-                                this.writeLine("Please connect to the host before sending to it any other commands.");
-                                break;
-                            }
-
-                            try
-                            {
-                                var response = await service.FSCommandAsync(
-                                    new FSCommandRequest() { UserName = UserInfo.UserName, Token = UserInfo.Token, CommandLine = command.CommandLine }
-                                );
-
-                                this.writeLine(response?.ResponseMessage);
-                            }
-                            catch (FaultException<FSCommandFault> e)
-                            {
-                                this.writeLine(e.Message);
-                            }
-                            catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
-                            {
-                                this.writeLine(e.InnerException.Message);
-                            }
-                        }
+                        await this.ProcessFSCommand(service, command);
                         break;
                 }
             } // while
