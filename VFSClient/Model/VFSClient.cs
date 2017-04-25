@@ -12,7 +12,7 @@ namespace VFSClient.Model
     internal static class VFSClient
     {
 
-        private static async Task ProcessConnectCommand(Action<string> writeLine, VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
+        private static async Task ProcessConnectCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if (command.Parameters.Count == 0)
             {
@@ -50,7 +50,7 @@ namespace VFSClient.Model
             }
         }
 
-        private static async Task ProcessDisconnectCommand(Action<string> writeLine, VFSServiceClient service, User user)
+        private static async Task ProcessDisconnectCommand(User user, VFSServiceClient service, Action<string> writeLine)
         {
             if ((object)user.Credentials == null)
             {
@@ -78,7 +78,7 @@ namespace VFSClient.Model
             }
         }
 
-        private static async Task ProcessFSCommand(Action<string> writeLine, VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
+        private static async Task ProcessFSCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if ((object)user.Credentials == null)
             {
@@ -104,6 +104,20 @@ namespace VFSClient.Model
             }
         }
 
+        private static void HandleCallback(FileSystemChangedData data, User user, Action<string> writeLine)
+        {
+            if ((object)data == null)
+                return;
+
+            if ((object)user.Credentials == null)
+                return;
+
+            if (data.UserName == user.Credentials.UserName)
+                return;
+
+            writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
+        }
+
         public static async Task Run(Func<string> readLine, Action<string> writeLine)
         {
             if ((object)readLine == null)
@@ -118,29 +132,18 @@ namespace VFSClient.Model
 
             var user = new User();
 
-            VFSServiceClient service = new VFSServiceClient(
+            var service = new VFSServiceClient(
                 new InstanceContext(
-                    new VFSServiceCallbackHandler(
-                        data =>
-                        {
-                            if ((object)data == null)
-                                return;
-
-                            if ((object)user.Credentials == null)
-                                return;
-
-                            if (data.UserName == user.Credentials.UserName)
-                                return;
-
-                            writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
-                        }
-                    )
+                    new VFSServiceCallbackHandler(data => HandleCallback(data, user, writeLine))
                 )
             );
 
+            Func<ConsoleCommand<ConsoleCommandCode>> readCommand = () => ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false);
+
             ConsoleCommand<ConsoleCommandCode> command;
+
             while (
-                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false)) != null &&
+                (object)(command = readCommand()) != null &&
                 command.CommandCode != ConsoleCommandCode.Exit
             )
             {
@@ -150,20 +153,20 @@ namespace VFSClient.Model
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
-                        await ProcessConnectCommand(writeLine, service, user, command);
+                        await ProcessConnectCommand(command, user, service, writeLine);
                         break;
 
                     case ConsoleCommandCode.Disconnect:
-                        await ProcessDisconnectCommand(writeLine, service, user);
+                        await ProcessDisconnectCommand(user, service, writeLine);
                         break;
 
                     default:
-                        await ProcessFSCommand(writeLine, service, user, command);
+                        await ProcessFSCommand(command, user, service, writeLine);
                         break;
                 }
             } // while
 
-        } // Run method
+        } // Run
 
     }
 
