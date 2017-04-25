@@ -1,17 +1,19 @@
 ﻿namespace VFSClient.Model.Security
 {
 
-    internal sealed class UserInfo
+    internal sealed class UserCredentials
     {
+
         public string UserName { get; }
 
         public byte[] Token { get; }
 
-        public UserInfo(string userName, byte[] token)
+        public UserCredentials(string userName, byte[] token)
         {
             this.UserName = userName;
             this.Token = token;
         }
+
     }
 
 }

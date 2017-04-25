@@ -28,9 +28,7 @@ namespace VFSClient.Model
             this.writeLine = writeLine;
         }
 
-        public UserInfo UserInfo { get; private set; }
-
-        private async Task ProcessConnectCommand(VFSServiceClient service, ConsoleCommand<ConsoleCommandCode> command)
+        private async Task ProcessConnectCommand(VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
         {
             if (command.Parameters.Count == 0)
             {
@@ -45,7 +43,7 @@ namespace VFSClient.Model
                     new ConnectRequest() { UserName = userName }
                 );
 
-                this.UserInfo = new UserInfo(userName, response?.Token);
+                user.Credentials = new UserCredentials(userName, response?.Token);
 
                 this.writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
                 this.writeLine(Invariant($"Total users: {response?.TotalUsers}."));
@@ -56,9 +54,9 @@ namespace VFSClient.Model
             }
         }
 
-        private async Task ProcessDisconnectCommand(VFSServiceClient service)
+        private async Task ProcessDisconnectCommand(VFSServiceClient service, User user)
         {
-            if ((object)this.UserInfo == null)
+            if ((object)user.Credentials == null)
             {
                 this.writeLine("Current user is undefined.");
                 return;
@@ -67,10 +65,10 @@ namespace VFSClient.Model
             try
             {
                 var response = await service.DisconnectAsync(
-                    new DisconnectRequest() { UserName = this.UserInfo.UserName, Token = this.UserInfo.Token }
+                    new DisconnectRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token }
                 );
 
-                this.UserInfo = null;
+                user.Credentials = null;
 
                 this.writeLine(Invariant($"User '{response?.UserName}' disconnected."));
             }
@@ -84,9 +82,9 @@ namespace VFSClient.Model
             }
         }
 
-        private async Task ProcessFSCommand(VFSServiceClient service, ConsoleCommand<ConsoleCommandCode> command)
+        private async Task ProcessFSCommand(VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
         {
-            if ((object)this.UserInfo == null)
+            if ((object)user.Credentials == null)
             {
                 this.writeLine("Please connect to the host before sending to it any other commands.");
                 return;
@@ -95,7 +93,7 @@ namespace VFSClient.Model
             try
             {
                 var response = await service.FSCommandAsync(
-                    new FSCommandRequest() { UserName = this.UserInfo.UserName, Token = this.UserInfo.Token, CommandLine = command.CommandLine }
+                    new FSCommandRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token, CommandLine = command.CommandLine }
                 );
 
                 this.writeLine(response?.ResponseMessage);
@@ -116,7 +114,7 @@ namespace VFSClient.Model
             this.writeLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
             this.writeLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
-            this.UserInfo = null;
+            var user = new User();
 
             VFSServiceClient service = new VFSServiceClient(
                 new InstanceContext(
@@ -126,10 +124,10 @@ namespace VFSClient.Model
                             if ((object)data == null)
                                 return;
 
-                            if ((object)this.UserInfo == null)
+                            if ((object)user.Credentials == null)
                                 return;
 
-                            if (data.UserName == this.UserInfo.UserName)
+                            if (data.UserName == user.Credentials.UserName)
                                 return;
 
                             this.writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
@@ -150,15 +148,15 @@ namespace VFSClient.Model
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
-                        await this.ProcessConnectCommand(service, command);
+                        await this.ProcessConnectCommand(service, user, command);
                         break;
 
                     case ConsoleCommandCode.Disconnect:
-                        await this.ProcessDisconnectCommand(service);
+                        await this.ProcessDisconnectCommand(service, user);
                         break;
 
                     default:
-                        await this.ProcessFSCommand(service, command);
+                        await this.ProcessFSCommand(service, user, command);
                         break;
                 }
             } // while

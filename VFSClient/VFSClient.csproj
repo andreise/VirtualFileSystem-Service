@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model.Security\User.cs" />
+    <Compile Include="Model.Security\UserCredentials.cs" />
     <Compile Include="Model\ConsoleCommandCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,7 +53,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Model.Security\UserInfo.cs" />
     <Compile Include="Model\VFSClient.cs" />
     <Compile Include="Model\VFSServiceCallbackHandler.cs" />
   </ItemGroup>
