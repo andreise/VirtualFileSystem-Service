@@ -6,6 +6,6 @@ namespace VFSClient
 
     static class Program
     {
-        static void Main(string[] args) => new VFSClient(ReadLine, WriteLine).Run().Wait();
+        static void Main(string[] args) => VFSClient.Run(ReadLine, WriteLine).Wait();
     }
 }

@@ -9,30 +9,14 @@ namespace VFSClient.Model
     using Security;
     using VFSServiceReference;
 
-    internal sealed class VFSClient
+    internal static class VFSClient
     {
 
-        private readonly Func<string> readLine;
-
-        private readonly Action<string> writeLine;
-
-        public VFSClient(Func<string> readLine, Action<string> writeLine)
-        {
-            if ((object)readLine == null)
-                throw new ArgumentNullException(nameof(readLine));
-
-            if ((object)writeLine == null)
-                throw new ArgumentNullException(nameof(writeLine));
-
-            this.readLine = readLine;
-            this.writeLine = writeLine;
-        }
-
-        private async Task ProcessConnectCommand(VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
+        private static async Task ProcessConnectCommand(Action<string> writeLine, VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
         {
             if (command.Parameters.Count == 0)
             {
-                this.writeLine("User name not specified.");
+                writeLine("User name not specified.");
                 return;
             }
 
@@ -45,7 +29,7 @@ namespace VFSClient.Model
                 if (!string.Equals(user.Credentials.UserName, userName, StringComparison.InvariantCultureIgnoreCase))
                     message += " Please disconnect current user before connect new user.";
 
-                this.writeLine(message);
+                writeLine(message);
                 return;
             }
 
@@ -57,20 +41,20 @@ namespace VFSClient.Model
 
                 user.Credentials = new UserCredentials(userName, response?.Token);
 
-                this.writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
-                this.writeLine(Invariant($"Total users: {response?.TotalUsers}."));
+                writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
+                writeLine(Invariant($"Total users: {response?.TotalUsers}."));
             }
             catch (FaultException<ConnectFault> e)
             {
-                this.writeLine(e.Message);
+                writeLine(e.Message);
             }
         }
 
-        private async Task ProcessDisconnectCommand(VFSServiceClient service, User user)
+        private static async Task ProcessDisconnectCommand(Action<string> writeLine, VFSServiceClient service, User user)
         {
             if ((object)user.Credentials == null)
             {
-                this.writeLine("Current user is undefined.");
+                writeLine("Current user is undefined.");
                 return;
             }
 
@@ -82,23 +66,23 @@ namespace VFSClient.Model
 
                 user.Credentials = null;
 
-                this.writeLine(Invariant($"User '{response?.UserName}' disconnected."));
+                writeLine(Invariant($"User '{response?.UserName}' disconnected."));
             }
             catch (FaultException<DisconnectFault> e)
             {
-                this.writeLine(e.Message);
+                writeLine(e.Message);
             }
             catch (AggregateException e) when (e.InnerException is FaultException<DisconnectFault>)
             {
-                this.writeLine(e.InnerException.Message);
+                writeLine(e.InnerException.Message);
             }
         }
 
-        private async Task ProcessFSCommand(VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
+        private static async Task ProcessFSCommand(Action<string> writeLine, VFSServiceClient service, User user, ConsoleCommand<ConsoleCommandCode> command)
         {
             if ((object)user.Credentials == null)
             {
-                this.writeLine("Please connect to the host before sending to it any other commands.");
+                writeLine("Please connect to the host before sending to it any other commands.");
                 return;
             }
 
@@ -108,23 +92,29 @@ namespace VFSClient.Model
                     new FSCommandRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token, CommandLine = command.CommandLine }
                 );
 
-                this.writeLine(response?.ResponseMessage);
+                writeLine(response?.ResponseMessage);
             }
             catch (FaultException<FSCommandFault> e)
             {
-                this.writeLine(e.Message);
+                writeLine(e.Message);
             }
             catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
             {
-                this.writeLine(e.InnerException.Message);
+                writeLine(e.InnerException.Message);
             }
         }
 
-        public async Task Run()
+        public static async Task Run(Func<string> readLine, Action<string> writeLine)
         {
-            this.writeLine("Virtual File System Client");
-            this.writeLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
-            this.writeLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
+            if ((object)readLine == null)
+                throw new ArgumentNullException(nameof(readLine));
+
+            if ((object)writeLine == null)
+                throw new ArgumentNullException(nameof(writeLine));
+
+            writeLine("Virtual File System Client");
+            writeLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
+            writeLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
             var user = new User();
 
@@ -142,7 +132,7 @@ namespace VFSClient.Model
                             if (data.UserName == user.Credentials.UserName)
                                 return;
 
-                            this.writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
+                            writeLine(Invariant($"User '{data.UserName}' performs command: {data.CommandLine}"));
                         }
                     )
                 )
@@ -150,7 +140,7 @@ namespace VFSClient.Model
 
             ConsoleCommand<ConsoleCommandCode> command;
             while (
-                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(this.readLine(), isCaseSensitive: false)) != null &&
+                (object)(command = ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false)) != null &&
                 command.CommandCode != ConsoleCommandCode.Exit
             )
             {
@@ -160,15 +150,15 @@ namespace VFSClient.Model
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
-                        await this.ProcessConnectCommand(service, user, command);
+                        await ProcessConnectCommand(writeLine, service, user, command);
                         break;
 
                     case ConsoleCommandCode.Disconnect:
-                        await this.ProcessDisconnectCommand(service, user);
+                        await ProcessDisconnectCommand(writeLine, service, user);
                         break;
 
                     default:
-                        await this.ProcessFSCommand(service, user, command);
+                        await ProcessFSCommand(writeLine, service, user, command);
                         break;
                 }
             } // while

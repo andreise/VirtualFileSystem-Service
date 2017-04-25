@@ -7,8 +7,6 @@ namespace VFSClient.Model
     internal sealed class VFSServiceCallbackHandler : IVFSServiceCallback
     {
 
-        public VFSClient Owner { get; }
-
         private readonly Action<FileSystemChangedData> handler;
 
         public VFSServiceCallbackHandler(Action<FileSystemChangedData> handler)
