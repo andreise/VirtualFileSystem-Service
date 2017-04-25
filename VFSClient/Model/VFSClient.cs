@@ -37,6 +37,18 @@ namespace VFSClient.Model
             }
 
             string userName = command.Parameters[0];
+
+            if ((object)user.Credentials != null)
+            {
+                string message = Invariant($"User '{user.Credentials.UserName}' already connected.");
+
+                if (!string.Equals(user.Credentials.UserName, userName, StringComparison.InvariantCultureIgnoreCase))
+                    message += " Please disconnect current user before connect new user.";
+
+                this.writeLine(message);
+                return;
+            }
+
             try
             {
                 var response = await service.ConnectAsync(
