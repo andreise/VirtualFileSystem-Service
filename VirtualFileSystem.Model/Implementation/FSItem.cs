@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VFSCommon;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -33,7 +34,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItemsInternal;
 
-        private readonly HashSet<string> lockedBy = new HashSet<string>();
+        private readonly HashSet<string> lockedBy = new HashSet<string>(UserNameCompareRules.Comparer);
 
         /// <summary>
         /// Validates name
@@ -69,7 +70,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
 
             if (this.lockedBy.Contains(userName))
-                throw new InvalidOperationException("File already locked by the specified user.");
+                throw new InvalidOperationException(Invariant($"File already locked by user '{userName}'."));
 
             this.lockedBy.Add(userName);
         }
@@ -93,7 +94,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
 
             if (!this.lockedBy.Contains(userName))
-                throw new InvalidOperationException("File is not locked by the specified user.");
+                throw new InvalidOperationException(Invariant($"File is not locked by user '{userName}'."));
 
             this.lockedBy.Remove(userName);
         }
