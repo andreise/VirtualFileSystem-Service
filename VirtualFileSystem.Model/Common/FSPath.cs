@@ -80,26 +80,26 @@ namespace VirtualFileSystem.Model
 
         public static bool IsValidVolumeChar(char c) => (c = FSItemNameCompareRules.NormalizeChar(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
 
-        public static bool IsValidVolumeName(string name) => (object)name != null && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
+        public static bool IsValidVolumeName(string name) => !(name is null) && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
-        public static bool IsAbsolutePath(string path) => (object)path != null && path.Length >= 2 && IsValidVolumeName(path.Substring(0, 2));
+        public static bool IsAbsolutePath(string path) => !(path is null) && path.Length >= 2 && IsValidVolumeName(path.Substring(0, 2));
 
         public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => c != item);
 
         public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => c != item);
 
-        public static bool IsValidFileSystemName(string name) => (object)name != null && name.Length <= MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidFileSystemName(string name) => !(name is null) && name.Length <= MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidDirectoryName(string name) => (object)name != null && name.Length <= MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidDirectoryName(string name) => !(name is null) && name.Length <= MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidFileName(string name) => (object)name != null && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
+        public static bool IsValidFileName(string name) => !(name is null) && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
         public static string CombinePath(string path1, string relativePath2)
         {
-            if ((object)path1 == null)
+            if (path1 is null)
                 path1 = string.Empty;
 
-            if ((object)relativePath2 == null)
+            if (relativePath2 is null)
                 relativePath2 = string.Empty;
 
             relativePath2 = relativePath2.Trim().TrimStart(GetPathSeparators());
@@ -122,7 +122,7 @@ namespace VirtualFileSystem.Model
 
         public static string[] SplitPath(string path)
         {
-            if ((object)path == null)
+            if (path is null)
                 return new string[0];
 
             string[] tempItems = path.Split(GetPathSeparators(), StringSplitOptions.RemoveEmptyEntries);

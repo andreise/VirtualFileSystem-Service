@@ -43,7 +43,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
         protected virtual void ValidateName(string name)
         {
-            if ((object)name == null)
+            if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
             if (string.IsNullOrWhiteSpace(name))
@@ -62,7 +62,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.File)
                 throw new InvalidOperationException("Item is not a file.");
 
-            if ((object)userName == null)
+            if (userName is null)
                 throw new ArgumentNullException(paramName: nameof(userName));
 
             if (string.IsNullOrWhiteSpace(userName))
@@ -86,7 +86,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.File)
                 throw new InvalidOperationException("Item is not a file.");
 
-            if ((object)userName == null)
+            if (userName is null)
                 throw new ArgumentNullException(paramName: nameof(userName));
 
             if (string.IsNullOrWhiteSpace(userName))
@@ -161,7 +161,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(directory.Name, item.Name)).FirstOrDefault();
 
-            if ((object)child == null)
+            if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
 
             if (child.Kind != FSItemKind.Directory)
@@ -190,7 +190,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(directory.Name, item.Name)).FirstOrDefault();
 
-            if ((object)child == null)
+            if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
 
             if (child.Kind != FSItemKind.Directory)
@@ -217,7 +217,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem child = this.childItemsInternal.Where(item => FSItemNameCompareRules.EqualNames(file.Name, item.Name)).FirstOrDefault();
 
-            if ((object)child == null)
+            if (child is null)
                 throw new InvalidOperationException("File with the specified name is not exists.");
 
             if (child.Kind != FSItemKind.File)
@@ -243,7 +243,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            if ((object)child == null)
+            if (child is null)
                 throw new ArgumentNullException(nameof(child));
 
             if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
@@ -272,7 +272,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            if ((object)child == null)
+            if (child is null)
                 throw new ArgumentNullException(nameof(child));
 
             if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)

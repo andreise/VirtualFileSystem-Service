@@ -25,10 +25,10 @@ namespace VirtualFileSystem.Model
             if ((object)x == (object)y)
                 return 0;
 
-            if ((object)x == null)
+            if (x is null)
                 return -1;
 
-            if ((object)y == null)
+            if (y is null)
                 return 1;
 
             return FSItemNameCompareRules.CompareNames(x.Name, y.Name);

@@ -22,7 +22,7 @@ namespace VirtualFileSystem.Model
             if ((object)x == (object)y)
                 return true;
 
-            if ((object)x == null || (object)y == null)
+            if (x is null || y is null)
                 return false;
 
             return FSItemNameCompareRules.EqualNames(x.Name, y.Name);
@@ -35,10 +35,10 @@ namespace VirtualFileSystem.Model
         /// <returns>Returns item hash code</returns>
         public int GetHashCode(IFSItem obj)
         {
-            if ((object)obj == null)
+            if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
 
-            if ((object)obj.Name == null)
+            if (obj.Name is null)
                 throw new ArgumentException(Invariant($"{nameof(obj.Name)} is null."), nameof(obj));
 
             return FSItemNameCompareRules.GetHashCode(obj.Name);
