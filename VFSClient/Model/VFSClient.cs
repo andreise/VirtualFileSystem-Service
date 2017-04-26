@@ -14,6 +14,22 @@ namespace VFSClient.Model
 
         private static bool EqualUserNames(string name1, string name2) => string.Equals(name1, name2, StringComparison.InvariantCultureIgnoreCase);
 
+        private static async Task ProcessCommandHelper<TFault>(Func<Task> handler, Action<string> writeLine) where TFault : BaseFault
+        {
+            try
+            {
+                await handler();
+            }
+            catch (FaultException<TFault> e)
+            {
+                writeLine(e.Message);
+            }
+            catch (AggregateException e) when (e.InnerException is FaultException<TFault>)
+            {
+                writeLine(e.InnerException.Message);
+            }
+        }
+
         private static async Task ProcessConnectCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if (command.Parameters.Count == 0)
@@ -35,21 +51,20 @@ namespace VFSClient.Model
                 return;
             }
 
-            try
-            {
-                var response = await service.ConnectAsync(
-                    new ConnectRequest() { UserName = userName }
-                );
+            await ProcessCommandHelper<ConnectFault>(
+                async () =>
+                {
+                    var response = await service.ConnectAsync(
+                        new ConnectRequest() { UserName = userName }
+                    );
 
-                user.SetCredentials(userName, response?.Token);
+                    user.SetCredentials(userName, response?.Token);
 
-                writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
-                writeLine(Invariant($"Total users: {response?.TotalUsers}."));
-            }
-            catch (FaultException<ConnectFault> e)
-            {
-                writeLine(e.Message);
-            }
+                    writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
+                    writeLine(Invariant($"Total users: {response?.TotalUsers}."));
+                },
+                writeLine
+            );
         }
 
         private static async Task ProcessDisconnectCommand(User user, VFSServiceClient service, Action<string> writeLine)
@@ -60,24 +75,19 @@ namespace VFSClient.Model
                 return;
             }
 
-            try
-            {
-                var response = await service.DisconnectAsync(
-                    new DisconnectRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token }
-                );
+            await ProcessCommandHelper<DisconnectFault>(
+                async () =>
+                {
+                    var response = await service.DisconnectAsync(
+                        new DisconnectRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token }
+                    );
 
-                user.ResetCredentials();
+                    user.ResetCredentials();
 
-                writeLine(Invariant($"User '{response?.UserName}' disconnected."));
-            }
-            catch (FaultException<DisconnectFault> e)
-            {
-                writeLine(e.Message);
-            }
-            catch (AggregateException e) when (e.InnerException is FaultException<DisconnectFault>)
-            {
-                writeLine(e.InnerException.Message);
-            }
+                    writeLine(Invariant($"User '{response?.UserName}' disconnected."));
+                },
+                writeLine
+            );
         }
 
         private static async Task ProcessFSCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
@@ -88,22 +98,17 @@ namespace VFSClient.Model
                 return;
             }
 
-            try
-            {
-                var response = await service.FSCommandAsync(
-                    new FSCommandRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token, CommandLine = command.CommandLine }
-                );
+            await ProcessCommandHelper<FSCommandFault>(
+                async () =>
+                {
+                    var response = await service.FSCommandAsync(
+                        new FSCommandRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token, CommandLine = command.CommandLine }
+                    );
 
-                writeLine(response?.ResponseMessage);
-            }
-            catch (FaultException<FSCommandFault> e)
-            {
-                writeLine(e.Message);
-            }
-            catch (AggregateException e) when (e.InnerException is FaultException<FSCommandFault>)
-            {
-                writeLine(e.InnerException.Message);
-            }
+                    writeLine(response?.ResponseMessage);
+                },
+                writeLine
+            );
         }
 
         private static void HandleCallback(FileSystemChangedData data, User user, Action<string> writeLine)
