@@ -11,7 +11,7 @@ namespace VFSClient.Model
 
         public VFSServiceCallbackHandler(Action<FileSystemChangedData> handler)
         {
-            if ((object)handler == null)
+            if (handler is null)
                 throw new ArgumentNullException(nameof(handler));
 
             this.handler = handler;

@@ -24,7 +24,7 @@ namespace VFSClient.Model
 
             string userName = command.Parameters[0];
 
-            if ((object)user.Credentials != null)
+            if (!(user.Credentials is null))
             {
                 string message = Invariant($"User '{user.Credentials.UserName}' already connected.");
 
@@ -54,7 +54,7 @@ namespace VFSClient.Model
 
         private static async Task ProcessDisconnectCommand(User user, VFSServiceClient service, Action<string> writeLine)
         {
-            if ((object)user.Credentials == null)
+            if (user.Credentials is null)
             {
                 writeLine("Current user is undefined.");
                 return;
@@ -82,7 +82,7 @@ namespace VFSClient.Model
 
         private static async Task ProcessFSCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
-            if ((object)user.Credentials == null)
+            if (user.Credentials is null)
             {
                 writeLine("Please connect to the host before sending to it any other commands.");
                 return;
@@ -108,10 +108,10 @@ namespace VFSClient.Model
 
         private static void HandleCallback(FileSystemChangedData data, User user, Action<string> writeLine)
         {
-            if ((object)data == null)
+            if (data is null)
                 return;
 
-            if ((object)user.Credentials == null)
+            if (user.Credentials is null)
                 return;
 
             if (EqualUserNames(data.UserName, user.Credentials.UserName))
@@ -122,10 +122,10 @@ namespace VFSClient.Model
 
         public static async Task Run(Func<string> readLine, Action<string> writeLine)
         {
-            if ((object)readLine == null)
+            if (readLine is null)
                 throw new ArgumentNullException(nameof(readLine));
 
-            if ((object)writeLine == null)
+            if (writeLine is null)
                 throw new ArgumentNullException(nameof(writeLine));
 
             writeLine("Virtual File System Client");
@@ -145,8 +145,7 @@ namespace VFSClient.Model
             ConsoleCommand<ConsoleCommandCode> command;
 
             while (
-                (object)(command = readCommand()) != null &&
-                command.CommandCode != ConsoleCommandCode.Exit
+                !((command = readCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
             )
             {
                 if (string.IsNullOrWhiteSpace(command.CommandLine))
