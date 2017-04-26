@@ -102,10 +102,10 @@ namespace VirtualFileSystem.Service.Model
 
         public ConnectResponse Connect(ConnectRequest request)
         {
-            if ((object)request == null)
+            if (request is null)
                 throw CreateConnectFaultException(null, Invariant($"{nameof(request)} is null."));
 
-            if ((object)request.UserName == null)
+            if (request.UserName is null)
                 throw CreateConnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
@@ -130,16 +130,16 @@ namespace VirtualFileSystem.Service.Model
 
         public DisconnectResponse Disconnect(DisconnectRequest request)
         {
-            if ((object)request == null)
+            if (request is null)
                 throw CreateDisconnectFaultException(null, Invariant($"{nameof(request)} is null."));
 
-            if ((object)request.UserName == null)
+            if (request.UserName is null)
                 throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
                 throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
 
-            if ((object)request.Token == null)
+            if (request.Token is null)
                 throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.Token)} is null."));
 
             if (request.Token.Length == 0)
@@ -263,16 +263,16 @@ namespace VirtualFileSystem.Service.Model
 
         public FSCommandResponse FSCommand(FSCommandRequest request)
         {
-            if ((object)request == null)
+            if (request is null)
                 throw CreateFSCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));
 
-            if ((object)request.UserName == null)
+            if (request.UserName is null)
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
 
-            if ((object)request.CommandLine == null)
+            if (request.CommandLine is null)
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
 
             if (string.IsNullOrEmpty(request.CommandLine))

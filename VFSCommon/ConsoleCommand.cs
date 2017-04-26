@@ -75,7 +75,7 @@ namespace VFSCommon
         /// <exception cref="ArgumentNullException">Throws if the command line is null</exception>
         public static ConsoleCommand Parse(string commandLine, bool isCaseSensitive)
         {
-            if ((object)commandLine == null)
+            if (commandLine is null)
                 throw new ArgumentNullException(nameof(commandLine));
 
             return ParseInternal(commandLine, isCaseSensitive);
@@ -89,7 +89,7 @@ namespace VFSCommon
         /// <returns>A parsed command instance or null if the command line is null</returns>
         public static ConsoleCommand ParseNullable(string commandLine, bool isCaseSensitive)
         {
-            if ((object)commandLine == null)
+            if (commandLine is null)
                 return null;
 
             return ParseInternal(commandLine, isCaseSensitive);
@@ -103,7 +103,7 @@ namespace VFSCommon
         /// <exception cref="ArgumentNullException">Throws if the specified command is null</exception>
         public bool IsCommand(string command)
         {
-            if ((object)command == null)
+            if (command is null)
                 throw new ArgumentNullException(nameof(command));
 
             return string.Equals(

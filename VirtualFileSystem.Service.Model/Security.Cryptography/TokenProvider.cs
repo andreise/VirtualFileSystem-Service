@@ -38,7 +38,7 @@ namespace VirtualFileSystem.Service.Model.Security.Cryptography
 
         public void ValidateToken(byte[] token)
         {
-            if ((object)token == null)
+            if (token is null)
                 throw new ArgumentNullException(paramName: nameof(token));
 
             if (token.Length == 0)

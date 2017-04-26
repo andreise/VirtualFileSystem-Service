@@ -21,7 +21,7 @@ namespace VirtualFileSystem.Service.WindowsService
 
         private void CloseServiceHost()
         {
-            if ((object)this.serviceHost == null)
+            if (this.serviceHost is null)
                 return;
 
             switch (this.serviceHost.State)
