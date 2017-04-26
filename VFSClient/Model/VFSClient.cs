@@ -41,7 +41,7 @@ namespace VFSClient.Model
                     new ConnectRequest() { UserName = userName }
                 );
 
-                user.Credentials = new UserCredentials(userName, response?.Token);
+                user.SetCredentials(userName, response?.Token);
 
                 writeLine(Invariant($"User '{response?.UserName}' connected successfully."));
                 writeLine(Invariant($"Total users: {response?.TotalUsers}."));
@@ -66,7 +66,7 @@ namespace VFSClient.Model
                     new DisconnectRequest() { UserName = user.Credentials.UserName, Token = user.Credentials.Token }
                 );
 
-                user.Credentials = null;
+                user.ResetCredentials();
 
                 writeLine(Invariant($"User '{response?.UserName}' disconnected."));
             }
