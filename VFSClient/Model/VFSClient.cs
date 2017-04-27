@@ -42,13 +42,11 @@ namespace VFSClient.Model
 
             if (!(user.Credentials is null))
             {
-                string message = Invariant($"User '{user.Credentials.UserName}' already connected.");
-
                 if (!EqualUserNames(user.Credentials.UserName, userName))
-                    message += " Please disconnect current user before connect new user.";
-
-                writeLine(message);
-                return;
+                {
+                    writeLine(Invariant($"Please disconnect current user ('{user.Credentials.UserName}') before connect new user."));
+                    return;
+                }
             }
 
             await ProcessCommandHelper<ConnectFault>(
