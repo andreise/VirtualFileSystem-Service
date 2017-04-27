@@ -117,8 +117,8 @@ namespace VirtualFileSystem.Service.Model
             {
                 if (this.IsActualUserSession(request.UserName))
                     throw CreateConnectFaultException(request.UserName, Invariant($"User '{request.UserName}' already connected."));
-                else
-                    this.connectedUsers.Remove(request.UserName);
+
+                this.connectedUsers.Remove(request.UserName);
             }
 
             byte[] token = this.TokenProvider.GenerateToken();
