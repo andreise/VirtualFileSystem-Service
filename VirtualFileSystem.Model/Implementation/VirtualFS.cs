@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using VFSCommon;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -434,7 +435,7 @@ namespace VirtualFileSystem.Model
                     builder.Append(" [FILE]");
                     if (item.LockedBy.Count > 0)
                     {
-                        var lockedBy = item.LockedBy.OrderBy(userName => userName, StringComparer.InvariantCulture);
+                        var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
                         builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
                     }
                 }
