@@ -32,13 +32,6 @@ namespace VirtualFileSystem.Model
         public static StringComparer Comparer => defaultInstance.Value;
 
         /// <summary>
-        /// Normalizes Item Name Char
-        /// </summary>
-        /// <param name="name">Item Name Char</param>
-        /// <returns>Returns a normalized item name char</returns>
-        public static char NormalizeChar(char c) => char.ToUpperInvariant(c);
-
-        /// <summary>
         /// Static constructor
         /// </summary>
         /// <remarks>
