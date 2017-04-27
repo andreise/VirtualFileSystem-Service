@@ -25,7 +25,7 @@ namespace VirtualFileSystem.Model
             if (x is null || y is null)
                 return false;
 
-            return FSItemNameComparerProvider.Comparer.Equals(x.Name, y.Name);
+            return FSItemNameComparerProvider.Default.Equals(x.Name, y.Name);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace VirtualFileSystem.Model
             if (obj.Name is null)
                 throw new ArgumentException(Invariant($"{nameof(obj.Name)} is null."), nameof(obj));
 
-            return FSItemNameComparerProvider.Comparer.GetHashCode(obj.Name);
+            return FSItemNameComparerProvider.Default.GetHashCode(obj.Name);
         }
 
         private static readonly Lazy<FSItemEqualityComparer> defaultInstance = new Lazy<FSItemEqualityComparer>(() => new FSItemEqualityComparer());

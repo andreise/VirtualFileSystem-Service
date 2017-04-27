@@ -1,13 +1,12 @@
 ﻿using System;
-using VFSCommon;
 
-namespace VirtualFileSystem.Model
+namespace VFSCommon
 {
 
     /// <summary>
-    /// File System Item Name Comparer Provider
+    /// User Name Comparer Provider
     /// </summary>
-    internal static class FSItemNameComparerProvider
+    public static class UserNameComparerProvider
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(
@@ -15,7 +14,7 @@ namespace VirtualFileSystem.Model
         );
 
         /// <summary>
-        /// File System Item Name Comparer
+        /// User Name Comparer
         /// </summary>
         public static StringComparer Default => defaultInstance.Value;
 
@@ -25,7 +24,7 @@ namespace VirtualFileSystem.Model
         /// <remarks>
         /// Needs for the guaranted static fields initialization in a multithreading work
         /// </remarks>
-        static FSItemNameComparerProvider()
+        static UserNameComparerProvider()
         {
         }
 

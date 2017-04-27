@@ -39,8 +39,9 @@
     <Compile Include="ConsoleCommand.cs" />
     <Compile Include="ConsoleCommandOfT.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="UserNameComparerProvider.cs" />
+    <Compile Include="NameComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserNameCompareRules.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

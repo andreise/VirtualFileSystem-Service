@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
             if (y is null)
                 return 1;
 
-            return FSItemNameComparerProvider.Comparer.Compare(x.Name, y.Name);
+            return FSItemNameComparerProvider.Default.Compare(x.Name, y.Name);
         }
 
         private static readonly Lazy<FSItemComparer> defaultInstance = new Lazy<FSItemComparer>(() => new FSItemComparer());

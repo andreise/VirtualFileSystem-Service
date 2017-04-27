@@ -34,7 +34,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItemsInternal;
 
-        private readonly HashSet<string> lockedBy = new HashSet<string>(UserNameCompareRules.Comparer);
+        private readonly HashSet<string> lockedBy = new HashSet<string>(UserNameComparerProvider.Default);
 
         /// <summary>
         /// Validates name
@@ -114,7 +114,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name);
 
-            if (this.childItemsInternal.Any(item => FSItemNameComparerProvider.Comparer.Equals(directory.Name, item.Name)))
+            if (this.childItemsInternal.Any(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             directory.Parent = this;
@@ -137,7 +137,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem file = new FSFile(name);
 
-            if (this.childItemsInternal.Any(item => FSItemNameComparerProvider.Comparer.Equals(file.Name, item.Name)))
+            if (this.childItemsInternal.Any(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             file.Parent = this;
@@ -160,7 +160,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name); // validate name
 
-            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Comparer.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -189,7 +189,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name); // validate name
 
-            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Comparer.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -216,7 +216,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem file = new FSFile(name); // validate name
 
-            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Comparer.Equals(file.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.childItemsInternal.Where(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("File with the specified name is not exists.");

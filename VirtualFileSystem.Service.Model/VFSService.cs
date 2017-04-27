@@ -28,7 +28,7 @@ namespace VirtualFileSystem.Service.Model
 
         private TokenProvider TokenProvider => TokenProvider.Default;
 
-        private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>(UserNameCompareRules.Comparer);
+        private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
 
         private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
