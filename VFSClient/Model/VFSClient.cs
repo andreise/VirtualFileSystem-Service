@@ -12,7 +12,7 @@ namespace VFSClient.Model
     internal static class VFSClient
     {
 
-        private static bool EqualUserNames(string name1, string name2) => string.Equals(name1, name2, UserNameCompareRules.Comparison);
+        private static bool EqualUserNames(string name1, string name2) => UserNameCompareRules.Comparer.Equals(name1, name2);
 
         private static async Task ProcessCommandHelper<TFault>(Func<Task> handler, Action<string> writeLine) where TFault : BaseFault
         {
