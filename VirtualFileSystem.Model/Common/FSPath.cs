@@ -78,7 +78,7 @@ namespace VirtualFileSystem.Model
 
         public static bool IsPathSeparator(char c) => PathSeparators.Contains(c);
 
-        public static bool IsValidVolumeChar(char c) => (c = FSItemNameCompareRules.NormalizeChar(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
+        public static bool IsValidVolumeChar(char c) => (c = FSItemNameComparerProvider.NormalizeChar(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
 
         public static bool IsValidVolumeName(string name) => !(name is null) && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
