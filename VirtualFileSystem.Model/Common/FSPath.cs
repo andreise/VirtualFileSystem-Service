@@ -40,27 +40,19 @@ namespace VirtualFileSystem.Model
             return names;
         }
 
-        private static char[] GetPathSeparators() => new char[] { PathSeparator, AltPathSeparator };
+        public static IReadOnlyList<char> PathSeparators { get; } = new ReadOnlyCollection<char>(new char[] { PathSeparator, AltPathSeparator });
 
-        private static readonly Lazy<IReadOnlyList<char>> validVolumeChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(GetValidVolumeChars()));
+        public static IReadOnlyList<char> ValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars());
 
-        private static readonly Lazy<IReadOnlyList<string>> validVolumeNames = new Lazy<IReadOnlyList<string>>(() => new ReadOnlyCollection<string>(GetValidVolumeNames()));
+        public static IReadOnlyList<string> ValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames());
 
         private static readonly Lazy<IReadOnlyList<char>> invalidPathChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidPathChars()));
 
         private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
 
-        private static readonly Lazy<IReadOnlyList<char>> pathSeparators = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(GetPathSeparators()));
-
-        public static IReadOnlyList<string> ValidVolumeNames => validVolumeNames.Value;
-
-        public static IReadOnlyList<char> ValidVolumeChars => validVolumeChars.Value;
-
         public static IReadOnlyList<char> InvalidPathChars => invalidPathChars.Value;
 
         public static IReadOnlyList<char> InvalidFileNameChars => invalidFileNameChars.Value;
-
-        public static IReadOnlyList<char> PathSeparators => pathSeparators.Value;
 
         public const char VolumeSeparator = ':';
 
@@ -102,11 +94,11 @@ namespace VirtualFileSystem.Model
             if (relativePath2 is null)
                 relativePath2 = string.Empty;
 
-            relativePath2 = relativePath2.Trim().TrimStart(GetPathSeparators());
+            relativePath2 = relativePath2.Trim().TrimStart(PathSeparators.ToArray());
             if (IsAbsolutePath(relativePath2))
                 return relativePath2;
 
-            path1 = path1.Trim().TrimEnd(GetPathSeparators());
+            path1 = path1.Trim().TrimEnd(PathSeparators.ToArray());
 
             if (path1.Length == 0 && relativePath2.Length == 0)
                 return string.Empty;
@@ -125,7 +117,7 @@ namespace VirtualFileSystem.Model
             if (path is null)
                 return new string[0];
 
-            string[] tempItems = path.Split(GetPathSeparators(), StringSplitOptions.RemoveEmptyEntries);
+            string[] tempItems = path.Split(PathSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
             List<string> items = new List<string>(tempItems.Length);
 
