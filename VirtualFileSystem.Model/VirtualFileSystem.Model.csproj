@@ -47,6 +47,7 @@
     <Compile Include="Common\FSItemKind.cs" />
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
     <Compile Include="Common\FSPath.cs" />
+    <Compile Include="Common\FSPath.Consts.cs" />
     <Compile Include="Implementation\FSDirectory.cs" />
     <Compile Include="Implementation\FSFile.cs" />
     <Compile Include="Implementation\FSItem.cs" />

@@ -34,7 +34,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid directory name."), nameof(name));
         }
 
-        private static string DefaultVolumePath => FSPath.ValidVolumeNames[0];
+        private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
 
         /// <summary>
         /// Constructor

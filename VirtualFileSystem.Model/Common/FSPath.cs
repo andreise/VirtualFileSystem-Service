@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 
 namespace VirtualFileSystem.Model
@@ -10,81 +8,36 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Path Utils
     /// </summary>
-    internal static class FSPath
+    internal static partial class FSPath
     {
 
-        private static char[] GetValidVolumeChars()
-        {
-            const char firstChar = 'C';
-            const char lastChar = 'Z';
+        // Path Separator Validators
 
-            char[] chars = new char[(lastChar - firstChar) + 1];
+        public static bool IsPathSeparator(char c) => Consts.PathSeparators.Contains(c);
 
-            chars[0] = firstChar;
-            for (int i = 0; i < chars.Length - 1; i++)
-            {
-                chars[i + 1] = chars[i];
-                chars[i + 1]++;
-            }
+        // Volume Name Validators
 
-            return chars;
-        }
+        public static bool IsVolumeSeparator(char c) => c == Consts.VolumeSeparator;
 
-        private static string[] GetValidVolumeNames()
-        {
-            string[] names = new string[ValidVolumeChars.Count];
-
-            for (int i = 0; i < names.Length; i++)
-                names[i] = new string(new char[] { ValidVolumeChars[i], VolumeSeparator });
-
-            return names;
-        }
-
-        public static IReadOnlyList<char> PathSeparators { get; } = new ReadOnlyCollection<char>(new char[] { PathSeparator, AltPathSeparator });
-
-        public static IReadOnlyList<char> ValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars());
-
-        public static IReadOnlyList<string> ValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames());
-
-        private static readonly Lazy<IReadOnlyList<char>> invalidPathChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidPathChars()));
-
-        private static readonly Lazy<IReadOnlyList<char>> invalidFileNameChars = new Lazy<IReadOnlyList<char>>(() => new ReadOnlyCollection<char>(Path.GetInvalidFileNameChars()));
-
-        public static IReadOnlyList<char> InvalidPathChars => invalidPathChars.Value;
-
-        public static IReadOnlyList<char> InvalidFileNameChars => invalidFileNameChars.Value;
-
-        public const char VolumeSeparator = ':';
-
-        public const char PathSeparator = '\\';
-
-        public const char AltPathSeparator = '/';
-
-        public const int MaxFileSystemNameLength = 255;
-
-        public const int MaxDirectoryNameLength = 255;
-
-        public const int MaxFileNameLength = 255;
-
-        public static bool IsVolumeSeparator(char c) => c == VolumeSeparator;
-
-        public static bool IsPathSeparator(char c) => PathSeparators.Contains(c);
-
-        public static bool IsValidVolumeChar(char c) => (c = char.ToUpperInvariant(c)) >= ValidVolumeChars[0] && c <= ValidVolumeChars[ValidVolumeChars.Count - 1];
+        public static bool IsValidVolumeChar(char c) => (c = char.ToUpperInvariant(c)) >= Consts.ValidVolumeChars[0] && c <= Consts.ValidVolumeChars[Consts.ValidVolumeChars.Count - 1];
 
         public static bool IsValidVolumeName(string name) => !(name is null) && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
+        // Other Path Validators
+
         public static bool IsAbsolutePath(string path) => !(path is null) && path.Length >= 2 && IsValidVolumeName(path.Substring(0, 2));
 
-        public static bool IsValidPathChar(char c) => InvalidPathChars.All(item => c != item);
+        public static bool IsValidPathChar(char c) => Consts.InvalidPathChars.All(item => c != item);
 
-        public static bool IsValidFileNameChar(char c) => InvalidFileNameChars.All(item => c != item);
+        public static bool IsValidFileNameChar(char c) => Consts.InvalidFileNameChars.All(item => c != item);
 
-        public static bool IsValidFileSystemName(string name) => !(name is null) && name.Length <= MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidFileSystemName(string name) => !(name is null) && name.Length <= Consts.MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidDirectoryName(string name) => !(name is null) && name.Length <= MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidDirectoryName(string name) => !(name is null) && name.Length <= Consts.MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidFileName(string name) => !(name is null) && name.Length <= MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
+        public static bool IsValidFileName(string name) => !(name is null) && name.Length <= Consts.MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
+
+        // Path Combining/Splitting
 
         public static string CombinePath(string path1, string relativePath2)
         {
@@ -94,11 +47,11 @@ namespace VirtualFileSystem.Model
             if (relativePath2 is null)
                 relativePath2 = string.Empty;
 
-            relativePath2 = relativePath2.Trim().TrimStart(PathSeparators.ToArray());
+            relativePath2 = relativePath2.Trim().TrimStart(Consts.PathSeparators.ToArray());
             if (IsAbsolutePath(relativePath2))
                 return relativePath2;
 
-            path1 = path1.Trim().TrimEnd(PathSeparators.ToArray());
+            path1 = path1.Trim().TrimEnd(Consts.PathSeparators.ToArray());
 
             if (path1.Length == 0 && relativePath2.Length == 0)
                 return string.Empty;
@@ -109,7 +62,7 @@ namespace VirtualFileSystem.Model
             if (relativePath2.Length == 0)
                 return path1;
 
-            return path1 + new string(PathSeparator, 1) + relativePath2;
+            return path1 + new string(Consts.PathSeparator, 1) + relativePath2;
         }
 
         public static string[] SplitPath(string path)
@@ -117,7 +70,7 @@ namespace VirtualFileSystem.Model
             if (path is null)
                 return new string[0];
 
-            string[] tempItems = path.Split(PathSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] tempItems = path.Split(Consts.PathSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
             List<string> items = new List<string>(tempItems.Length);
 
