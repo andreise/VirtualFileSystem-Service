@@ -10,7 +10,7 @@ namespace VFSCommon
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(
-            () => new NameComparer(StringComparer.OrdinalIgnoreCase)
+            () => new NameComparer(name => name?.Trim(), StringComparer.OrdinalIgnoreCase)
         );
 
         /// <summary>

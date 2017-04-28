@@ -6,17 +6,21 @@ namespace VFSCommon
     public sealed class NameComparer : StringComparer
     {
 
+        private readonly Func<string, string> normalizeName;
+
         private readonly StringComparer internalComparer;
 
-        public NameComparer(StringComparer internalComparer = null) => this.internalComparer = internalComparer ?? Ordinal;
+        public NameComparer(Func<string, string> normalizeName = null, StringComparer internalComparer = null)
+        {
+            this.normalizeName = normalizeName ?? (name => name);
+            this.internalComparer = internalComparer ?? Ordinal;
+        }
 
-        private static string NormalizeName(string name) => name?.Trim();
+        public override int Compare(string x, string y) => this.internalComparer.Compare(normalizeName(x), normalizeName(y));
 
-        public override int Compare(string x, string y) => this.internalComparer.Compare(NormalizeName(x), NormalizeName(y));
+        public override bool Equals(string x, string y) => this.internalComparer.Equals(normalizeName(x), normalizeName(y));
 
-        public override bool Equals(string x, string y) => this.internalComparer.Equals(NormalizeName(x), NormalizeName(y));
-
-        public override int GetHashCode(string obj) => this.internalComparer.GetHashCode(NormalizeName(obj));
+        public override int GetHashCode(string obj) => this.internalComparer.GetHashCode(normalizeName(obj));
 
     }
 
