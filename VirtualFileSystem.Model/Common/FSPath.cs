@@ -37,10 +37,10 @@ namespace VirtualFileSystem.Model
             );
 
         public static bool IsValidPathChar(char c) =>
-            Consts.InvalidPathChars.All(item => c != item);
+            !Consts.InvalidPathChars.Contains(c);
 
         public static bool IsValidFileNameChar(char c) =>
-            Consts.InvalidFileNameChars.All(item => c != item);
+            !Consts.InvalidFileNameChars.Contains(c);
 
         public static bool IsValidFileSystemName(string name) =>
             !(name is null) && name.Length <= Consts.MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
