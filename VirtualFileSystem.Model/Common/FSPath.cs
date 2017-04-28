@@ -13,31 +13,43 @@ namespace VirtualFileSystem.Model
 
         // Path Separator Validators
 
-        public static bool IsPathSeparator(char c) => Consts.PathSeparators.Contains(c);
+        public static bool IsPathSeparator(char c) =>
+            Consts.PathSeparators.Contains(c);
 
         // Volume Name Validators
 
-        public static bool IsVolumeSeparator(char c) => c == Consts.VolumeSeparator;
+        public static bool IsVolumeSeparator(char c) =>
+            c == Consts.VolumeSeparator;
 
         public static bool IsValidVolumeChar(char c) =>
-            c >= Consts.ValidVolumeChars[0] && c <= Consts.ValidVolumeChars[Consts.ValidVolumeChars.Count - 1] ||
-            c >= Consts.AltValidVolumeChars[0] && c <= Consts.AltValidVolumeChars[Consts.AltValidVolumeChars.Count - 1];
+            Consts.ValidVolumeChars.Contains(c) || Consts.AltValidVolumeChars.Contains(c);
 
-        public static bool IsValidVolumeName(string name) => !(name is null) && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
+        public static bool IsValidVolumeName(string name) =>
+            !(name is null) && (Consts.ValidVolumeNames.Contains(name) || Consts.AltValidVolumeNames.Contains(name));
 
         // Other Path Validators
 
-        public static bool IsAbsolutePath(string path) => !(path is null) && path.Length >= 2 && IsValidVolumeName(path.Substring(0, 2));
+        public static bool IsAbsolutePath(string path) =>
+            !(path is null) &&
+            new IReadOnlyList<string>[] { Consts.ValidVolumeNames, Consts.AltValidVolumeNames }
+            .Any(
+                volumes => volumes.Any(volume => path.StartsWith(volume, StringComparison.Ordinal))
+            );
 
-        public static bool IsValidPathChar(char c) => Consts.InvalidPathChars.All(item => c != item);
+        public static bool IsValidPathChar(char c) =>
+            Consts.InvalidPathChars.All(item => c != item);
 
-        public static bool IsValidFileNameChar(char c) => Consts.InvalidFileNameChars.All(item => c != item);
+        public static bool IsValidFileNameChar(char c) =>
+            Consts.InvalidFileNameChars.All(item => c != item);
 
-        public static bool IsValidFileSystemName(string name) => !(name is null) && name.Length <= Consts.MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidFileSystemName(string name) =>
+            !(name is null) && name.Length <= Consts.MaxFileSystemNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidDirectoryName(string name) => !(name is null) && name.Length <= Consts.MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
+        public static bool IsValidDirectoryName(string name) =>
+            !(name is null) && name.Length <= Consts.MaxDirectoryNameLength && name.All(c => IsValidPathChar(c));
 
-        public static bool IsValidFileName(string name) => !(name is null) && name.Length <= Consts.MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
+        public static bool IsValidFileName(string name) =>
+            !(name is null) && name.Length <= Consts.MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
 
         // Path Combining/Splitting
 
