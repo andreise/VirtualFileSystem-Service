@@ -37,11 +37,8 @@ namespace VirtualFileSystem.Model
 
             public const char VolumeSeparator = ':';
 
-            private static char[] GetValidVolumeChars()
+            private static char[] GetValidVolumeChars(char firstChar, char lastChar)
             {
-                const char firstChar = 'C';
-                const char lastChar = 'Z';
-
                 char[] chars = new char[(lastChar - firstChar) + 1];
 
                 chars[0] = firstChar;
@@ -54,19 +51,23 @@ namespace VirtualFileSystem.Model
                 return chars;
             }
 
-            public static IReadOnlyList<char> ValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars());
+            public static IReadOnlyList<char> ValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars('C', 'Z'));
 
-            private static string[] GetValidVolumeNames()
+            public static IReadOnlyList<char> AltValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars('c', 'z'));
+
+            private static string[] GetValidVolumeNames(IReadOnlyList<char> validVolumeChars)
             {
-                string[] names = new string[ValidVolumeChars.Count];
+                string[] names = new string[validVolumeChars.Count];
 
                 for (int i = 0; i < names.Length; i++)
-                    names[i] = new string(new char[] { ValidVolumeChars[i], VolumeSeparator });
+                    names[i] = new string(new char[] { validVolumeChars[i], VolumeSeparator });
 
                 return names;
             }
 
-            public static IReadOnlyList<string> ValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames());
+            public static IReadOnlyList<string> ValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames(ValidVolumeChars));
+
+            public static IReadOnlyList<string> AltValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames(AltValidVolumeChars));
 
             // Invalid Path/FileName Chars
 

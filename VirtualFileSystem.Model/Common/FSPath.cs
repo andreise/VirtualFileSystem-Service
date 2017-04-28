@@ -19,7 +19,9 @@ namespace VirtualFileSystem.Model
 
         public static bool IsVolumeSeparator(char c) => c == Consts.VolumeSeparator;
 
-        public static bool IsValidVolumeChar(char c) => (c = char.ToUpperInvariant(c)) >= Consts.ValidVolumeChars[0] && c <= Consts.ValidVolumeChars[Consts.ValidVolumeChars.Count - 1];
+        public static bool IsValidVolumeChar(char c) =>
+            c >= Consts.ValidVolumeChars[0] && c <= Consts.ValidVolumeChars[Consts.ValidVolumeChars.Count - 1] ||
+            c >= Consts.AltValidVolumeChars[0] && c <= Consts.AltValidVolumeChars[Consts.AltValidVolumeChars.Count - 1];
 
         public static bool IsValidVolumeName(string name) => !(name is null) && name.Length == 2 && IsValidVolumeChar(name[0]) && IsVolumeSeparator(name[1]);
 
