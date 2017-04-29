@@ -415,7 +415,7 @@ namespace VirtualFileSystem.Model
                     itemParent = itemParent.Parent;
                 }
 
-                if (itemGeneration > 0)
+                if (itemGeneration > 1)
                 {
                     var indent = new StringBuilder(2 * itemGeneration);
                     for (int i = 0; i < itemGeneration; i++)
