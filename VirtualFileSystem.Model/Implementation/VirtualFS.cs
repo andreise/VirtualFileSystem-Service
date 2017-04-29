@@ -36,14 +36,18 @@ namespace VirtualFileSystem.Model
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
 
+        private readonly bool printTreeRoot;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="name">File System Name</param>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public VirtualFS(string name) : base(FSItemKind.FileSystem, name)
+        public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
         {
+            this.printTreeRoot = printTreeRoot;
+
             IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
             this.AddChild(defaultVolume);
         }
@@ -399,9 +403,9 @@ namespace VirtualFileSystem.Model
             currentDirectory, sourcePath, destPath, move: true
         );
 
-        private static void PrintTreeHelper(IFSItem item, StringBuilder builder)
+        private void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
-            if (item.Kind != FSItemKind.FileSystem)
+            if (item.Kind != FSItemKind.FileSystem || this.printTreeRoot)
             {
                 if (builder.Length > 0)
                     builder.AppendLine();
@@ -415,7 +419,7 @@ namespace VirtualFileSystem.Model
                     itemParent = itemParent.Parent;
                 }
 
-                if (itemGeneration > 1)
+                if (itemGeneration > (this.printTreeRoot ? 0 : 1))
                 {
                     var indent = new StringBuilder(2 * itemGeneration);
                     for (int i = 0; i < itemGeneration; i++)
