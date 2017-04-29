@@ -425,7 +425,11 @@ namespace VirtualFileSystem.Model
                     builder.AppendLine();
 
                 int itemLevel = GetItemLevel(item);
-                if (itemLevel > (this.printTreeRoot ? 0 : 1))
+
+                if (!this.printTreeRoot)
+                    itemLevel--;
+
+                if (itemLevel > 0)
                 {
                     var indent = new StringBuilder(2 * itemLevel);
                     for (int i = 0; i < itemLevel; i++)
