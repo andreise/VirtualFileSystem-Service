@@ -27,7 +27,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public virtual IFSItem Parent { get; set; }
 
-        protected internal readonly HashSet<IFSItem> childItemsInternal = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
+        protected readonly HashSet<IFSItem> childItemsInternal = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
 
         /// <summary>
         /// Child Items
