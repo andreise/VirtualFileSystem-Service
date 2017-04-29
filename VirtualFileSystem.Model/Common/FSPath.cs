@@ -25,12 +25,12 @@ namespace VirtualFileSystem.Model
             Consts.ValidVolumeChars.Contains(c) || Consts.AltValidVolumeChars.Contains(c);
 
         public static bool IsValidVolumeName(string name) =>
-            !(name is null) && (Consts.ValidVolumeNames.Contains(name) || Consts.AltValidVolumeNames.Contains(name));
+            !string.IsNullOrEmpty(name) && (Consts.ValidVolumeNames.Contains(name) || Consts.AltValidVolumeNames.Contains(name));
 
         // Other Path Validators
 
         public static bool IsAbsolutePath(string path) =>
-            !(path is null) &&
+            !string.IsNullOrEmpty(path) &&
             new IReadOnlyList<string>[] { Consts.ValidVolumeNames, Consts.AltValidVolumeNames }
             .Any(
                 volumes => volumes.Any(volume => path.StartsWith(volume, StringComparison.Ordinal))
@@ -42,14 +42,17 @@ namespace VirtualFileSystem.Model
         public static bool IsValidFileNameChar(char c) =>
             !Consts.InvalidFileNameChars.Contains(c);
 
+        private static bool IsValidName(string name, int maxLength, Func<char, bool> isValidChar) =>
+            !string.IsNullOrEmpty(name) && name.Length <= maxLength && name.All(isValidChar);
+
         public static bool IsValidFileSystemName(string name) =>
-            !(name is null) && name.Length <= Consts.MaxFileSystemNameLength && name.All(c => IsValidFileNameChar(c));
+            IsValidName(name, Consts.MaxFileSystemNameLength, IsValidFileNameChar);
 
         public static bool IsValidDirectoryName(string name) =>
-            !(name is null) && name.Length <= Consts.MaxDirectoryNameLength && name.All(c => IsValidFileNameChar(c));
+            IsValidName(name, Consts.MaxDirectoryNameLength, IsValidFileNameChar);
 
         public static bool IsValidFileName(string name) =>
-            !(name is null) && name.Length <= Consts.MaxFileNameLength && name.All(c => IsValidFileNameChar(c));
+            IsValidName(name, Consts.MaxFileNameLength, IsValidFileNameChar);
 
         // Path Combining/Splitting
 
