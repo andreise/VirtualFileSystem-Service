@@ -403,6 +403,20 @@ namespace VirtualFileSystem.Model
             currentDirectory, sourcePath, destPath, move: true
         );
 
+        private static int GetItemLevel(IFSItem item)
+        {
+            int itemLevel = 0;
+
+            IFSItem itemParent = item.Parent;
+            while (!(itemParent is null))
+            {
+                itemLevel++;
+                itemParent = itemParent.Parent;
+            }
+
+            return itemLevel;
+        }
+
         private void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
             if (item.Kind != FSItemKind.FileSystem || this.printTreeRoot)
@@ -410,19 +424,11 @@ namespace VirtualFileSystem.Model
                 if (builder.Length > 0)
                     builder.AppendLine();
 
-                int itemGeneration = 0;
-
-                IFSItem itemParent = item.Parent;
-                while (!(itemParent is null))
+                int itemLevel = GetItemLevel(item);
+                if (itemLevel > (this.printTreeRoot ? 0 : 1))
                 {
-                    itemGeneration++;
-                    itemParent = itemParent.Parent;
-                }
-
-                if (itemGeneration > (this.printTreeRoot ? 0 : 1))
-                {
-                    var indent = new StringBuilder(2 * itemGeneration);
-                    for (int i = 0; i < itemGeneration; i++)
+                    var indent = new StringBuilder(2 * itemLevel);
+                    for (int i = 0; i < itemLevel; i++)
                         indent.Append("| ");
                     indent[indent.Length - 1] = '_';
                     builder.Append(indent.ToString());
@@ -430,18 +436,20 @@ namespace VirtualFileSystem.Model
 
                 builder.Append(item.Name);
 
-                if (item.Kind == FSItemKind.Directory)
+                switch (item.Kind)
                 {
-                    builder.Append(" [DIR]");
-                }
-                else if (item.Kind == FSItemKind.File)
-                {
-                    builder.Append(" [FILE]");
-                    if (item.LockedBy.Count > 0)
-                    {
-                        var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
-                        builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
-                    }
+                    case FSItemKind.Directory:
+                        builder.Append(" [DIR]");
+                        break;
+
+                    case FSItemKind.File:
+                        builder.Append(" [FILE]");
+                        if (item.LockedBy.Count > 0)
+                        {
+                            var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
+                            builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                        }
+                        break;
                 }
             }
 
