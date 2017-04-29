@@ -21,7 +21,7 @@ namespace VirtualFileSystem.Model
             base.ValidateName(name);
 
             if (!FSPath.IsValidFileName(name))
-                throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid file name."), nameof(name));
+                throw new ArgumentException(Invariant($"The '{name}' is not a valid file name."), nameof(name));
         }
 
         /// <summary>

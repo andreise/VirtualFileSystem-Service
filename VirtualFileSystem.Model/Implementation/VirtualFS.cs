@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
             base.ValidateName(name);
 
             if (!FSPath.IsValidFileSystemName(name))
-                throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid directory name."), nameof(name));
+                throw new ArgumentException(Invariant($"The '{name}' is not a valid file system name."), nameof(name));
         }
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];

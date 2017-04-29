@@ -82,7 +82,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentNullException(paramName: nameof(userName));
 
             if (string.IsNullOrWhiteSpace(userName))
-                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
+                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{nameof(userName)} is empty."));
 
             if (this.lockedBy.Contains(userName))
                 throw new InvalidOperationException(Invariant($"File already locked by user '{userName}'."));
@@ -106,7 +106,7 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentNullException(paramName: nameof(userName));
 
             if (string.IsNullOrWhiteSpace(userName))
-                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{userName} is empty."));
+                throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{nameof(userName)} is empty."));
 
             if (!this.lockedBy.Contains(userName))
                 throw new InvalidOperationException(Invariant($"File is not locked by user '{userName}'."));

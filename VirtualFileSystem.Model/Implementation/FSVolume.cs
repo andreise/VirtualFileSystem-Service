@@ -21,7 +21,7 @@ namespace VirtualFileSystem.Model
             base.ValidateName(name);
 
             if (!FSPath.IsValidVolumeName(name))
-                throw new ArgumentException(Invariant($"The {nameof(name)} is not a valid volume name."), nameof(name));
+                throw new ArgumentException(Invariant($"The '{name}' is not a valid volume name."), nameof(name));
         }
 
         /// <summary>
