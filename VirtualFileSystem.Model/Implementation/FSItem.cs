@@ -27,7 +27,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public virtual IFSItem Parent { get; set; }
 
-        protected readonly HashSet<IFSItem> childItems = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
+        private readonly HashSet<IFSItem> childItems = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
 
         /// <summary>
         /// Child Items
@@ -256,17 +256,28 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void AddChild(IFSItem child)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
-
             if (child is null)
                 throw new ArgumentNullException(nameof(child));
 
-            if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
-                throw new InvalidOperationException("Child item is not a directory or a file.");
+            if (this.Kind != FSItemKind.FileSystem && this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
+                throw new InvalidOperationException("Item is not a file system, a volume or a directory.");
 
-            if (this.childItems.Contains(child))
-                throw new InvalidOperationException("Directory already contains child item (directory or file) with the same name.");
+            if (this.Kind == FSItemKind.FileSystem)
+            {
+                if (child.Kind != FSItemKind.Volume)
+                    throw new InvalidOperationException("Child item is not a volume.");
+
+                if (this.childItems.Contains(child))
+                    throw new InvalidOperationException("File system already contains volume with the same name.");
+            }
+            else
+            {
+                if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
+                    throw new InvalidOperationException("Child item is not a directory or a file.");
+
+                if (this.childItems.Contains(child))
+                    throw new InvalidOperationException("Directory already contains child item (directory or file) with the same name.");
+            }
 
             child.Parent = this;
             this.childItems.Add(child);

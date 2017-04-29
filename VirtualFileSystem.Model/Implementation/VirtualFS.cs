@@ -45,7 +45,7 @@ namespace VirtualFileSystem.Model
         public VirtualFS(string name) : base(FSItemKind.FileSystem, name)
         {
             IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
-            this.childItems.Add(defaultVolume);
+            this.AddChild(defaultVolume);
         }
 
         /// <summary>
