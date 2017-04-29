@@ -403,6 +403,9 @@ namespace VirtualFileSystem.Model
         {
             if (item.Kind != FSItemKind.FileSystem)
             {
+                if (builder.Length > 0)
+                    builder.AppendLine();
+
                 int itemGeneration = 0;
 
                 IFSItem itemParent = item.Parent;
@@ -411,9 +414,6 @@ namespace VirtualFileSystem.Model
                     itemGeneration++;
                     itemParent = itemParent.Parent;
                 }
-
-                if (builder.Length > 0)
-                    builder.AppendLine();
 
                 if (itemGeneration > 0)
                 {
@@ -441,21 +441,10 @@ namespace VirtualFileSystem.Model
                 }
             }
 
-            if (item.Kind == FSItemKind.FileSystem)
+            foreach (var childGroup in item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key))
             {
-                var volumes = item.ChildItems.OrderBy(item1 => item1, FSItemComparer.Default);
-                foreach (IFSItem volume in volumes)
-                    PrintTreeHelper(volume, builder);
-            }
-            else if (item.Kind == FSItemKind.Volume || item.Kind == FSItemKind.Directory)
-            {
-                var directories = item.ChildItems.Where(item1 => item1.Kind == FSItemKind.Directory).OrderBy(item1 => item1, FSItemComparer.Default);
-                foreach (IFSItem directory in directories)
-                    PrintTreeHelper(directory, builder);
-
-                var files = item.ChildItems.Where(item1 => item1.Kind == FSItemKind.File).OrderBy(item1 => item1, FSItemComparer.Default);
-                foreach (IFSItem file in files)
-                    PrintTreeHelper(file, builder);
+                foreach (var child in childGroup.OrderBy(child => child.Name, FSItemNameComparerProvider.Default))
+                    PrintTreeHelper(child, builder);
             }
         }
 
