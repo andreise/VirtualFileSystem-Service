@@ -338,7 +338,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (sourcePathCurrentItem.Kind != FSItemKind.Directory && sourcePathCurrentItem.Kind != FSItemKind.File)
-                throw new FSException(Invariant($"{nameof(sourcePath)} is not a directory or a file."));
+                throw new FSException(Invariant($"'{sourcePath}' is not a directory or a file."));
 
             if (sourcePathCurrentItem.Kind == FSItemKind.File)
                 if (sourcePathCurrentItem.LockedBy.Count > 0)
@@ -356,7 +356,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (destPathCurrentItem.Kind != FSItemKind.Volume && destPathCurrentItem.Kind != FSItemKind.Directory)
-                throw new FSException(Invariant($"{nameof(destPath)} is not a volume or a directory."));
+                throw new FSException(Invariant($"'{destPath}' is not a volume or a directory."));
 
             if (sourcePathCurrentItem == destPathCurrentItem)
                 throw new FSException("Source path and destination path should be not equal.");
