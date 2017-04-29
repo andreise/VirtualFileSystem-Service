@@ -22,18 +22,18 @@ namespace VirtualFileSystem.Model
             c == Consts.VolumeSeparator;
 
         public static bool IsValidVolumeChar(char c) =>
-            Consts.ValidVolumeChars.Contains(c) || Consts.AltValidVolumeChars.Contains(c);
+            Consts.ValidVolumeChars.Concat(Consts.AltValidVolumeChars).Contains(c);
 
         public static bool IsValidVolumeName(string name) =>
-            !string.IsNullOrEmpty(name) && (Consts.ValidVolumeNames.Contains(name) || Consts.AltValidVolumeNames.Contains(name));
+            !string.IsNullOrEmpty(name) &&
+            Consts.ValidVolumeNames.Concat(Consts.AltValidVolumeNames).Contains(name);
 
         // Other Path Validators
 
         public static bool IsAbsolutePath(string path) =>
             !string.IsNullOrEmpty(path) &&
-            new IReadOnlyList<string>[] { Consts.ValidVolumeNames, Consts.AltValidVolumeNames }
-            .Any(
-                volumes => volumes.Any(volume => path.StartsWith(volume, StringComparison.Ordinal))
+            Consts.ValidVolumeNames.Concat(Consts.AltValidVolumeNames).Any(
+                volume => path.StartsWith(volume, StringComparison.Ordinal)
             );
 
         public static bool IsValidPathChar(char c) =>
