@@ -51,6 +51,7 @@
     <Compile Include="Implementation\FSDirectory.cs" />
     <Compile Include="Implementation\FSFile.cs" />
     <Compile Include="Implementation\FSItem.cs" />
+    <Compile Include="Implementation\FSItemChildItems.cs" />
     <Compile Include="Implementation\FSVolume.cs" />
     <Compile Include="Implementation\VirtualFS.cs" />
     <Compile Include="Interfaces\IFSItem.cs" />
