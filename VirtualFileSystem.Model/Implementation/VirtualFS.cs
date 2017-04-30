@@ -410,11 +410,16 @@ namespace VirtualFileSystem.Model
 
                 if (itemLevel > 0)
                 {
-                    var indent = new StringBuilder(2 * itemLevel);
-                    for (int i = 0; i < itemLevel; i++)
-                        indent.Append("| ");
-                    indent[indent.Length - 1] = '_';
-                    builder.Append(indent.ToString());
+                    string GetIndent()
+                    {
+                        var indent = new StringBuilder(2 * itemLevel);
+                        for (int i = 0; i < itemLevel; i++)
+                            indent.Append("| ");
+                        indent[indent.Length - 1] = '_';
+                        return indent.ToString();
+                    }
+
+                    builder.Append(GetIndent());
                 }
 
                 builder.Append(item.Name);
