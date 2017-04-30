@@ -195,6 +195,17 @@ namespace VirtualFileSystem.Model
             return file;
         }
 
+        private void RemoveChildInternal(IFSItem child)
+        {
+            if (!this.childItems.Remove(child))
+                return;
+
+            if (child is null)
+                return;
+
+            child.Parent = null;
+        }
+
         /// <summary>
         /// Removes empty child directory
         /// </summary>
@@ -221,7 +232,7 @@ namespace VirtualFileSystem.Model
             if (child.ChildItems.Count > 0)
                 throw new InvalidOperationException("Directory with the specified name is not empty.");
 
-            this.childItems.Remove(child);
+            this.RemoveChildInternal(child);
         }
 
         /// <summary>
@@ -247,7 +258,7 @@ namespace VirtualFileSystem.Model
             if (child.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item with the specified name is not a directory.");
 
-            this.childItems.Remove(child);
+            this.RemoveChildInternal(child);
         }
 
         /// <summary>
@@ -277,7 +288,7 @@ namespace VirtualFileSystem.Model
             if (child.LockedBy.Count > 0)
                 throw new InvalidOperationException("File with the specified name is locked.");
 
-            this.childItems.Remove(child);
+            this.RemoveChildInternal(child);
         }
 
         /// <summary>
@@ -347,7 +358,7 @@ namespace VirtualFileSystem.Model
             if (!this.childItems.Contains(child))
                 throw new InvalidOperationException("Directory not contains specified child item (directory or file).");
 
-            this.childItems.Remove(child);
+            this.RemoveChildInternal(child);
         }
 
         /// <summary>

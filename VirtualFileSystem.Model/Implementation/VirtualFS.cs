@@ -367,7 +367,6 @@ namespace VirtualFileSystem.Model
             if (move)
             {
                 sourcePathCurrentItem.Parent.RemoveChild(sourcePathCurrentItem);
-                sourcePathCurrentItem.Parent = null;
                 destPathCurrentItem.AddChild(sourcePathCurrentItem);
             }
             else
