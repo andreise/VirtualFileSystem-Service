@@ -34,6 +34,10 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItems;
 
+        /// <summary>
+        /// Gets zero-based item level in the file system hierarchy
+        /// </summary>
+        /// <returns>Zero-based item level in the file system hierarchy</returns>
         public int GetLevel()
         {
             int level = 0;
