@@ -36,7 +36,7 @@ namespace VirtualFileSystem.Model
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
 
-        private readonly bool printTreeRoot;
+        public bool PrintTreeRoot { get; }
 
         /// <summary>
         /// Constructor
@@ -46,20 +46,10 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
         public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
         {
-            this.printTreeRoot = printTreeRoot;
+            this.PrintTreeRoot = printTreeRoot;
 
             IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
             this.AddChild(defaultVolume);
-        }
-
-        /// <summary>
-        /// Static constructor
-        /// </summary>
-        /// <remarks>
-        /// Needs for the guaranted static fields initialization in a multithreading work
-        /// </remarks>
-        static VirtualFS()
-        {
         }
 
         /// <summary>
@@ -421,7 +411,7 @@ namespace VirtualFileSystem.Model
         {
             void PrintItem()
             {
-                if (item.Kind == FSItemKind.FileSystem && !this.printTreeRoot)
+                if (item.Kind == FSItemKind.FileSystem && !this.PrintTreeRoot)
                     return;
 
                 if (builder.Length > 0)
@@ -429,7 +419,7 @@ namespace VirtualFileSystem.Model
 
                 int itemLevel = GetItemLevel(item);
 
-                if (!this.printTreeRoot)
+                if (!this.PrintTreeRoot)
                     itemLevel--;
 
                 if (itemLevel > 0)

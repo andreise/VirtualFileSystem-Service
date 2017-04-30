@@ -27,6 +27,8 @@
 
         void Move(string currentDirectory, string sourcePath, string destPath);
 
+        bool PrintTreeRoot { get; }
+
         string PrintTree();
 
     }
