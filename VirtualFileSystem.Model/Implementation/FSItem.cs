@@ -147,6 +147,18 @@ namespace VirtualFileSystem.Model
             this.lockedBy.Remove(userName);
         }
 
+        private void AddChildInternal(IFSItem child)
+        {
+            child.Parent = this;
+            this.childItems.Add(child);
+        }
+
+        private void RemoveChildInternal(IFSItem child)
+        {
+            if (this.childItems.Remove(child))
+                child.Parent = null;
+        }
+
         /// <summary>
         /// Adds child directory
         /// </summary>
@@ -166,8 +178,7 @@ namespace VirtualFileSystem.Model
             if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
-            directory.Parent = this;
-            this.childItems.Add(directory);
+            this.AddChildInternal(directory);
             return directory;
         }
 
@@ -190,20 +201,8 @@ namespace VirtualFileSystem.Model
             if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
-            file.Parent = this;
-            this.childItems.Add(file);
+            this.AddChildInternal(file);
             return file;
-        }
-
-        private void RemoveChildInternal(IFSItem child)
-        {
-            if (!this.childItems.Remove(child))
-                return;
-
-            if (child is null)
-                return;
-
-            child.Parent = null;
         }
 
         /// <summary>
@@ -325,8 +324,7 @@ namespace VirtualFileSystem.Model
                     throw new InvalidOperationException("Directory already contains specified child item (directory or file).");
             }
 
-            child.Parent = this;
-            this.childItems.Add(child);
+            this.AddChildInternal(child);
         }
 
         /// <summary>
