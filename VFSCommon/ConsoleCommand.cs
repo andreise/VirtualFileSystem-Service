@@ -40,11 +40,11 @@ namespace VFSCommon
         /// <param name="parameters">Command Parameters</param>
         protected ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
         {
-            Func<string, string> normalizeString = value => value?.Trim() ?? string.Empty;
+            string NormalizeString(string value) => value?.Trim() ?? string.Empty;
 
-            this.CommandLine = normalizeString(commandLine);
+            this.CommandLine = NormalizeString(commandLine);
             this.IsCaseSensitive = isCaseSensitive;
-            this.Command = normalizeString(command);
+            this.Command = NormalizeString(command);
             this.Parameters = new ReadOnlyCollection<string>(parameters?.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray() ?? new string[0]);
         }
 

@@ -143,12 +143,12 @@ namespace VFSClient.Model
                 )
             );
 
-            Func<ConsoleCommand<ConsoleCommandCode>> readCommand = () => ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false);
+            ConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false);
 
             ConsoleCommand<ConsoleCommandCode> command;
 
             while (
-                !((command = readCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
+                !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
             )
             {
                 if (string.IsNullOrWhiteSpace(command.CommandLine))
