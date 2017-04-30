@@ -176,7 +176,7 @@ namespace VirtualFileSystem.Model
 
 
             if (HasLocks(currentItem))
-                throw new FSException("Directory or its subdirectories contains one or more locked files.");
+                throw new FSException("Directory or its subdirectories contain one or more locked files.");
 
             currentItem.Parent.RemoveChildDirectoryWithTree(currentItem.Name);
 
@@ -326,8 +326,10 @@ namespace VirtualFileSystem.Model
                 throw new FSException(Invariant($"'{sourcePath}' is not a directory or a file."));
 
             if (sourcePathCurrentItem.Kind == FSItemKind.File)
+            {
                 if (sourcePathCurrentItem.LockedBy.Count > 0)
                     throw new FSException(Invariant($"File '{sourcePath}' is locked."));
+            }
 
             string[] destPathParts = FSPath.SplitPath(destPath);
 
@@ -362,7 +364,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (HasLocks(sourcePathCurrentItem))
-                throw new FSException("Source path contains one or more locked files and cannot be moved.");
+                throw new FSException("Source path contain one or more locked files and cannot be moved.");
 
             if (move)
             {

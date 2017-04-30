@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     internal sealed class FSItemChildItems
     {
 
-        private readonly HashSet<IFSItem> items = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
+        private readonly HashSet<IFSItem> items = new HashSet<IFSItem>();
 
         public IReadOnlyCollection<IFSItem> Items => this.items;
 

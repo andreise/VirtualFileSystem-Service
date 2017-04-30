@@ -285,7 +285,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
         /// <exception cref="InvalidOperationException">
         /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
-        /// or if the item child list already contains child with the same name
+        /// or if the item already have a child with the same name
         /// </exception>
         public void AddChild(IFSItem child)
         {
@@ -300,7 +300,7 @@ namespace VirtualFileSystem.Model
                 if (child.Kind != FSItemKind.Volume)
                     throw new InvalidOperationException("Child item is not a volume.");
 
-                if (this.ChildItems.Contains(child))
+                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
                     throw new InvalidOperationException("Volume with the specified name already exists.");
             }
             else
@@ -308,7 +308,7 @@ namespace VirtualFileSystem.Model
                 if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
                     throw new InvalidOperationException("Child item is not a directory or a file.");
 
-                if (this.ChildItems.Contains(child))
+                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
                     throw new InvalidOperationException("Directory or file with the specified name already exists.");
             }
 
@@ -324,7 +324,7 @@ namespace VirtualFileSystem.Model
         /// Throws if the item is not a volume or a directory,
         /// or if the child item is not a directory or a file,
         /// or if the child item is a locked file,
-        /// or if the child item is not contains in the item child list
+        /// or if the item do not contain the specified child
         /// </exception>
         public void RemoveChild(IFSItem child)
         {
@@ -338,11 +338,13 @@ namespace VirtualFileSystem.Model
                 throw new InvalidOperationException("Child item is not a directory or a file.");
 
             if (child.Kind == FSItemKind.File)
+            {
                 if (child.LockedBy.Count > 0)
                     throw new InvalidOperationException("Child item is a locked file.");
+            }
 
             if (!this.ChildItems.Contains(child))
-                throw new InvalidOperationException("Directory or file with the specified name is not exists.");
+                throw new InvalidOperationException("Item do not have the specified child item.");
 
             this.childItems.Remove(child);
         }

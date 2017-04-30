@@ -123,7 +123,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
         /// <exception cref="InvalidOperationException">
         /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
-        /// or if the item child list already contains child with the same name
+        /// or if the item already have a child with the same name
         /// </exception>
         void AddChild(IFSItem child);
 
@@ -136,7 +136,7 @@ namespace VirtualFileSystem.Model
         /// Throws if the item is not a volume or a directory,
         /// or if the child item is not a directory or a file,
         /// or if the child item is a locked file,
-        /// or if the child item is not contains in the item child list
+        /// or if the item do not contain the specified child
         /// </exception>
         void RemoveChild(IFSItem child);
 
