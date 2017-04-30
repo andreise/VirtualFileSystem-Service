@@ -34,6 +34,20 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => childItems;
 
+        public int GetLevel()
+        {
+            int level = 0;
+
+            IFSItem parent = this.Parent;
+            while (!(parent is null))
+            {
+                level++;
+                parent = parent.Parent;
+            }
+
+            return level;
+        }
+
         private readonly HashSet<string> lockedBy = new HashSet<string>(UserNameComparerProvider.Default);
 
         /// <summary>
@@ -122,6 +136,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
+        /// <returns>Added child directory</returns>
         public IFSItem AddChildDirectory(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
@@ -145,6 +160,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
+        /// <returns>Added child file</returns>
         public IFSItem AddChildFile(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)

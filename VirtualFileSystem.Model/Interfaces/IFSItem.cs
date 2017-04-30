@@ -9,6 +9,7 @@ namespace VirtualFileSystem.Model
     /// </summary>
     public interface IFSItem
     {
+
         /// <summary>
         /// Item Kind
         /// </summary>
@@ -28,6 +29,12 @@ namespace VirtualFileSystem.Model
         /// Child Items
         /// </summary>
         IReadOnlyCollection<IFSItem> ChildItems { get; }
+
+        /// <summary>
+        /// Gets zero-based item level in the file system hierarchy
+        /// </summary>
+        /// <returns>Zero-based item level in the file system hierarchy</returns>
+        int GetLevel();
 
         /// <summary>
         /// Locks Item
@@ -61,6 +68,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
+        /// <returns>Added child directory</returns>
         IFSItem AddChildDirectory(string name);
 
         /// <summary>
@@ -91,6 +99,7 @@ namespace VirtualFileSystem.Model
         /// Throws if child directory or file with same name already exists,
         /// or if the item kind is not volume or directory
         /// </exception>
+        /// <returns>Added child file</returns>
         IFSItem AddChildFile(string name);
 
         /// <summary>
@@ -127,6 +136,7 @@ namespace VirtualFileSystem.Model
         /// or if the child item is not contains in the item child list
         /// </exception>
         void RemoveChild(IFSItem child);
+
     }
 
 }

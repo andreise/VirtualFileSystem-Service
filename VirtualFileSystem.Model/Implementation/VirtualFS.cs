@@ -393,20 +393,6 @@ namespace VirtualFileSystem.Model
             currentDirectory, sourcePath, destPath, move: true
         );
 
-        private static int GetItemLevel(IFSItem item)
-        {
-            int itemLevel = 0;
-
-            IFSItem itemParent = item.Parent;
-            while (!(itemParent is null))
-            {
-                itemLevel++;
-                itemParent = itemParent.Parent;
-            }
-
-            return itemLevel;
-        }
-
         private void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
             void PrintItem()
@@ -417,7 +403,7 @@ namespace VirtualFileSystem.Model
                 if (builder.Length > 0)
                     builder.AppendLine();
 
-                int itemLevel = GetItemLevel(item);
+                int itemLevel = item.GetLevel();
 
                 if (!this.PrintTreeRoot)
                     itemLevel--;
