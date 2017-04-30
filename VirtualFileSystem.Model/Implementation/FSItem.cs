@@ -301,7 +301,7 @@ namespace VirtualFileSystem.Model
                     throw new InvalidOperationException("Child item is not a volume.");
 
                 if (this.ChildItems.Contains(child))
-                    throw new InvalidOperationException("File system already contains specified volume.");
+                    throw new InvalidOperationException("Volume with the specified name already exists.");
             }
             else
             {
@@ -309,7 +309,7 @@ namespace VirtualFileSystem.Model
                     throw new InvalidOperationException("Child item is not a directory or a file.");
 
                 if (this.ChildItems.Contains(child))
-                    throw new InvalidOperationException("Directory already contains specified child item (directory or file).");
+                    throw new InvalidOperationException("Directory or file with the specified name already exists.");
             }
 
             this.childItems.Add(child);
@@ -342,7 +342,7 @@ namespace VirtualFileSystem.Model
                     throw new InvalidOperationException("Child item is a locked file.");
 
             if (!this.ChildItems.Contains(child))
-                throw new InvalidOperationException("Directory not contains specified child item (directory or file).");
+                throw new InvalidOperationException("Directory or file with the specified name is not exists.");
 
             this.childItems.Remove(child);
         }
