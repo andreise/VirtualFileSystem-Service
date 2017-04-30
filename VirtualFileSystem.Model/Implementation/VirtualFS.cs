@@ -53,22 +53,13 @@ namespace VirtualFileSystem.Model
         }
 
         /// <summary>
-        /// Parent Item. Always returns null
+        /// Parent Item. Always returns null.
         /// </summary>
         /// <exception cref="InvalidOperationException">Throws on a setting attempt</exception>
         public override IFSItem Parent
         {
-
-            get
-            {
-                return null;
-            }
-
-            set
-            {
-                throw new InvalidOperationException("File system cannot has a parent item.");
-            }
-
+            get => null;
+            set => throw new InvalidOperationException("File system cannot has a parent item.");
         }
 
         private static string NormalizeCurrentDirectory(string currentDirectory)
@@ -92,7 +83,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
-                throw new FSException("Destination path is not a directory.");
+                throw new FSException("Destination path is not a volume or a directory.");
 
             currentItem.AddChildDirectory(directoryParts[directoryParts.Length - 1]);
             return directory;
@@ -116,7 +107,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
-                throw new FSException("Destination path is not a directory.");
+                throw new FSException("Destination path is not a volume or a directory.");
 
             return directory;
         }
@@ -210,7 +201,7 @@ namespace VirtualFileSystem.Model
             }
 
             if (currentItem.Kind != FSItemKind.Volume && currentItem.Kind != FSItemKind.Directory)
-                throw new FSException("Destination path is not a directory.");
+                throw new FSException("Destination path is not a volume or a directory.");
 
             currentItem.AddChildFile(directoryParts[directoryParts.Length - 1]);
             return fileName;
@@ -364,7 +355,7 @@ namespace VirtualFileSystem.Model
                 while (!(destPathCurrentItemParent is null))
                 {
                     if (destPathCurrentItemParent == sourcePathCurrentItem)
-                        throw new FSException("Source directory cannot be parent of the dest directory.");
+                        throw new FSException("Source directory cannot be a parent of the dest directory.");
 
                     destPathCurrentItemParent = destPathCurrentItemParent.Parent;
                 }

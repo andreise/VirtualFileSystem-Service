@@ -34,6 +34,28 @@ namespace VirtualFileSystem.Model
         {
         }
 
+        /// <summary>
+        /// Parent Item
+        /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item,
+        /// or if new parent item is not null and is not a volume or a directory
+        /// </exception>
+        public override IFSItem Parent
+        {
+            get => base.Parent;
+            set
+            {
+                if (!(value is null))
+                {
+                    if (value.Kind != FSItemKind.Volume && value.Kind != FSItemKind.Directory)
+                        throw new ArgumentException("Directory can have only a volume or a directory as a parent.");
+                }
+
+                base.Parent = value;
+            }
+        }
+
     }
 
 }

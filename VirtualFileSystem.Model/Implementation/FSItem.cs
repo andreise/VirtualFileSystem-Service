@@ -22,10 +22,25 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public string Name { get; }
 
+        private IFSItem parent;
+
         /// <summary>
         /// Parent Item
         /// </summary>
-        public virtual IFSItem Parent { get; set; }
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item.
+        /// </exception>
+        public virtual IFSItem Parent
+        {
+            get => this.parent;
+            set
+            {
+                if ((object)this == (object)value)
+                    throw new ArgumentException("File system item cannot be a parent of itself.");
+
+                this.parent = value;
+            }
+        }
 
         private readonly HashSet<IFSItem> childItems = new HashSet<IFSItem>(FSItemEqualityComparer.Default);
 
@@ -144,7 +159,7 @@ namespace VirtualFileSystem.Model
         public IFSItem AddChildDirectory(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item kind is not volume or directory.");
+                throw new InvalidOperationException("Item is not a volume or a directory.");
 
             IFSItem directory = new FSDirectory(name);
 
@@ -168,7 +183,7 @@ namespace VirtualFileSystem.Model
         public IFSItem AddChildFile(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item kind is not volume or directory.");
+                throw new InvalidOperationException("Item is not a volume or a directory.");
 
             IFSItem file = new FSFile(name);
 
@@ -191,7 +206,7 @@ namespace VirtualFileSystem.Model
         public void RemoveChildDirectory(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item kind is not volume or directory.");
+                throw new InvalidOperationException("Item is not a volume or a directory.");
 
             IFSItem directory = new FSDirectory(name); // validate name
 
@@ -220,7 +235,7 @@ namespace VirtualFileSystem.Model
         public void RemoveChildDirectoryWithTree(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item kind is not volume or directory.");
+                throw new InvalidOperationException("Item is not a volume or a directory.");
 
             IFSItem directory = new FSDirectory(name); // validate name
 
@@ -247,7 +262,7 @@ namespace VirtualFileSystem.Model
         public void RemoveChildFile(string name)
         {
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item kind is not volume or directory.");
+                throw new InvalidOperationException("Item is not a volume or a directory.");
 
             IFSItem file = new FSFile(name); // validate name
 

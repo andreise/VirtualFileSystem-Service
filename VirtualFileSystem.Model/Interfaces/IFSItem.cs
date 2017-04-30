@@ -23,6 +23,9 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Parent Item
         /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item.
+        /// </exception>
         IFSItem Parent { get; set; }
 
         /// <summary>
