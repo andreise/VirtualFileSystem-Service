@@ -419,8 +419,11 @@ namespace VirtualFileSystem.Model
 
         private void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
-            if (item.Kind != FSItemKind.FileSystem || this.printTreeRoot)
+            void PrintItem()
             {
+                if (item.Kind == FSItemKind.FileSystem && !this.printTreeRoot)
+                    return;
+
                 if (builder.Length > 0)
                     builder.AppendLine();
 
@@ -456,6 +459,8 @@ namespace VirtualFileSystem.Model
                         break;
                 }
             }
+
+            PrintItem();
 
             foreach (var childGroup in item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key))
             {
