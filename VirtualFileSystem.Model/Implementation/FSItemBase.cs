@@ -61,6 +61,9 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">
         /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
         /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if parent settings operation is invalid for this item
+        /// </exception>
         public void SetParent(IFSItem parent)
         {
             this.ValidateSetParent(parent);
