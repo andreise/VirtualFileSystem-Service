@@ -10,7 +10,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item
     /// </summary>
-    internal abstract class FSItem : IFSItem
+    internal abstract class FSItemBase : IFSItem
     {
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentOutOfRangeException">Throws if the kind is incorrect</exception>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
-        public FSItem(FSItemKind kind, string name)
+        public FSItemBase(FSItemKind kind, string name)
         {
             if (!Enum.IsDefined(typeof(FSItemKind), kind))
                 throw new ArgumentOutOfRangeException(nameof(kind), kind, Invariant($"{nameof(kind)} is incorrect."));

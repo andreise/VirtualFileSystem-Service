@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Volume
     /// </summary>
-    internal sealed class FSVolume : FSItem
+    internal sealed class FSVolume : FSItemBase
     {
 
         /// <summary>

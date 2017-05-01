@@ -17,7 +17,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// Virtual File System
     /// </summary>
-    internal sealed class VirtualFS : FSItem, IVirtualFS
+    internal sealed class VirtualFS : FSItemBase, IVirtualFS
     {
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];

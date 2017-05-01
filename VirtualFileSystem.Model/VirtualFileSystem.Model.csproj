@@ -42,13 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConsoleCommandCode.cs" />
-    <Compile Include="Common\FSItemKind.cs" />
+    <Compile Include="Interfaces\FSItemKind.cs" />
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
     <Compile Include="Common\FSPath.cs" />
     <Compile Include="Common\FSPath.Consts.cs" />
     <Compile Include="Implementation\FSDirectory.cs" />
     <Compile Include="Implementation\FSFile.cs" />
-    <Compile Include="Implementation\FSItem.cs" />
+    <Compile Include="Implementation\FSItemBase.cs" />
     <Compile Include="Implementation\FSItemChildItems.cs" />
     <Compile Include="Implementation\FSVolume.cs" />
     <Compile Include="Implementation\VirtualFS.cs" />
