@@ -301,7 +301,7 @@ namespace VirtualFileSystem.Model
                 throw new VFSConsoleException(Invariant($"'{destPath}' is not a volume or a directory."));
 
             if (sourcePathCurrentItem == destPathCurrentItem)
-                throw new VFSConsoleException("Source path and destination path should be not equal.");
+                throw new VFSConsoleException("Source path and destination path must be not equal.");
 
             if (sourcePathCurrentItem.Parent == destPathCurrentItem)
                 throw new VFSConsoleException("Source path cannot be copied or moved to its parent.");
