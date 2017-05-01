@@ -1,6 +1,9 @@
 ﻿namespace VirtualFileSystem.Model
 {
 
+    /// <summary>
+    /// Virtual File System Console
+    /// </summary>
     public interface IVFSConsole
     {
 
