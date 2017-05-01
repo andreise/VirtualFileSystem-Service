@@ -4,7 +4,7 @@
     /// <summary>
     /// File System Item Kind
     /// </summary>
-    public enum FSItemKind
+    internal enum FSItemKind
     {
         /// <summary>
         /// File System

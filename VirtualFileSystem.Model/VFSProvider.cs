@@ -4,9 +4,9 @@ namespace VirtualFileSystem.Model
 {
 
     /// <summary>
-    /// Virtual File System Factory
+    /// Virtual File System Provider
     /// </summary>
-    public static class VirtualFSProvider
+    public static class VFSProvider
     {
 
         /// <summary>
@@ -16,14 +16,14 @@ namespace VirtualFileSystem.Model
         /// <returns>Returns a new virtual file system</returns>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public static IVirtualFS Create(string name, bool printTreeRoot = true) => new VirtualFS(name, printTreeRoot);
+        public static IVFSConsole Create(string name, bool printTreeRoot = true) => new VirtualFS(name, printTreeRoot);
 
-        private static readonly Lazy<IVirtualFS> defaultInstance = new Lazy<IVirtualFS>(() => Create("Default Virtual File System"));
+        private static readonly Lazy<IVFSConsole> defaultInstance = new Lazy<IVFSConsole>(() => Create("Default Virtual File System"));
 
         /// <summary>
         /// Default Virtual File System
         /// </summary>
-        public static IVirtualFS Default => defaultInstance.Value;
+        public static IVFSConsole Default => defaultInstance.Value;
 
         /// <summary>
         /// Static constructor
@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
         /// <remarks>
         /// Needs for the guaranted static fields initialization in a multithreading work
         /// </remarks>
-        static VirtualFSProvider()
+        static VFSProvider()
         {
         }
 
