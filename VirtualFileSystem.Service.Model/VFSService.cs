@@ -22,7 +22,7 @@ namespace VirtualFileSystem.Service.Model
     )]
     public class VFSService : IVFSService
     {
-        private IVFSConsole VFSConsole => VFSProvider.Default;
+        private IVirtualFS VFS => VFSProvider.Default;
 
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
@@ -177,76 +177,76 @@ namespace VirtualFileSystem.Service.Model
                     {
                         checkParameterCount(1);
                         this.connectedUsers[request.UserName].CurrentDirectory =
-                            this.VFSConsole.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                            this.VFS.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
                     }
 
                 case ConsoleCommandCode.CopyTree:
                     {
                         checkParameterCount(2);
-                        this.VFSConsole.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        this.VFS.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
 
                 case ConsoleCommandCode.DeleteFile:
                     {
                         checkParameterCount(1);
-                        string fileName = this.VFSConsole.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.VFS.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' deleted succesfully.");
                     }
 
                 case ConsoleCommandCode.DeleteTree:
                     {
                         checkParameterCount(1);
-                        string directory = this.VFSConsole.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.VFS.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Tree '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.LockFile:
                     {
                         checkParameterCount(1);
-                        string fileName = this.VFSConsole.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.VFS.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
                     }
 
                 case ConsoleCommandCode.MakeDirectory:
                     {
                         checkParameterCount(1);
-                        string directory = this.VFSConsole.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.VFS.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MakeFile:
                     {
                         checkParameterCount(1);
-                        string fileName = this.VFSConsole.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.VFS.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MoveTree:
                     {
                         checkParameterCount(2);
-                        this.VFSConsole.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        this.VFS.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
 
                 case ConsoleCommandCode.PrintTree:
                     {
                         checkParameterCount(0);
-                        return this.VFSConsole.PrintTree();
+                        return this.VFS.PrintTree();
                     }
 
                 case ConsoleCommandCode.RemoveDirectory:
                     {
                         checkParameterCount(1);
-                        string directory = this.VFSConsole.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.VFS.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.UnlockFile:
                     {
                         checkParameterCount(1);
-                        string fileName = this.VFSConsole.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.VFS.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
                     }
 

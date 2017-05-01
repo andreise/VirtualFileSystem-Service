@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConsoleCommandCode.cs" />
-    <Compile Include="Interfaces\VFSConsoleException.cs" />
+    <Compile Include="Interfaces\VFSException.cs" />
     <Compile Include="Interfaces\FSItemKind.cs" />
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
     <Compile Include="Common\FSPath.cs" />
@@ -54,7 +54,7 @@
     <Compile Include="Implementation\FSVolume.cs" />
     <Compile Include="Implementation\VirtualFS.cs" />
     <Compile Include="Interfaces\IFSItem.cs" />
-    <Compile Include="Interfaces\IVFSConsole.cs" />
+    <Compile Include="Interfaces\IVirtualFS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VFSProvider.cs" />
   </ItemGroup>
