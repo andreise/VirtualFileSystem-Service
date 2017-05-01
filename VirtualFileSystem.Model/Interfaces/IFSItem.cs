@@ -29,15 +29,21 @@ namespace VirtualFileSystem.Model
         IFSItem Parent { get; set; }
 
         /// <summary>
+        /// Gets zero-based item level in the file system hierarchy
+        /// </summary>
+        /// <returns>Zero-based item level in the file system hierarchy</returns>
+        int GetLevel();
+
+        /// <summary>
         /// Child Items
         /// </summary>
         IReadOnlyCollection<IFSItem> ChildItems { get; }
 
         /// <summary>
-        /// Gets zero-based item level in the file system hierarchy
+        /// User list which blocked the item
         /// </summary>
-        /// <returns>Zero-based item level in the file system hierarchy</returns>
-        int GetLevel();
+        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        IReadOnlyCollection<string> LockedBy { get; }
 
         /// <summary>
         /// Locks Item
@@ -58,10 +64,28 @@ namespace VirtualFileSystem.Model
         void Unlock(string userName);
 
         /// <summary>
-        /// User list which blocked the item
+        /// Adds child item
         /// </summary>
-        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
-        IReadOnlyCollection<string> LockedBy { get; }
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
+        /// or if the item already have a child with the same name
+        /// </exception>
+        void AddChild(IFSItem child);
+
+        /// <summary>
+        /// Removes child item
+        /// </summary>
+        /// <param name="child">Child item</param>
+        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if the item is not a volume or a directory,
+        /// or if the child item is not a directory or a file,
+        /// or if the child item is a locked file,
+        /// or if the item do not contain the specified child
+        /// </exception>
+        void RemoveChild(IFSItem child);
 
         /// <summary>
         /// Adds child directory
@@ -73,6 +97,17 @@ namespace VirtualFileSystem.Model
         /// </exception>
         /// <returns>Added child directory</returns>
         IFSItem AddChildDirectory(string name);
+
+        /// <summary>
+        /// Adds child file
+        /// </summary>
+        /// <param name="name">File name</param>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if child directory or file with same name already exists,
+        /// or if the item kind is not volume or directory
+        /// </exception>
+        /// <returns>Added child file</returns>
+        IFSItem AddChildFile(string name);
 
         /// <summary>
         /// Removes empty child directory
@@ -95,17 +130,6 @@ namespace VirtualFileSystem.Model
         void RemoveChildDirectoryWithTree(string name);
 
         /// <summary>
-        /// Adds child file
-        /// </summary>
-        /// <param name="name">File name</param>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if child directory or file with same name already exists,
-        /// or if the item kind is not volume or directory
-        /// </exception>
-        /// <returns>Added child file</returns>
-        IFSItem AddChildFile(string name);
-
-        /// <summary>
         /// Removes child file
         /// </summary>
         /// <param name="name">File name</param>
@@ -115,30 +139,6 @@ namespace VirtualFileSystem.Model
         /// or if a child item with the specified name is locked
         /// </exception>
         void RemoveChildFile(string name);
-
-        /// <summary>
-        /// Adds child item
-        /// </summary>
-        /// <param name="child">Child item</param>
-        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
-        /// or if the item already have a child with the same name
-        /// </exception>
-        void AddChild(IFSItem child);
-
-        /// <summary>
-        /// Remove child item
-        /// </summary>
-        /// <param name="child">Child item</param>
-        /// <exception cref="ArgumentNullException">Throws if the child item is null</exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if the item is not a volume or a directory,
-        /// or if the child item is not a directory or a file,
-        /// or if the child item is a locked file,
-        /// or if the item do not contain the specified child
-        /// </exception>
-        void RemoveChild(IFSItem child);
 
     }
 
