@@ -20,37 +20,7 @@ namespace VirtualFileSystem.Model
     internal sealed class VirtualFS : FSItem, IVirtualFS
     {
 
-        /// <summary>
-        /// Validates name
-        /// </summary>
-        /// <param name="name">Item Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        protected override void ValidateName(string name)
-        {
-            base.ValidateName(name);
-
-            if (!FSPath.IsValidFileSystemName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
-        }
-
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
-
-        public bool PrintTreeRoot { get; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name">File System Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
-        {
-            this.PrintTreeRoot = printTreeRoot;
-
-            IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
-            this.AddChild(defaultVolume);
-        }
 
         /// <summary>
         /// Parent Item. Always returns null.
@@ -386,6 +356,8 @@ namespace VirtualFileSystem.Model
             currentDirectory, sourcePath, destPath, move: true
         );
 
+        public bool PrintTreeRoot { get; }
+
         private void PrintTreeHelper(IFSItem item, StringBuilder builder)
         {
             void PrintItem()
@@ -448,6 +420,34 @@ namespace VirtualFileSystem.Model
             var builder = new StringBuilder();
             PrintTreeHelper(this, builder);
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Validates name
+        /// </summary>
+        /// <param name="name">Item Name</param>
+        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
+        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
+        protected override void ValidateName(string name)
+        {
+            base.ValidateName(name);
+
+            if (!FSPath.IsValidFileSystemName(name))
+                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">File System Name</param>
+        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
+        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
+        public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
+        {
+            this.PrintTreeRoot = printTreeRoot;
+
+            IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
+            this.AddChild(defaultVolume);
         }
 
     }
