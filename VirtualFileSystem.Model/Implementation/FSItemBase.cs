@@ -23,24 +23,48 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public string Name { get; }
 
-        private IFSItem parent;
+        /// <summary>
+        /// Parent Item, or null if this item have no a parent
+        /// </summary>
+        public IFSItem Parent { get; private set; }
 
         /// <summary>
-        /// Parent Item
+        /// Resets Parent Item
         /// </summary>
-        /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item.
-        /// </exception>
-        public virtual IFSItem Parent
-        {
-            get => this.parent;
-            set
-            {
-                if ((object)this == (object)value)
-                    throw new ArgumentException("File system item cannot be a parent of itself.");
+        public void ResetParent() => this.Parent = null;
 
-                this.parent = value;
-            }
+        /// <summary>
+        /// Validates parent setting operation
+        /// </summary>
+        /// <param name="parent">Parent Item</param>
+        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if parent settings operation is invalid for this item
+        /// </exception>
+        protected virtual void ValidateSetParent(IFSItem parent)
+        {
+            if (parent is null)
+                throw new ArgumentNullException(nameof(parent));
+
+            if ((object)this == (object)parent)
+                throw new ArgumentException("Item cannot be a parent of itself.");
+        }
+
+        /// <summary>
+        /// Sets Parent Item
+        /// </summary>
+        /// <param name="parent">Parent Item</param>
+        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
+        /// </exception>
+        public void SetParent(IFSItem parent)
+        {
+            this.ValidateSetParent(parent);
+            this.Parent = parent;
         }
 
         /// <summary>

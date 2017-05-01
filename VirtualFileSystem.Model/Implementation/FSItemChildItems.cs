@@ -26,7 +26,7 @@ namespace VirtualFileSystem.Model
             if (item is null)
                 throw new ArgumentNullException(nameof(item));
 
-            item.Parent = this.owner;
+            item.SetParent(this.owner);
             this.items.Add(item);
         }
 
@@ -38,7 +38,7 @@ namespace VirtualFileSystem.Model
             if (this.items.Remove(item))
             {
                 if ((object)item.Parent == (object)this.owner)
-                    item.Parent = null;
+                    item.ResetParent();
             }
         }
 

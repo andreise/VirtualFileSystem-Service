@@ -21,12 +21,24 @@ namespace VirtualFileSystem.Model
         string Name { get; }
 
         /// <summary>
-        /// Parent Item
+        /// Parent Item, or null if this item have no a parent
         /// </summary>
+        IFSItem Parent { get; }
+
+        /// <summary>
+        /// Resets Parent Item
+        /// </summary>
+        void ResetParent();
+
+        /// <summary>
+        /// Sets Parent Item
+        /// </summary>
+        /// <param name="parent">Parent Item</param>
+        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
         /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item.
+        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
         /// </exception>
-        IFSItem Parent { get; set; }
+        void SetParent(IFSItem parent);
 
         /// <summary>
         /// Gets zero-based item level in the file system hierarchy
