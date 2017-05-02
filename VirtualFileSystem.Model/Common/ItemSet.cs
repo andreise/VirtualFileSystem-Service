@@ -15,11 +15,9 @@ namespace VirtualFileSystem.Model
 
         public int Count => this.items.Count;
 
-        private IEnumerator<T> GetEnumeratorInternal() => ((IReadOnlyCollection<T>)this.items).GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => ((IReadOnlyCollection<T>)this.items).GetEnumerator();
 
-        public IEnumerator<T> GetEnumerator() => GetEnumeratorInternal();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumeratorInternal();
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         public virtual bool Add(T item) => this.items.Add(item);
 
