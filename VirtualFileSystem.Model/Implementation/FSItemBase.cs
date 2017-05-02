@@ -88,14 +88,14 @@ namespace VirtualFileSystem.Model
             return level;
         }
 
-        private readonly FSItemChildItems childItems;
+        private readonly FSItemChildItemSet childItems;
 
         /// <summary>
         /// Child Items
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => this.childItems;
 
-        private readonly FSUserNames lockedBy = new FSUserNames();
+        private readonly FSUserNameSet lockedBy = new FSUserNameSet();
 
         /// <summary>
         /// User list which blocked the item
@@ -396,7 +396,7 @@ namespace VirtualFileSystem.Model
 
             this.Name = name.Trim();
 
-            this.childItems = new FSItemChildItems(this);
+            this.childItems = new FSItemChildItemSet(this);
         }
 
     }
