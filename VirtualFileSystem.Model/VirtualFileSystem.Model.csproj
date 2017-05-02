@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConsoleCommandCode.cs" />
+    <Compile Include="Implementation\FSUserNames.cs" />
     <Compile Include="Interfaces\VFSException.cs" />
     <Compile Include="Interfaces\FSItemKind.cs" />
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
