@@ -95,7 +95,7 @@ namespace VirtualFileSystem.Model
         /// </summary>
         public IReadOnlyCollection<IFSItem> ChildItems => this.childItems;
 
-        private readonly HashSet<string> lockedBy = new HashSet<string>(UserNameComparerProvider.Default);
+        private readonly FSUserNames lockedBy = new FSUserNames();
 
         /// <summary>
         /// User list which blocked the item
