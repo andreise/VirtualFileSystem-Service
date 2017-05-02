@@ -3,8 +3,10 @@
 namespace VirtualFileSystem.Model
 {
 
-    internal interface IItemSet<T> : IReadOnlyCollection<T>
+    internal interface IItemSet<T>
     {
+
+        IReadOnlyCollection<T> Items { get; }
 
         bool Add(T item);
 

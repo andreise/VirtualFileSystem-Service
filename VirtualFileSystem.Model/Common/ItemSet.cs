@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace VirtualFileSystem.Model
 {
@@ -9,15 +8,11 @@ namespace VirtualFileSystem.Model
 
         private readonly HashSet<T> items;
 
-        protected IEqualityComparer<T> Comparer => this.items.Comparer;
-
         public ItemSet(IEqualityComparer<T> comparer = null) => this.items = new HashSet<T>(comparer);
 
-        public int Count => this.items.Count;
+        protected IEqualityComparer<T> Comparer => this.items.Comparer;
 
-        public IEnumerator<T> GetEnumerator() => ((IReadOnlyCollection<T>)this.items).GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        public IReadOnlyCollection<T> Items => this.items;
 
         public virtual bool Add(T item) => this.items.Add(item);
 

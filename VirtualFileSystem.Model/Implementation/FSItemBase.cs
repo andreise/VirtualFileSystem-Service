@@ -93,7 +93,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Child Items
         /// </summary>
-        public IReadOnlyCollection<IFSItem> ChildItems => this.childItems;
+        public IReadOnlyCollection<IFSItem> ChildItems => this.childItems.Items;
 
         private readonly IItemSet<string> lockedBy = new FSUserNameSet();
 
@@ -108,7 +108,7 @@ namespace VirtualFileSystem.Model
                 if (this.Kind != FSItemKind.File)
                     throw new InvalidOperationException("Item is not a file.");
 
-                return this.lockedBy;
+                return this.lockedBy.Items;
             }
         }
 
@@ -130,7 +130,7 @@ namespace VirtualFileSystem.Model
             if (string.IsNullOrWhiteSpace(userName))
                 throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{nameof(userName)} is empty."));
 
-            if (this.lockedBy.Contains(userName))
+            if (this.LockedBy.Contains(userName))
                 throw new InvalidOperationException(Invariant($"File already locked by user '{userName}'."));
 
             this.lockedBy.Add(userName);
@@ -154,7 +154,7 @@ namespace VirtualFileSystem.Model
             if (string.IsNullOrWhiteSpace(userName))
                 throw new ArgumentException(paramName: nameof(userName), message: Invariant($"{nameof(userName)} is empty."));
 
-            if (!this.lockedBy.Contains(userName))
+            if (!this.LockedBy.Contains(userName))
                 throw new InvalidOperationException(Invariant($"File is not locked by user '{userName}'."));
 
             this.lockedBy.Remove(userName);
@@ -182,7 +182,7 @@ namespace VirtualFileSystem.Model
                 if (child.Kind != FSItemKind.Volume)
                     throw new InvalidOperationException("Child item is not a volume.");
 
-                if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
+                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
                     throw new InvalidOperationException("Volume with the specified name already exists.");
             }
             else
@@ -190,7 +190,7 @@ namespace VirtualFileSystem.Model
                 if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
                     throw new InvalidOperationException("Child item is not a directory or a file.");
 
-                if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
+                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
                     throw new InvalidOperationException("Directory or file with the specified name already exists.");
             }
 
@@ -225,7 +225,7 @@ namespace VirtualFileSystem.Model
                     throw new InvalidOperationException("Child item is a locked file.");
             }
 
-            if (!this.childItems.Contains(child))
+            if (!this.ChildItems.Contains(child))
                 throw new InvalidOperationException("Item do not have the specified child item.");
 
             this.childItems.Remove(child);
@@ -247,7 +247,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name);
 
-            if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
+            if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             this.childItems.Add(directory);
@@ -270,7 +270,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem file = new FSFile(name);
 
-            if (this.childItems.Any(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
+            if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             this.childItems.Add(file);
@@ -292,7 +292,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name); // validate name
 
-            IFSItem child = this.childItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -321,7 +321,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem directory = new FSDirectory(name); // validate name
 
-            IFSItem child = this.childItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -348,7 +348,7 @@ namespace VirtualFileSystem.Model
 
             IFSItem file = new FSFile(name); // validate name
 
-            IFSItem child = this.childItems.Where(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)).FirstOrDefault();
+            IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("File with the specified name is not exists.");
