@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace VirtualFileSystem.Model
 {
 
-    internal sealed class FSItemChildItems
+    internal sealed class FSItemChildItems : IReadOnlyCollection<IFSItem>
     {
 
         private readonly HashSet<IFSItem> items = new HashSet<IFSItem>();
-
-        public IReadOnlyCollection<IFSItem> Items => this.items;
 
         private readonly IFSItem owner;
 
@@ -21,25 +20,35 @@ namespace VirtualFileSystem.Model
             this.owner = owner;
         }
 
-        public void Add(IFSItem item)
+        public int Count => this.items.Count;
+
+        private IEnumerator<IFSItem> GetEnumeratorInternal() => ((IReadOnlyCollection<IFSItem>)this.items).GetEnumerator();
+
+        public IEnumerator<IFSItem> GetEnumerator() => GetEnumeratorInternal();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumeratorInternal();
+
+        public bool Add(IFSItem item)
         {
             if (item is null)
                 throw new ArgumentNullException(nameof(item));
 
             item.SetParent(this.owner);
-            this.items.Add(item);
+            return this.items.Add(item);
         }
 
-        public void Remove(IFSItem item)
+        public bool Remove(IFSItem item)
         {
             if (item is null)
                 throw new ArgumentNullException(nameof(item));
 
-            if (this.items.Remove(item))
+            bool removed = this.items.Remove(item);
+            if (removed)
             {
                 if ((object)item.Parent == (object)this.owner)
                     item.ResetParent();
             }
+            return removed;
         }
 
     }
