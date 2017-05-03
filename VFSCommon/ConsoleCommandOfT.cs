@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace VFSCommon
 {
@@ -11,6 +13,16 @@ namespace VFSCommon
         /// </summary>
         public TCommandCodeEnum? CommandCode { get; }
 
+        private static bool IsNumeric(string s)
+        {
+            const NumberStyles style = NumberStyles.Integer;
+            IFormatProvider provider = NumberFormatInfo.InvariantInfo;
+
+            return
+                long.TryParse(s, style, provider, out _) ||
+                ulong.TryParse(s, style, provider, out _);
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -21,7 +33,8 @@ namespace VFSCommon
         protected ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
             : base(commandLine, isCaseSensitive, command, parameters)
         {
-            this.CommandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
+            if (typeof(TCommandCodeEnum).IsEnum && !IsNumeric(this.Command))
+                this.CommandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
         }
 
         protected static ConsoleCommand<TCommandCodeEnum> CreateInternal(ConsoleCommand command) =>
