@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using VFSCommon;
@@ -13,9 +15,9 @@ namespace VirtualFileSystem.Model
     internal sealed class VirtualFS : FSItemBase, IVirtualFS
     {
 
-        // IVirtualFS
-
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
+
+        // IVirtualFS
 
         private static string NormalizeCurrentDirectory(string currentDirectory) =>
             string.IsNullOrWhiteSpace(currentDirectory) ? DefaultVolumePath : currentDirectory.Trim();
@@ -407,6 +409,18 @@ namespace VirtualFileSystem.Model
         }
 
         // Base
+
+        /// <summary>
+        /// Valid Parent Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidParentKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { });
+
+        /// <summary>
+        /// Valid Child Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidChildKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Volume });
 
         /// <summary>
         /// Validates parent setting operation

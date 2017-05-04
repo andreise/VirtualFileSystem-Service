@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -9,6 +11,18 @@ namespace VirtualFileSystem.Model
     /// </summary>
     internal sealed class FSFile : FSItemBase
     {
+
+        /// <summary>
+        /// Valid Parent Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidParentKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Volume, FSItemKind.Directory });
+
+        /// <summary>
+        /// Valid Child Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidChildKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { });
 
         /// <summary>
         /// Validates parent setting operation

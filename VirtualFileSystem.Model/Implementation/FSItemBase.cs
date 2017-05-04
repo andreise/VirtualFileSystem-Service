@@ -13,6 +13,16 @@ namespace VirtualFileSystem.Model
     {
 
         /// <summary>
+        /// Valid Parent Kinds
+        /// </summary>
+        protected abstract IReadOnlyCollection<FSItemKind> ValidParentKinds { get; }
+
+        /// <summary>
+        /// Valid Child Kinds
+        /// </summary>
+        protected abstract IReadOnlyCollection<FSItemKind> ValidChildKinds { get; }
+
+        /// <summary>
         /// Item Kind
         /// </summary>
         public FSItemKind Kind { get; }
