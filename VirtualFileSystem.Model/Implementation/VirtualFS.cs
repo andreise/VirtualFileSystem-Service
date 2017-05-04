@@ -17,6 +17,64 @@ namespace VirtualFileSystem.Model
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
 
+        // Base
+
+        /// <summary>
+        /// Valid Parent Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidParentKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { });
+
+        /// <summary>
+        /// Valid Child Kinds
+        /// </summary>
+        protected override IReadOnlyCollection<FSItemKind> ValidChildKinds { get; } =
+            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Volume });
+
+        /// <summary>
+        /// Validates parent setting operation
+        /// </summary>
+        /// <param name="parent">Parent Item</param>
+        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
+        /// <exception cref="ArgumentException">
+        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Throws if parent settings operation is invalid for this item
+        /// </exception>
+        protected override void ValidateSetParent(IFSItem parent) =>
+            throw new InvalidOperationException("File system cannot have a parent item.");
+
+        /// <summary>
+        /// Validates name
+        /// </summary>
+        /// <param name="name">Item Name</param>
+        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
+        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
+        protected override void ValidateName(string name)
+        {
+            base.ValidateName(name);
+
+            if (!FSPath.IsValidFileSystemName(name))
+                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
+        }
+
+        // Constructor
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">File System Name</param>
+        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
+        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
+        public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
+        {
+            this.PrintTreeRoot = printTreeRoot;
+
+            IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
+            this.AddChild(defaultVolume);
+        }
+
         // IVirtualFS
 
         private static string NormalizeCurrentDirectory(string currentDirectory) =>
@@ -406,64 +464,6 @@ namespace VirtualFileSystem.Model
             var builder = new StringBuilder();
             PrintTreeHelper(this, builder);
             return builder.ToString();
-        }
-
-        // Base
-
-        /// <summary>
-        /// Valid Parent Kinds
-        /// </summary>
-        protected override IReadOnlyCollection<FSItemKind> ValidParentKinds { get; } =
-            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { });
-
-        /// <summary>
-        /// Valid Child Kinds
-        /// </summary>
-        protected override IReadOnlyCollection<FSItemKind> ValidChildKinds { get; } =
-            new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Volume });
-
-        /// <summary>
-        /// Validates parent setting operation
-        /// </summary>
-        /// <param name="parent">Parent Item</param>
-        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
-        /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if parent settings operation is invalid for this item
-        /// </exception>
-        protected override void ValidateSetParent(IFSItem parent) =>
-            throw new InvalidOperationException("File system cannot have a parent item.");
-
-        /// <summary>
-        /// Validates name
-        /// </summary>
-        /// <param name="name">Item Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        protected override void ValidateName(string name)
-        {
-            base.ValidateName(name);
-
-            if (!FSPath.IsValidFileSystemName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
-        }
-
-        // Constructor
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name">File System Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public VirtualFS(string name, bool printTreeRoot) : base(FSItemKind.FileSystem, name)
-        {
-            this.PrintTreeRoot = printTreeRoot;
-
-            IFSItem defaultVolume = new FSVolume(DefaultVolumePath);
-            this.AddChild(defaultVolume);
         }
 
     }
