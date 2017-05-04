@@ -77,11 +77,12 @@ namespace VirtualFileSystem.Model
         {
             int level = 0;
 
-            IFSItem parent = this.Parent;
-            while (!(parent is null))
+            IFSItem current = this;
+            while (
+                !((current = current.Parent) is null)
+            )
             {
                 level++;
-                parent = parent.Parent;
             }
 
             return level;
