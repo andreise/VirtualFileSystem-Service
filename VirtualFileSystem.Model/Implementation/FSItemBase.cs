@@ -177,12 +177,14 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.FileSystem && this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a file system, a volume or a directory.");
 
+            bool IsChildAlreadyExists() => this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name));
+
             if (this.Kind == FSItemKind.FileSystem)
             {
                 if (child.Kind != FSItemKind.Volume)
                     throw new InvalidOperationException("Child item is not a volume.");
 
-                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
+                if (IsChildAlreadyExists())
                     throw new InvalidOperationException("Volume with the specified name already exists.");
             }
             else
@@ -190,7 +192,7 @@ namespace VirtualFileSystem.Model
                 if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
                     throw new InvalidOperationException("Child item is not a directory or a file.");
 
-                if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name)))
+                if (IsChildAlreadyExists())
                     throw new InvalidOperationException("Directory or file with the specified name already exists.");
             }
 
