@@ -2,9 +2,9 @@
 {
 
     /// <summary>
-    /// Virtual File System
+    /// Virtual File System Console
     /// </summary>
-    public interface IVirtualFS
+    public interface IVFSConsole
     {
 
         string MakeDirectory(string currentDirectory, string newDirectory);
@@ -27,9 +27,7 @@
 
         void Move(string currentDirectory, string sourcePath, string destPath);
 
-        bool PrintTreeRoot { get; }
-
-        string PrintTree();
+        string PrintTree(bool printRoot);
 
     }
 

@@ -7,9 +7,9 @@
     internal enum FSItemKind
     {
         /// <summary>
-        /// File System
+        /// Root
         /// </summary>
-        FileSystem,
+        Root,
 
         /// <summary>
         /// Volume

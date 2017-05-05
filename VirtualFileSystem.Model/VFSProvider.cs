@@ -16,14 +16,14 @@ namespace VirtualFileSystem.Model
         /// <returns>Returns a new virtual file system</returns>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public static IVirtualFS Create(string name, bool printTreeRoot = true) => new VirtualFS(name, printTreeRoot);
+        public static IVFSConsole Create(string name) => new VFSConsole(name);
 
-        private static readonly Lazy<IVirtualFS> defaultInstance = new Lazy<IVirtualFS>(() => Create("Default Virtual File System"));
+        private static readonly Lazy<IVFSConsole> defaultInstance = new Lazy<IVFSConsole>(() => Create("Default Virtual File System"));
 
         /// <summary>
         /// Default Virtual File System
         /// </summary>
-        public static IVirtualFS Default => defaultInstance.Value;
+        public static IVFSConsole Default => defaultInstance.Value;
 
         /// <summary>
         /// Static constructor

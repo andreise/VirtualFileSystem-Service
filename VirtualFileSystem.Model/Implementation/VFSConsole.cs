@@ -8,42 +8,24 @@ namespace VirtualFileSystem.Model
 {
 
     /// <summary>
-    /// Virtual File System
+    /// Virtual File System Console
     /// </summary>
-    internal sealed class VirtualFS : FSItem, IVirtualFS
+    internal sealed class VFSConsole : IVFSConsole
     {
 
         private static string DefaultVolumePath => FSPath.Consts.ValidVolumeNames[0];
 
+        private readonly IFSItem root;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="name">File System Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public VirtualFS(string name, bool printTreeRoot) :
-            base(
-                FSItemKind.FileSystem,
-                name,
-                new FSItemKind[] { },
-                new FSItemKind[] { FSItemKind.Volume },
-                "File system cannot have a parent item.",
-                "File system can contain volumes only as child items."
-            )
+        /// <param name="rootName">File System Name</param>
+        /// <exception cref="ArgumentNullException">Throws if the root name is null</exception>
+        /// <exception cref="ArgumentException">Throws if the root name is empty or is not a valid file system name</exception>
+        public VFSConsole(string rootName)
         {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
-
-            if (!FSPath.IsValidFileSystemName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
-
-            this.PrintTreeRoot = printTreeRoot;
-
-            IFSItem defaultVolume = FSItemFactory.CreateVolume(DefaultVolumePath);
-            this.AddChild(defaultVolume);
+            this.root = FSItemFactory.CreateRoot(rootName);
         }
 
         // IVirtualFS
@@ -59,7 +41,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(directory);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
@@ -83,7 +65,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(directory);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -106,7 +88,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(directory);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -148,7 +130,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(directory);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -176,7 +158,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(fileName);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
@@ -200,7 +182,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(fileName);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -225,7 +207,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(fileName);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -250,7 +232,7 @@ namespace VirtualFileSystem.Model
 
             string[] directoryParts = FSPath.SplitPath(fileName);
 
-            IFSItem currentItem = this;
+            IFSItem currentItem = this.root;
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
@@ -298,7 +280,7 @@ namespace VirtualFileSystem.Model
 
             string[] sourcePathParts = FSPath.SplitPath(sourcePath);
 
-            IFSItem sourcePathCurrentItem = this;
+            IFSItem sourcePathCurrentItem = this.root;
 
             for (int i = 0; i < sourcePathParts.Length; i++)
             {
@@ -318,7 +300,7 @@ namespace VirtualFileSystem.Model
 
             string[] destPathParts = FSPath.SplitPath(destPath);
 
-            IFSItem destPathCurrentItem = this;
+            IFSItem destPathCurrentItem = this.root;
 
             for (int i = 0; i < destPathParts.Length; i++)
             {
@@ -371,13 +353,11 @@ namespace VirtualFileSystem.Model
             currentDirectory, sourcePath, destPath, move: true
         );
 
-        public bool PrintTreeRoot { get; }
-
-        private void PrintTreeHelper(IFSItem item, StringBuilder builder)
+        private void PrintTreeHelper(IFSItem item, StringBuilder builder, bool printRoot)
         {
             void PrintItem()
             {
-                if (item.Kind == FSItemKind.FileSystem && !this.PrintTreeRoot)
+                if (item.Kind == FSItemKind.Root && !printRoot)
                     return;
 
                 if (builder.Length > 0)
@@ -385,7 +365,7 @@ namespace VirtualFileSystem.Model
 
                 int itemLevel = item.GetLevel();
 
-                if (!this.PrintTreeRoot)
+                if (!printRoot)
                     itemLevel--;
 
                 if (itemLevel > 0)
@@ -426,14 +406,14 @@ namespace VirtualFileSystem.Model
             foreach (var childGroup in item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key))
             {
                 foreach (var child in childGroup.OrderBy(child => child.Name, FSItemNameComparerProvider.Default))
-                    PrintTreeHelper(child, builder);
+                    PrintTreeHelper(child, builder, printRoot);
             }
         }
 
-        public string PrintTree()
+        public string PrintTree(bool printRoot)
         {
             var builder = new StringBuilder();
-            PrintTreeHelper(this, builder);
+            PrintTreeHelper(this.root, builder, printRoot);
             return builder.ToString();
         }
 

@@ -16,6 +16,28 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
         }
 
+        public static IFSItem CreateRoot(string name)
+        {
+            ValidateName(name);
+
+            if (!FSPath.IsValidFileSystemName(name))
+                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
+
+            IFSItem root = new FSItem(
+                FSItemKind.Root,
+                name,
+                new FSItemKind[] { },
+                new FSItemKind[] { FSItemKind.Volume },
+                "File system cannot have a parent item.",
+                "File system can contain volumes only as child items."
+            );
+
+            IFSItem defaultVolume = CreateVolume(FSPath.Consts.ValidVolumeNames[0]);
+            root.AddChild(defaultVolume);
+
+            return root;
+        }
+
         public static IFSItem CreateVolume(string name)
         {
             ValidateName(name);
@@ -26,7 +48,7 @@ namespace VirtualFileSystem.Model
             return new FSItem(
                 FSItemKind.Volume,
                 name,
-                new FSItemKind[] { FSItemKind.FileSystem },
+                new FSItemKind[] { FSItemKind.Root },
                 new FSItemKind[] { FSItemKind.Directory, FSItemKind.File },
                 "Volume can have only a file system as a parent.",
                 "Volume can contain directories and files only as child items."
