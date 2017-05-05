@@ -53,29 +53,6 @@ namespace VirtualFileSystem.Model
         public void ResetParent() => this.Parent = null;
 
         /// <summary>
-        /// Validates parent setting operation
-        /// </summary>
-        /// <param name="parent">Parent Item</param>
-        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
-        /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if parent settings operation is invalid for this item
-        /// </exception>
-        protected virtual void ValidateSetParent(IFSItem parent)
-        {
-            if (parent is null)
-                throw new ArgumentNullException(nameof(parent));
-
-            if ((object)this == (object)parent)
-                throw new ArgumentException("Item cannot be a parent of itself.");
-
-            if (!this.ValidParentKinds.Contains(parent.Kind))
-                throw new ArgumentException(this.ValidParentKindsMessage);
-        }
-
-        /// <summary>
         /// Sets Parent Item
         /// </summary>
         /// <param name="parent">Parent Item</param>
@@ -88,7 +65,18 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void SetParent(IFSItem parent)
         {
-            this.ValidateSetParent(parent);
+            if (this.ValidParentKinds.Count == 0)
+                throw new InvalidOperationException(this.ValidParentKindsMessage);
+
+            if (parent is null)
+                throw new ArgumentNullException(nameof(parent));
+
+            if ((object)this == (object)parent)
+                throw new ArgumentException("Item cannot be a parent of itself.");
+
+            if (!this.ValidParentKinds.Contains(parent.Kind))
+                throw new ArgumentException(this.ValidParentKindsMessage);
+
             this.Parent = parent;
         }
 

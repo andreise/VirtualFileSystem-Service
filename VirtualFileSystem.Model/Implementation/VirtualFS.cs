@@ -42,20 +42,6 @@ namespace VirtualFileSystem.Model
         protected override string ValidChildKindsMessage => "File system can contain volumes only as child items.";
 
         /// <summary>
-        /// Validates parent setting operation
-        /// </summary>
-        /// <param name="parent">Parent Item</param>
-        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
-        /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if parent settings operation is invalid for this item
-        /// </exception>
-        protected override void ValidateSetParent(IFSItem parent) =>
-            throw new InvalidOperationException(this.ValidParentKindsMessage);
-
-        /// <summary>
         /// Validates name
         /// </summary>
         /// <param name="name">Item Name</param>
