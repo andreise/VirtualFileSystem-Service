@@ -32,6 +32,16 @@ namespace VirtualFileSystem.Model
             new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Volume });
 
         /// <summary>
+        /// Valid Parent Kinds Message
+        /// </summary>
+        protected override string ValidParentKindsMessage => "File system cannot have a parent item.";
+
+        /// <summary>
+        /// Valid Child Kinds Message
+        /// </summary>
+        protected override string ValidChildKindsMessage => string.Empty;
+
+        /// <summary>
         /// Validates parent setting operation
         /// </summary>
         /// <param name="parent">Parent Item</param>
@@ -43,7 +53,7 @@ namespace VirtualFileSystem.Model
         /// Throws if parent settings operation is invalid for this item
         /// </exception>
         protected override void ValidateSetParent(IFSItem parent) =>
-            throw new InvalidOperationException("File system cannot have a parent item.");
+            throw new InvalidOperationException(this.ValidParentKindsMessage);
 
         /// <summary>
         /// Validates name

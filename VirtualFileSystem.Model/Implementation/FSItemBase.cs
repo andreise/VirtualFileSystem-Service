@@ -23,6 +23,16 @@ namespace VirtualFileSystem.Model
         protected abstract IReadOnlyCollection<FSItemKind> ValidChildKinds { get; }
 
         /// <summary>
+        /// Valid Parent Kinds Message
+        /// </summary>
+        protected abstract string ValidParentKindsMessage { get; }
+
+        /// <summary>
+        /// Valid Child Kinds Message
+        /// </summary>
+        protected abstract string ValidChildKindsMessage { get; }
+
+        /// <summary>
         /// Item Kind
         /// </summary>
         public FSItemKind Kind { get; }
@@ -60,6 +70,9 @@ namespace VirtualFileSystem.Model
 
             if ((object)this == (object)parent)
                 throw new ArgumentException("Item cannot be a parent of itself.");
+
+            if (!this.ValidParentKinds.Contains(parent.Kind))
+                throw new ArgumentException(this.ValidParentKindsMessage);
         }
 
         /// <summary>

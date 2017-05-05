@@ -25,23 +25,14 @@ namespace VirtualFileSystem.Model
             new ReadOnlyCollection<FSItemKind>(new FSItemKind[] { FSItemKind.Directory, FSItemKind.File });
 
         /// <summary>
-        /// Validates parent setting operation
+        /// Valid Parent Kinds Message
         /// </summary>
-        /// <param name="parent">Parent Item</param>
-        /// <exception cref="ArgumentNullException">Throws if new parent item is null</exception>
-        /// <exception cref="ArgumentException">
-        /// Throws if this item and new parent item is the same item, or if new parent item cannot have this item as a child
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if parent settings operation is invalid for this item
-        /// </exception>
-        protected override void ValidateSetParent(IFSItem parent)
-        {
-            base.ValidateSetParent(parent);
+        protected override string ValidParentKindsMessage => "Volume can have only a file system as a parent.";
 
-            if (parent.Kind != FSItemKind.FileSystem)
-                throw new ArgumentException("Volume can have only a file system as a parent.");
-        }
+        /// <summary>
+        /// Valid Child Kinds Message
+        /// </summary>
+        protected override string ValidChildKindsMessage => string.Empty;
 
         /// <summary>
         /// Validates name
