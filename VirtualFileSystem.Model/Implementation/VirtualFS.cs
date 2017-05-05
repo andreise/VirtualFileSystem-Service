@@ -39,7 +39,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Valid Child Kinds Message
         /// </summary>
-        protected override string ValidChildKindsMessage => string.Empty;
+        protected override string ValidChildKindsMessage => "File system can contain volumes only as child items.";
 
         /// <summary>
         /// Validates parent setting operation

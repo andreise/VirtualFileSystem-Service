@@ -32,7 +32,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Valid Child Kinds Message
         /// </summary>
-        protected override string ValidChildKindsMessage => string.Empty;
+        protected override string ValidChildKindsMessage => "File cannot contain child items.";
 
         /// <summary>
         /// Validates name
