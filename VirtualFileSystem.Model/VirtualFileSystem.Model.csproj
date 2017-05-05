@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Common\ConsoleCommandCode.cs" />
     <Compile Include="Common\ItemSet.cs" />
+    <Compile Include="Implementation\FSItemFactory.cs" />
     <Compile Include="Implementation\FSUserNameSet.cs" />
     <Compile Include="Interfaces\IItemSet.cs" />
     <Compile Include="Interfaces\VFSException.cs" />
@@ -50,11 +51,8 @@
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
     <Compile Include="Common\FSPath.cs" />
     <Compile Include="Common\FSPath.Consts.cs" />
-    <Compile Include="Implementation\FSDirectory.cs" />
-    <Compile Include="Implementation\FSFile.cs" />
-    <Compile Include="Implementation\FSItemBase.cs" />
+    <Compile Include="Implementation\FSItem.cs" />
     <Compile Include="Implementation\FSItemChildItemSet.cs" />
-    <Compile Include="Implementation\FSVolume.cs" />
     <Compile Include="Implementation\VirtualFS.cs" />
     <Compile Include="Interfaces\IFSItem.cs" />
     <Compile Include="Interfaces\IVirtualFS.cs" />

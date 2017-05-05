@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using static System.FormattableString;
 
@@ -9,28 +10,8 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item
     /// </summary>
-    internal abstract class FSItemBase : IFSItem
+    internal class FSItem : IFSItem
     {
-
-        /// <summary>
-        /// Valid Parent Kinds
-        /// </summary>
-        protected abstract IReadOnlyCollection<FSItemKind> ValidParentKinds { get; }
-
-        /// <summary>
-        /// Valid Child Kinds
-        /// </summary>
-        protected abstract IReadOnlyCollection<FSItemKind> ValidChildKinds { get; }
-
-        /// <summary>
-        /// Valid Parent Kinds Message
-        /// </summary>
-        protected abstract string ValidParentKindsMessage { get; }
-
-        /// <summary>
-        /// Valid Child Kinds Message
-        /// </summary>
-        protected abstract string ValidChildKindsMessage { get; }
 
         /// <summary>
         /// Item Kind
@@ -41,6 +22,26 @@ namespace VirtualFileSystem.Model
         /// Item Name
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Valid Parent Kinds
+        /// </summary>
+        private readonly IReadOnlyCollection<FSItemKind> validParentKinds;
+
+        /// <summary>
+        /// Valid Child Kinds
+        /// </summary>
+        private readonly IReadOnlyCollection<FSItemKind> validChildKinds;
+
+        /// <summary>
+        /// Valid Parent Kinds Message
+        /// </summary>
+        private readonly string validParentKindsMessage;
+
+        /// <summary>
+        /// Valid Child Kinds Message
+        /// </summary>
+        private readonly string validChildKindsMessage;
 
         /// <summary>
         /// Parent Item, or null if this item have no a parent
@@ -65,8 +66,8 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void SetParent(IFSItem parent)
         {
-            if (this.ValidParentKinds.Count == 0)
-                throw new InvalidOperationException(this.ValidParentKindsMessage);
+            if (this.validParentKinds.Count == 0)
+                throw new InvalidOperationException(this.validParentKindsMessage);
 
             if (parent is null)
                 throw new ArgumentNullException(nameof(parent));
@@ -74,8 +75,8 @@ namespace VirtualFileSystem.Model
             if ((object)this == (object)parent)
                 throw new ArgumentException("Item cannot be a parent of itself.");
 
-            if (!this.ValidParentKinds.Contains(parent.Kind))
-                throw new ArgumentException(this.ValidParentKindsMessage);
+            if (!this.validParentKinds.Contains(parent.Kind))
+                throw new ArgumentException(this.validParentKindsMessage);
 
             this.Parent = parent;
         }
@@ -182,14 +183,14 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void AddChild(IFSItem child)
         {
-            if (this.ValidChildKinds.Count == 0)
-                throw new InvalidOperationException(this.ValidChildKindsMessage);
+            if (this.validChildKinds.Count == 0)
+                throw new InvalidOperationException(this.validChildKindsMessage);
 
             if (child is null)
                 throw new ArgumentNullException(nameof(child));
 
-            if (!this.ValidChildKinds.Contains(child.Kind))
-                throw new ArgumentException(this.ValidChildKindsMessage);
+            if (!this.validChildKinds.Contains(child.Kind))
+                throw new ArgumentException(this.validChildKindsMessage);
 
             bool IsChildAlreadyExists() => this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name));
 
@@ -247,7 +248,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            IFSItem directory = new FSDirectory(name);
+            IFSItem directory = FSItemFactory.CreateDirectory(name);
 
             if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
@@ -270,7 +271,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            IFSItem file = new FSFile(name);
+            IFSItem file = FSItemFactory.CreateFile(name);
 
             if (this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
@@ -292,7 +293,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            IFSItem directory = new FSDirectory(name); // validate name
+            IFSItem directory = FSItemFactory.CreateDirectory(name); // validate name
 
             IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
@@ -321,7 +322,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            IFSItem directory = new FSDirectory(name); // validate name
+            IFSItem directory = FSItemFactory.CreateDirectory(name); // validate name
 
             IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
 
@@ -348,7 +349,7 @@ namespace VirtualFileSystem.Model
             if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
                 throw new InvalidOperationException("Item is not a volume or a directory.");
 
-            IFSItem file = new FSFile(name); // validate name
+            IFSItem file = FSItemFactory.CreateFile(name); // validate name
 
             IFSItem child = this.ChildItems.Where(item => FSItemNameComparerProvider.Default.Equals(file.Name, item.Name)).FirstOrDefault();
 
@@ -365,21 +366,6 @@ namespace VirtualFileSystem.Model
         }
 
         /// <summary>
-        /// Validates name
-        /// </summary>
-        /// <param name="name">Item Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty</exception>
-        protected virtual void ValidateName(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
-        }
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="kind">Item Kind</param>
@@ -387,16 +373,26 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentOutOfRangeException">Throws if the kind is incorrect</exception>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
-        public FSItemBase(FSItemKind kind, string name)
+        public FSItem(
+            FSItemKind kind,
+            string name,
+            IEnumerable<FSItemKind> validParentKinds,
+            IEnumerable<FSItemKind> validChildKinds,
+            string validParentKindsMessage,
+            string validChildKindsMessage
+        )
         {
-            if (!Enum.IsDefined(typeof(FSItemKind), kind))
-                throw new ArgumentOutOfRangeException(nameof(kind), kind, Invariant($"{nameof(kind)} is incorrect."));
-
-            this.ValidateName(name);
+            string NormalizeString(string s) => s?.Trim() ?? string.Empty;
+            IReadOnlyCollection<T> NormalizeCollection<T>(IEnumerable<T> source) => new ReadOnlyCollection<T>(source?.ToArray() ?? new T[] { });
 
             this.Kind = kind;
+            this.Name = NormalizeString(name);
 
-            this.Name = name.Trim();
+            this.validParentKinds = NormalizeCollection(validParentKinds);
+            this.validChildKinds = NormalizeCollection(validChildKinds);
+
+            this.validParentKindsMessage = NormalizeString(validParentKindsMessage);
+            this.validChildKindsMessage = NormalizeString(validChildKindsMessage);
 
             this.childItems = new FSItemChildItemSet(this);
         }
