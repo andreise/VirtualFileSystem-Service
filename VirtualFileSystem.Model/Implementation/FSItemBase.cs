@@ -123,7 +123,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// User list which blocked the item
         /// </summary>
-        /// <exception cref="InvalidOperationException">Throws if item is not a file</exception>
+        /// <exception cref="InvalidOperationException">Throws if the item is not a file</exception>
         public IReadOnlyCollection<string> LockedBy
         {
             get
@@ -194,30 +194,19 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void AddChild(IFSItem child)
         {
+            if (this.ValidChildKinds.Count == 0)
+                throw new InvalidOperationException(this.ValidChildKindsMessage);
+
             if (child is null)
                 throw new ArgumentNullException(nameof(child));
 
-            if (this.Kind != FSItemKind.FileSystem && this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a file system, a volume or a directory.");
+            if (!this.ValidChildKinds.Contains(child.Kind))
+                throw new ArgumentException(this.ValidChildKindsMessage);
 
             bool IsChildAlreadyExists() => this.ChildItems.Any(item => FSItemNameComparerProvider.Default.Equals(item.Name, child.Name));
 
-            if (this.Kind == FSItemKind.FileSystem)
-            {
-                if (child.Kind != FSItemKind.Volume)
-                    throw new InvalidOperationException("Child item is not a volume.");
-
-                if (IsChildAlreadyExists())
-                    throw new InvalidOperationException("Volume with the specified name already exists.");
-            }
-            else
-            {
-                if (child.Kind != FSItemKind.Directory && child.Kind != FSItemKind.File)
-                    throw new InvalidOperationException("Child item is not a directory or a file.");
-
-                if (IsChildAlreadyExists())
-                    throw new InvalidOperationException("Directory or file with the specified name already exists.");
-            }
+            if (IsChildAlreadyExists())
+                throw new InvalidOperationException("Child item the specified name already exists.");
 
             this.childItems.Add(child);
         }
