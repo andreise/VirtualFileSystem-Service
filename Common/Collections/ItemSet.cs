@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Common.Collections
 {
@@ -14,9 +15,15 @@ namespace Common.Collections
 
         public IReadOnlyCollection<T> Items => this.items;
 
+        public void Clear() => this.items.Clear();
+
+        public void TrimExcess() => this.items.TrimExcess();
+
         public virtual bool Add(T item) => this.items.Add(item);
 
         public virtual bool Remove(T item) => this.items.Remove(item);
+
+        public int RemoveWhere(Predicate<T> match) => this.items.RemoveWhere(match);
 
     }
 
