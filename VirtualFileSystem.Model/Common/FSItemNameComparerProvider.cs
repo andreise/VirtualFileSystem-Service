@@ -1,6 +1,5 @@
 ﻿using Common.Comparers;
 using System;
-using VFSCommon;
 
 namespace VirtualFileSystem.Model
 {

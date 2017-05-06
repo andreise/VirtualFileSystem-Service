@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using VFSCommon;
+using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VFSClient.Model
@@ -30,7 +30,7 @@ namespace VFSClient.Model
             }
         }
 
-        private static async Task ProcessConnectCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
+        private static async Task ProcessConnectCommand(IConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if (command.Parameters.Count == 0)
             {
@@ -88,7 +88,7 @@ namespace VFSClient.Model
             );
         }
 
-        private static async Task ProcessFSCommand(ConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
+        private static async Task ProcessFSCommand(IConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
             if (user.Credentials is null)
             {
@@ -143,9 +143,9 @@ namespace VFSClient.Model
                 )
             );
 
-            ConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommand<ConsoleCommandCode>.ParseNullable(readLine(), isCaseSensitive: false);
+            IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandParser.TryParse<ConsoleCommandCode>(readLine(), isCaseSensitive: false);
 
-            ConsoleCommand<ConsoleCommandCode> command;
+            IConsoleCommand<ConsoleCommandCode> command;
 
             while (
                 !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit

@@ -1,7 +1,7 @@
 ﻿using Common.Comparers;
 using System;
 
-namespace VFSCommon
+namespace VirtualFileSystem.Common
 {
 
     /// <summary>

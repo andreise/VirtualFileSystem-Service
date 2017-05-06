@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using VFSCommon;
+using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model

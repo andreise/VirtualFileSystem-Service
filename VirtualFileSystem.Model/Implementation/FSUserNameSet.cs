@@ -1,6 +1,6 @@
 ﻿using Common.Collections;
 using System;
-using VFSCommon;
+using VirtualFileSystem.Common;
 
 namespace VirtualFileSystem.Model
 {

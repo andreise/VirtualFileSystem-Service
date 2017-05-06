@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace VFSCommon
+namespace VirtualFileSystem.Common
 {
 
     /// <summary>
     /// Console Command
     /// </summary>
-    public class ConsoleCommand
+    internal class ConsoleCommand : IConsoleCommand
     {
+
         /// <summary>
         /// Command Line
         /// </summary>
@@ -38,7 +39,7 @@ namespace VFSCommon
         /// <param name="isCaseSensitive">Is command a case sensitive</param>
         /// <param name="command">Command</param>
         /// <param name="parameters">Command Parameters</param>
-        protected ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
+        public ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
         {
             string NormalizeString(string value) => value?.Trim() ?? string.Empty;
 
@@ -46,53 +47,6 @@ namespace VFSCommon
             this.IsCaseSensitive = isCaseSensitive;
             this.Command = NormalizeString(command);
             this.Parameters = new ReadOnlyCollection<string>(parameters?.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray() ?? new string[0]);
-        }
-
-        /// <summary>
-        /// Parses the command from a command line
-        /// </summary>
-        /// <param name="commandLine">Command Line</param>
-        /// <param name="isCaseSensitive">Is command a case sensitive</param>
-        /// <returns>Parsed command instance</returns>
-        /// <exception cref="NullReferenceException">Throws if the command line is null</exception>
-        protected static ConsoleCommand ParseInternal(string commandLine, bool isCaseSensitive)
-        {
-            var commandLineItems = commandLine.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-            return new ConsoleCommand(
-                commandLine,
-                isCaseSensitive,
-                commandLineItems.FirstOrDefault() ?? string.Empty,
-                commandLineItems.Skip(1)
-            );
-        }
-
-        /// <summary>
-        /// Parses the command from a command line
-        /// </summary>
-        /// <param name="commandLine">Command Line</param>
-        /// <param name="isCaseSensitive">Is command a case sensitive</param>
-        /// <returns>A parsed command instance</returns>
-        /// <exception cref="ArgumentNullException">Throws if the command line is null</exception>
-        public static ConsoleCommand Parse(string commandLine, bool isCaseSensitive)
-        {
-            if (commandLine is null)
-                throw new ArgumentNullException(nameof(commandLine));
-
-            return ParseInternal(commandLine, isCaseSensitive);
-        }
-
-        /// <summary>
-        /// Parses the command from a command line
-        /// </summary>
-        /// <param name="commandLine">Command Line</param>
-        /// <param name="isCaseSensitive">Is command a case sensitive</param>
-        /// <returns>A parsed command instance or null if the command line is null</returns>
-        public static ConsoleCommand ParseNullable(string commandLine, bool isCaseSensitive)
-        {
-            if (commandLine is null)
-                return null;
-
-            return ParseInternal(commandLine, isCaseSensitive);
         }
 
         /// <summary>
@@ -112,6 +66,7 @@ namespace VFSCommon
                 this.IsCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase
             );
         }
+
     }
 
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Web.Configuration;
 using System.Xml;
-using VFSCommon;
+using VirtualFileSystem.Common;
 using VirtualFileSystem.Model;
 using static System.FormattableString;
 
@@ -161,7 +161,7 @@ namespace VirtualFileSystem.Service.Model
             return new DisconnectResponse() { UserName = request.UserName };
         }
 
-        private string ProcessRequestCommand(FSCommandRequest request, ConsoleCommand<ConsoleCommandCode> command)
+        private string ProcessRequestCommand(FSCommandRequest request, IConsoleCommand<ConsoleCommandCode> command)
         {
             const string defaultResponseMessage = "Command performed successfully.";
 
@@ -292,10 +292,10 @@ namespace VirtualFileSystem.Service.Model
 
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
-            ConsoleCommand<ConsoleCommandCode> command;
+            IConsoleCommand<ConsoleCommandCode> command;
             try
             {
-                command = ConsoleCommand<ConsoleCommandCode>.Parse(request.CommandLine, isCaseSensitive: false);
+                command = ConsoleCommandParser.Parse<ConsoleCommandCode>(request.CommandLine, isCaseSensitive: false);
             }
             catch (ArgumentException e)
             {
