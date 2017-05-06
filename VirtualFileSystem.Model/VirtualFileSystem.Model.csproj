@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ConsoleCommandCode.cs" />
     <Compile Include="Common\ItemSet.cs" />
     <Compile Include="Implementation\FSItemFactory.cs" />
     <Compile Include="Implementation\FSUserNameSet.cs" />

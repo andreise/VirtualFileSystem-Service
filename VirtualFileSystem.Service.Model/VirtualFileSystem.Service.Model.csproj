@@ -47,6 +47,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleCommandCode.cs" />
     <Compile Include="DataContracts.cs" />
     <Compile Include="IVFSService.cs" />
     <Compile Include="IVFSServiceCallback.cs" />
