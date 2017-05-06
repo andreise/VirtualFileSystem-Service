@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Comparers;
+using System;
 
 namespace VFSCommon
 {
@@ -10,7 +11,7 @@ namespace VFSCommon
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(
-            () => new NameComparer(name => name?.Trim(), StringComparer.OrdinalIgnoreCase)
+            () => new StringItemComparer(name => name?.Trim(), StringComparer.OrdinalIgnoreCase)
         );
 
         /// <summary>

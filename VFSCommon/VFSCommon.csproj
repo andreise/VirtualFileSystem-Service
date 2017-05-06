@@ -39,7 +39,6 @@
     <Compile Include="ConsoleCommand.cs" />
     <Compile Include="ConsoleCommandOfT.cs" />
     <Compile Include="UserNameComparerProvider.cs" />
-    <Compile Include="NameComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

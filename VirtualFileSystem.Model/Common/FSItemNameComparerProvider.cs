@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Comparers;
+using System;
 using VFSCommon;
 
 namespace VirtualFileSystem.Model
@@ -11,7 +12,7 @@ namespace VirtualFileSystem.Model
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(
-            () => new NameComparer(name => name?.Trim(), StringComparer.OrdinalIgnoreCase)
+            () => new StringItemComparer(name => name?.Trim(), StringComparer.OrdinalIgnoreCase)
         );
 
         /// <summary>
