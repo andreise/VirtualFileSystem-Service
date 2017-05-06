@@ -81,9 +81,9 @@
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
-      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
-      <Name>VFSCommon</Name>
+    <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
+      <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
+      <Name>VirtualFileSystem.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -34,7 +34,7 @@ namespace VFSCommon
         protected ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
             : base(commandLine, isCaseSensitive, command, parameters)
         {
-            if (typeof(TCommandCodeEnum).IsEnum && !IsNumeric(this.Command))
+            if (!IsNumeric(this.Command))
                 this.CommandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
         }
 

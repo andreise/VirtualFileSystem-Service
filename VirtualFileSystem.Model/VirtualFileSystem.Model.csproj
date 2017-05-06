@@ -61,9 +61,9 @@
       <Project>{541b4f5a-c550-4629-8ba3-455f26f10e9e}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
-      <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
-      <Name>VFSCommon</Name>
+    <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
+      <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
+      <Name>VirtualFileSystem.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

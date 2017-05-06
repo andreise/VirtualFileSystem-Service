@@ -10,13 +10,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSClient", "VFSClient\VFSC
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA} = {ABD16C53-55D0-46A5-B19B-D8283C28CFAA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VFSCommon", "VFSCommon\VFSCommon.csproj", "{8C825BFE-1E4B-458E-A5EE-06357A3DD345}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.Model", "VirtualFileSystem.Service.Model\VirtualFileSystem.Service.Model.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.WindowsService", "VirtualFileSystem.Service.WindowsService\VirtualFileSystem.Service.WindowsService.csproj", "{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{541B4F5A-C550-4629-8BA3-455F26F10E9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Common", "VirtualFileSystem.Common\VirtualFileSystem.Common.csproj", "{088CFC42-3515-45CE-841F-80663FCBC447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C825BFE-1E4B-458E-A5EE-06357A3DD345}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,6 +44,10 @@ Global
 		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{088CFC42-3515-45CE-841F-80663FCBC447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088CFC42-3515-45CE-841F-80663FCBC447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088CFC42-3515-45CE-841F-80663FCBC447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088CFC42-3515-45CE-841F-80663FCBC447}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
