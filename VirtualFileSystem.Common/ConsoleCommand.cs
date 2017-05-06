@@ -46,7 +46,9 @@ namespace VirtualFileSystem.Common
             this.CommandLine = NormalizeString(commandLine);
             this.IsCaseSensitive = isCaseSensitive;
             this.Command = NormalizeString(command);
-            this.Parameters = new ReadOnlyCollection<string>(parameters?.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray() ?? new string[0]);
+            this.Parameters = new ReadOnlyCollection<string>(
+                parameters?.Where(item => !string.IsNullOrWhiteSpace(item)).Select(item => item.Trim()).ToArray() ?? new string[0]
+            );
         }
 
         /// <summary>
