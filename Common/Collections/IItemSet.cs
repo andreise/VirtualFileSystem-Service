@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace VirtualFileSystem.Model
+namespace Common.Collections
 {
 
-    internal interface IItemSet<T>
+    public interface IItemSet<T>
     {
 
         IReadOnlyCollection<T> Items { get; }

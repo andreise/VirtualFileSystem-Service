@@ -41,10 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ItemSet.cs" />
     <Compile Include="Implementation\FSItemFactory.cs" />
     <Compile Include="Implementation\FSUserNameSet.cs" />
-    <Compile Include="Interfaces\IItemSet.cs" />
     <Compile Include="Interfaces\VFSException.cs" />
     <Compile Include="Interfaces\FSItemKind.cs" />
     <Compile Include="Common\FSItemNameComparerProvider.cs" />
@@ -59,6 +57,10 @@
     <Compile Include="VFSProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{541b4f5a-c550-4629-8ba3-455f26f10e9e}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VFSCommon\VFSCommon.csproj">
       <Project>{8c825bfe-1e4b-458e-a5ee-06357a3dd345}</Project>
       <Name>VFSCommon</Name>

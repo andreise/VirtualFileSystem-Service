@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Model", "VirtualFileSystem.Model\VirtualFileSystem.Model.csproj", "{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}"
 EndProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.Model", "VirtualFileSystem.Service.Model\VirtualFileSystem.Service.Model.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Service.WindowsService", "VirtualFileSystem.Service.WindowsService\VirtualFileSystem.Service.WindowsService.csproj", "{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{541B4F5A-C550-4629-8BA3-455F26F10E9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541B4F5A-C550-4629-8BA3-455F26F10E9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

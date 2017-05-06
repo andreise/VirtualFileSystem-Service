@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace VirtualFileSystem.Model
+namespace Common.Collections
 {
 
-    internal class ItemSet<T> : IItemSet<T>
+    public class ItemSet<T> : IItemSet<T>
     {
 
         private readonly HashSet<T> items;

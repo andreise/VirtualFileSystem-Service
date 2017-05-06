@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Collections;
+using System;
 
 namespace VirtualFileSystem.Model
 {
