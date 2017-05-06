@@ -68,7 +68,7 @@
       <Name>VirtualFileSystem.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\VirtualFileSystem.Model\VirtualFileSystem.Model.csproj">
-      <Project>{4bec7ad9-8dce-46ba-b78e-64ced6785573}</Project>
+      <Project>{974107d1-26e9-4c1e-96af-329a8ad30ffc}</Project>
       <Name>VirtualFileSystem.Model</Name>
     </ProjectReference>
   </ItemGroup>

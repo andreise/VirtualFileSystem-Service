@@ -1,77 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4BEC7AD9-8DCE-46BA-B78E-64CED6785573}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VirtualFileSystem.Model</RootNamespace>
-    <AssemblyName>VirtualFileSystem.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>netstandard1.4</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Internal.Implementation\FSItemFactory.cs" />
-    <Compile Include="Internal.Common\FSUserNameSet.cs" />
-    <Compile Include="VFSException.cs" />
-    <Compile Include="Internal.Interfaces\FSItemKind.cs" />
-    <Compile Include="Internal.Common\FSItemNameComparerProvider.cs" />
-    <Compile Include="Internal.Common\FSPath.cs" />
-    <Compile Include="Internal.Common\FSPath.Consts.cs" />
-    <Compile Include="Internal.Implementation\FSItem.cs" />
-    <Compile Include="Internal.Implementation\FSItemChildItemSet.cs" />
-    <Compile Include="Internal.Implementation\VFSConsole.cs" />
-    <Compile Include="Internal.Interfaces\IFSItem.cs" />
-    <Compile Include="IVFSConsole.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VFSProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{541b4f5a-c550-4629-8ba3-455f26f10e9e}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
-      <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
-      <Name>VirtualFileSystem.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
