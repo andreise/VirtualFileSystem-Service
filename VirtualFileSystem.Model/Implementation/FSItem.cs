@@ -10,7 +10,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item
     /// </summary>
-    internal class FSItem : IFSItem
+    internal sealed class FSItem : IFSItem
     {
 
         /// <summary>
@@ -172,6 +172,12 @@ namespace VirtualFileSystem.Model
             this.lockedBy.Remove(userName);
         }
 
+        private void ValidateCanHasChildItems()
+        {
+            if (this.validChildKinds.Count == 0)
+                throw new InvalidOperationException(this.validChildKindsMessage);
+        }
+
         /// <summary>
         /// Adds child item
         /// </summary>
@@ -183,8 +189,7 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void AddChild(IFSItem child)
         {
-            if (this.validChildKinds.Count == 0)
-                throw new InvalidOperationException(this.validChildKindsMessage);
+            this.ValidateCanHasChildItems();
 
             if (child is null)
                 throw new ArgumentNullException(nameof(child));
@@ -213,8 +218,7 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void RemoveChild(IFSItem child)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             if (child is null)
                 throw new ArgumentNullException(nameof(child));
@@ -245,8 +249,7 @@ namespace VirtualFileSystem.Model
         /// <returns>Added child directory</returns>
         public IFSItem AddChildDirectory(string name)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             IFSItem directory = FSItemFactory.CreateDirectory(name);
 
@@ -268,8 +271,7 @@ namespace VirtualFileSystem.Model
         /// <returns>Added child file</returns>
         public IFSItem AddChildFile(string name)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             IFSItem file = FSItemFactory.CreateFile(name);
 
@@ -290,8 +292,7 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void RemoveChildDirectory(string name)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             IFSItem directory = FSItemFactory.CreateDirectory(name); // validate name
 
@@ -319,8 +320,7 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void RemoveChildDirectoryWithTree(string name)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             IFSItem directory = FSItemFactory.CreateDirectory(name); // validate name
 
@@ -346,8 +346,7 @@ namespace VirtualFileSystem.Model
         /// </exception>
         public void RemoveChildFile(string name)
         {
-            if (this.Kind != FSItemKind.Volume && this.Kind != FSItemKind.Directory)
-                throw new InvalidOperationException("Item is not a volume or a directory.");
+            this.ValidateCanHasChildItems();
 
             IFSItem file = FSItemFactory.CreateFile(name); // validate name
 
