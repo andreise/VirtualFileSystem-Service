@@ -38,10 +38,15 @@
   <ItemGroup>
     <Compile Include="ConsoleCommand.cs" />
     <Compile Include="ConsoleCommandOfT.cs" />
-    <Compile Include="EnumHelper.cs" />
     <Compile Include="UserNameComparerProvider.cs" />
     <Compile Include="NameComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{541b4f5a-c550-4629-8ba3-455f26f10e9e}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

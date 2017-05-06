@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace VFSCommon
+namespace Common.Enums
 {
 
     public static class EnumHelper
     {
 
         public static TEnum? TryParse<TEnum>(string value, bool ignoreCase = false) where TEnum : struct =>
-            typeof(TEnum).IsEnum && Enum.TryParse(value, ignoreCase, out TEnum result) ? result : (TEnum?)null;
+            Enum.TryParse(value, ignoreCase, out TEnum result) ? result : (TEnum?)null;
 
     }
 
