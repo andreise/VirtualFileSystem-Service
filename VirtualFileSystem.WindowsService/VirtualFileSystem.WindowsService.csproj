@@ -63,7 +63,7 @@
     <None Include="InstallScripts\UninstallService_RELEASE.cmd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VirtualFileSystem.Service.Model\VirtualFileSystem.ServiceModel.csproj">
+    <ProjectReference Include="..\VirtualFileSystem.ServiceModel\VirtualFileSystem.ServiceModel.csproj">
       <Project>{abd16c53-55d0-46a5-b19b-d8283c28cfaa}</Project>
       <Name>VirtualFileSystem.ServiceModel</Name>
     </ProjectReference>
