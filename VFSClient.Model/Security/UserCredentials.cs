@@ -1,7 +1,7 @@
 ﻿namespace VFSClient.Model.Security
 {
 
-    internal sealed class UserCredentials
+    public sealed class UserCredentials
     {
 
         public string UserName { get; }

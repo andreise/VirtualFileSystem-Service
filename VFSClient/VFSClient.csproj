@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model.Security\User.cs" />
-    <Compile Include="Model.Security\UserCredentials.cs" />
     <Compile Include="Model\ConsoleCommandCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +79,10 @@
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VFSClient.Model\VFSClient.Model.csproj">
+      <Project>{8518317f-94d5-42f8-9a71-4a69ac53f2db}</Project>
+      <Name>VFSClient.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
       <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
       <Name>VirtualFileSystem.Common</Name>
