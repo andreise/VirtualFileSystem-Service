@@ -14,23 +14,31 @@ namespace VirtualFileSystemClient.Model
 
         private static bool EqualUserNames(string name1, string name2) => UserNameComparerProvider.Default.Equals(name1, name2);
 
-        private static async Task ProcessCommandHelper<TFault>(Func<Task> handler, Action<string> writeLine)
+        private static async Task ProcessCommandHelper<TFaultException>(
+            Func<Task> handler,
+            Action<string> writeLine
+        ) where TFaultException : Exception
         {
             try
             {
                 await handler();
             }
-            catch (FaultException<TFault> e)
+            catch (TFaultException e)
             {
                 writeLine(e.Message);
             }
-            catch (AggregateException e) when (e.InnerException is FaultException<TFault>)
+            catch (AggregateException e) when (e.InnerException is TFaultException)
             {
                 writeLine(e.InnerException.Message);
             }
         }
 
-        private static async Task ProcessConnectCommandHelper<TFault>(IConsoleCommand<ConsoleCommandCode> command, User user, Func<string, Task> handler, Action<string> writeLine)
+        private static async Task ProcessConnectCommandHelper<TFaultException>(
+            IConsoleCommand<ConsoleCommandCode> command,
+            User user,
+            Func<string, Task> handler,
+            Action<string> writeLine
+        ) where TFaultException : Exception
         {
             if (command.Parameters.Count == 0)
             {
@@ -49,7 +57,7 @@ namespace VirtualFileSystemClient.Model
                 }
             }
 
-            await ProcessCommandHelper<TFault>(
+            await ProcessCommandHelper<TFaultException>(
                 async () => await handler(userName),
                 writeLine
             );
@@ -57,7 +65,7 @@ namespace VirtualFileSystemClient.Model
 
         private static async Task ProcessConnectCommand(IConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
-            await ProcessConnectCommandHelper<ConnectFault>(
+            await ProcessConnectCommandHelper<FaultException<ConnectFault>>(
                 command,
                 user,
                 async (userName) =>
@@ -75,7 +83,11 @@ namespace VirtualFileSystemClient.Model
             );
         }
 
-        private static async Task ProcessDisconnectCommandHelper<TFault>(User user, Func<Task> handler, Action<string> writeLine)
+        private static async Task ProcessDisconnectCommandHelper<TFaultException>(
+            User user,
+            Func<Task> handler,
+            Action<string> writeLine
+        ) where TFaultException : Exception
         {
             if (user.Credentials is null)
             {
@@ -83,7 +95,7 @@ namespace VirtualFileSystemClient.Model
                 return;
             }
 
-            await ProcessCommandHelper<TFault>(
+            await ProcessCommandHelper<TFaultException>(
                 handler,
                 writeLine
             );
@@ -91,7 +103,7 @@ namespace VirtualFileSystemClient.Model
 
         private static async Task ProcessDisconnectCommand(User user, VFSServiceClient service, Action<string> writeLine)
         {
-            await ProcessDisconnectCommandHelper<DisconnectFault>(
+            await ProcessDisconnectCommandHelper<FaultException<DisconnectFault>>(
                 user,
                 async () =>
                 {
@@ -107,7 +119,12 @@ namespace VirtualFileSystemClient.Model
             );
         }
 
-        private static async Task ProcessFSCommandHelper<TFault>(IConsoleCommand<ConsoleCommandCode> command, User user, Func<Task> handler, Action<string> writeLine)
+        private static async Task ProcessFSCommandHelper<TFaultException>(
+            IConsoleCommand<ConsoleCommandCode> command,
+            User user,
+            Func<Task> handler,
+            Action<string> writeLine
+        ) where TFaultException : Exception
         {
             if (user.Credentials is null)
             {
@@ -115,7 +132,7 @@ namespace VirtualFileSystemClient.Model
                 return;
             }
 
-            await ProcessCommandHelper<TFault>(
+            await ProcessCommandHelper<TFaultException>(
                 handler,
                 writeLine
             );
@@ -129,7 +146,7 @@ namespace VirtualFileSystemClient.Model
                 return;
             }
 
-            await ProcessFSCommandHelper<FSCommandFault>(
+            await ProcessFSCommandHelper<FaultException<FSCommandFault>>(
                 command,
                 user,
                 async () =>
