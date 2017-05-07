@@ -78,13 +78,13 @@
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VFSClient.Model\VFSClient.Model.csproj">
-      <Project>{8518317f-94d5-42f8-9a71-4a69ac53f2db}</Project>
-      <Name>VFSClient.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
       <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
       <Name>VirtualFileSystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj">
+      <Project>{e64400b8-b1c6-4c74-8f7c-722f1ec01c2b}</Project>
+      <Name>VirtualFileSystemClient.Model.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
