@@ -7,7 +7,7 @@ using VirtualFileSystem.Common;
 using VirtualFileSystem.Model;
 using static System.FormattableString;
 
-namespace VirtualFileSystem.Service.Model
+namespace VirtualFileSystem.ServiceModel
 {
     using Security;
     using Security.Cryptography;

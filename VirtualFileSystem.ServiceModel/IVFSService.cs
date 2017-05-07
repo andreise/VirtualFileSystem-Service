@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 using System.ServiceModel;
 
-[assembly: ContractNamespace("http://andrey.sergeev.vfsservice", ClrNamespace = "VirtualFileSystem.Service.Model")]
+[assembly: ContractNamespace("http://andrey.sergeev.vfsservice", ClrNamespace = "VirtualFileSystem.ServiceModel")]
 
-namespace VirtualFileSystem.Service.Model
+namespace VirtualFileSystem.ServiceModel
 {
 
     /// <summary>

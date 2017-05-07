@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 
-namespace VirtualFileSystem.Service.Model
+namespace VirtualFileSystem.ServiceModel
 {
 
     internal interface IVFSServiceCallback

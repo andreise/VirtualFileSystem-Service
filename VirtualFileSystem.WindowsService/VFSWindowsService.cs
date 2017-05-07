@@ -1,9 +1,9 @@
 ﻿using System.ServiceModel;
 using System.ServiceProcess;
 
-namespace VirtualFileSystem.Service.WindowsService
+namespace VirtualFileSystem.WindowsService
 {
-    using Model;
+    using ServiceModel;
 
     public sealed class VFSWindowsService : ServiceBase
     {

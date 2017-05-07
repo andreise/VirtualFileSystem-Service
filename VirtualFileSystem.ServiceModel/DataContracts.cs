@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace VirtualFileSystem.Service.Model
+namespace VirtualFileSystem.ServiceModel
 {
 
     // Callbacks

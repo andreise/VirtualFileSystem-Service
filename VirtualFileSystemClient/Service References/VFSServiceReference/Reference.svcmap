@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="e65fb4e0-8751-4b9b-b4d9-b5134d00d56a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd2" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="00a0fce6-da42-4746-8b07-17d7dc7a3d4f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd1" />
-    <MetadataFile FileName="VFSService.wsdl" MetadataType="Wsdl" ID="003cb034-b046-4b44-804a-a1a690ad1bac" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?wsdl" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="53a32508-8b51-4276-bce0-1161a1804abe" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?disco" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="033441f6-df42-44ff-be59-b4e035b453ec" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/?xsd=xsd0" />
+    <MetadataFile FileName="item1.disco" MetadataType="Disco" ID="0fc1afec-0326-4726-bdb2-f12f2830efbc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?disco" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="ed480d1d-5fb4-401d-a88f-98b9ff1172ab" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd1" />
+    <MetadataFile FileName="item31.xsd" MetadataType="Schema" ID="0f87b231-91e3-4e6d-a2e6-62bacf6f3fe7" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd0" />
+    <MetadataFile FileName="VFSService1.wsdl" MetadataType="Wsdl" ID="d84ecd6a-1769-490f-b2be-5e85c7a64358" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?wsdl" />
+    <MetadataFile FileName="item32.xsd" MetadataType="Schema" ID="5271af26-4a34-41ac-afbf-1b4c6cdf71be" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

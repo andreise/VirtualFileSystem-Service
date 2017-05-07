@@ -1,4 +1,4 @@
-﻿namespace VirtualFileSystem.Service.Model
+﻿namespace VirtualFileSystem.ServiceModel
 {
 
     /// <summary>

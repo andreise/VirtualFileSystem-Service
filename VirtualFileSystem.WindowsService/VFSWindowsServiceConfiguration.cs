@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace VirtualFileSystem.Service.WindowsService
+namespace VirtualFileSystem.WindowsService
 {
 
     static class VFSWindowsServiceConfiguration

@@ -57,16 +57,16 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\item.xsd">
+    <None Include="Service References\VFSServiceReference\item3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\item1.xsd">
+    <None Include="Service References\VFSServiceReference\item31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\item2.xsd">
+    <None Include="Service References\VFSServiceReference\item32.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
+    <None Include="Service References\VFSServiceReference\VFSService1.wsdl" />
     <None Include="Service References\VFSServiceReference\VirtualFileSystemClient.VFSServiceReference.ConnectResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -94,9 +94,6 @@
     <WCFMetadataStorage Include="Service References\VFSServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\VFSServiceReference\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\VFSServiceReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +104,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VFSServiceReference\item1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirtualFileSystem.Service.Model.Security
+namespace VirtualFileSystem.ServiceModel.Security
 {
 
     internal sealed class UserSessionInfo

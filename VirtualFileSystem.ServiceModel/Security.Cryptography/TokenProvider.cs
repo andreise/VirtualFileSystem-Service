@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace VirtualFileSystem.Service.Model.Security.Cryptography
+namespace VirtualFileSystem.ServiceModel.Security.Cryptography
 {
 
     internal sealed class TokenProvider

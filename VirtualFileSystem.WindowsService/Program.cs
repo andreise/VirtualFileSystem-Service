@@ -1,12 +1,9 @@
 ﻿using System.ServiceProcess;
 
-namespace VirtualFileSystem.Service.WindowsService
+namespace VirtualFileSystem.WindowsService
 {
     static class Program
     {
-        static void Main(string[] args)
-        {
-            ServiceBase.Run(new VFSWindowsService());
-        }
+        static void Main(string[] args) => ServiceBase.Run(new VFSWindowsService());
     }
 }

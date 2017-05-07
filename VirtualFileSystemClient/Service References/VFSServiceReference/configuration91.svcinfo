@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="ZppyRZV5hubd+ZA6b3TGPJvK8Wc=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="P4P8z9bFcZsN37nVpkTxxNP0h6I=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsDualHttpBinding" name="WSDualHttpBinding_IVFSService">
       <properties>
@@ -97,10 +97,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSDualHttpBinding_IVFSService" contract="VFSServiceReference.IVFSService" bindingType="wsDualHttpBinding" address="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/" bindingConfiguration="WSDualHttpBinding_IVFSService">
+    <endpoint name="WSDualHttpBinding_IVFSService" contract="VFSServiceReference.IVFSService" bindingType="wsDualHttpBinding" address="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/" bindingConfiguration="WSDualHttpBinding_IVFSService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.Service.Model/VFSService/</serializedValue>
+          <serializedValue>http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

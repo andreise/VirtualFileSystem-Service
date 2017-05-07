@@ -7,8 +7,8 @@
     <ProjectGuid>{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VirtualFileSystem.Service.WindowsService</RootNamespace>
-    <AssemblyName>VirtualFileSystem.Service.WindowsService</AssemblyName>
+    <RootNamespace>VirtualFileSystem.WindowsService</RootNamespace>
+    <AssemblyName>VirtualFileSystem.WindowsService</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -9,8 +9,8 @@
     <ProjectGuid>{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VirtualFileSystem.Service.Model</RootNamespace>
-    <AssemblyName>VirtualFileSystem.Service.Model</AssemblyName>
+    <RootNamespace>VirtualFileSystem.ServiceModel</RootNamespace>
+    <AssemblyName>VirtualFileSystem.ServiceModel</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>

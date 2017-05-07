@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualFileSystemClient.Model.Common", "VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj", "{E64400B8-B1C6-4C74-8F7C-722F1EC01C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystemClient", "VirtualFileSystemClient\VirtualFileSystemClient.csproj", "{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA} = {ABD16C53-55D0-46A5-B19B-D8283C28CFAA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.ServiceModel", "VirtualFileSystem.ServiceModel\VirtualFileSystem.ServiceModel.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject

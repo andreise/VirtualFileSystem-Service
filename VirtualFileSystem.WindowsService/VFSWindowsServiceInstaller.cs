@@ -2,7 +2,7 @@
 using System.Configuration.Install;
 using System.ServiceProcess;
 
-namespace VirtualFileSystem.Service.WindowsService
+namespace VirtualFileSystem.WindowsService
 {
 
     /// <summary>
