@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using VirtualFileSystem.Common;
 using static System.FormattableString;
 
-namespace VFSClient.Model
+namespace VirtualFileSystemClient.Model
 {
     using Security;
     using VFSServiceReference;

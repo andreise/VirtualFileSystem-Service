@@ -1,4 +1,4 @@
-﻿namespace VFSClient.Model
+﻿namespace VirtualFileSystemClient.Model
 {
 
     /// <summary>

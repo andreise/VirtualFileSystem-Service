@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VFSClient.VFSServiceReference {
+namespace VirtualFileSystemClient.VFSServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -139,9 +139,9 @@ namespace VFSClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.DisconnectFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.FSCommandFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VFSClient.VFSServiceReference.ConnectFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.DisconnectFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.FSCommandFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.ConnectFault))]
     public partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -187,7 +187,7 @@ namespace VFSClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectFault : VFSClient.VFSServiceReference.BaseFault {
+    public partial class DisconnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -210,7 +210,7 @@ namespace VFSClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandFault : VFSClient.VFSServiceReference.BaseFault {
+    public partial class FSCommandFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CommandLineField;
@@ -249,7 +249,7 @@ namespace VFSClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectFault : VFSClient.VFSServiceReference.BaseFault {
+    public partial class ConnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
@@ -606,45 +606,45 @@ namespace VFSClient.VFSServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService", CallbackContract=typeof(VFSClient.VFSServiceReference.IVFSServiceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService", CallbackContract=typeof(VirtualFileSystemClient.VFSServiceReference.IVFSServiceCallback))]
     public interface IVFSService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VFSClient.VFSServiceReference.ConnectFault), Action="http://tempuri.org/IVFSService/ConnectConnectFaultFault", Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VFSClient.VFSServiceReference.ConnectResponse Connect(VFSClient.VFSServiceReference.ConnectRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.ConnectFault), Action="http://tempuri.org/IVFSService/ConnectConnectFaultFault", Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.VFSServiceReference.ConnectResponse Connect(VirtualFileSystemClient.VFSServiceReference.ConnectRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        System.Threading.Tasks.Task<VFSClient.VFSServiceReference.ConnectResponse> ConnectAsync(VFSClient.VFSServiceReference.ConnectRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.ConnectResponse> ConnectAsync(VirtualFileSystemClient.VFSServiceReference.ConnectRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VFSClient.VFSServiceReference.DisconnectFault), Action="http://tempuri.org/IVFSService/DisconnectDisconnectFaultFault", Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VFSClient.VFSServiceReference.DisconnectResponse Disconnect(VFSClient.VFSServiceReference.DisconnectRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.DisconnectFault), Action="http://tempuri.org/IVFSService/DisconnectDisconnectFaultFault", Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.VFSServiceReference.DisconnectResponse Disconnect(VirtualFileSystemClient.VFSServiceReference.DisconnectRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VirtualFileSystemClient.VFSServiceReference.DisconnectRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VFSClient.VFSServiceReference.FSCommandFault), Action="http://tempuri.org/IVFSService/FSCommandFSCommandFaultFault", Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VFSClient.VFSServiceReference.FSCommandResponse FSCommand(VFSClient.VFSServiceReference.FSCommandRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.FSCommandFault), Action="http://tempuri.org/IVFSService/FSCommandFSCommandFaultFault", Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.VFSServiceReference.FSCommandResponse FSCommand(VirtualFileSystemClient.VFSServiceReference.FSCommandRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        System.Threading.Tasks.Task<VFSClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VFSClient.VFSServiceReference.FSCommandRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VirtualFileSystemClient.VFSServiceReference.FSCommandRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IVFSServiceCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IVFSService/FileSystemChangedNotify")]
-        void FileSystemChangedNotify(VFSClient.VFSServiceReference.FileSystemChangedData data);
+        void FileSystemChangedNotify(VirtualFileSystemClient.VFSServiceReference.FileSystemChangedData data);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IVFSServiceChannel : VFSClient.VFSServiceReference.IVFSService, System.ServiceModel.IClientChannel {
+    public interface IVFSServiceChannel : VirtualFileSystemClient.VFSServiceReference.IVFSService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class VFSServiceClient : System.ServiceModel.DuplexClientBase<VFSClient.VFSServiceReference.IVFSService>, VFSClient.VFSServiceReference.IVFSService {
+    public partial class VFSServiceClient : System.ServiceModel.DuplexClientBase<VirtualFileSystemClient.VFSServiceReference.IVFSService>, VirtualFileSystemClient.VFSServiceReference.IVFSService {
         
         public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -666,27 +666,27 @@ namespace VFSClient.VFSServiceReference {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public VFSClient.VFSServiceReference.ConnectResponse Connect(VFSClient.VFSServiceReference.ConnectRequest request) {
+        public VirtualFileSystemClient.VFSServiceReference.ConnectResponse Connect(VirtualFileSystemClient.VFSServiceReference.ConnectRequest request) {
             return base.Channel.Connect(request);
         }
         
-        public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.ConnectResponse> ConnectAsync(VFSClient.VFSServiceReference.ConnectRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.ConnectResponse> ConnectAsync(VirtualFileSystemClient.VFSServiceReference.ConnectRequest request) {
             return base.Channel.ConnectAsync(request);
         }
         
-        public VFSClient.VFSServiceReference.DisconnectResponse Disconnect(VFSClient.VFSServiceReference.DisconnectRequest request) {
+        public VirtualFileSystemClient.VFSServiceReference.DisconnectResponse Disconnect(VirtualFileSystemClient.VFSServiceReference.DisconnectRequest request) {
             return base.Channel.Disconnect(request);
         }
         
-        public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VFSClient.VFSServiceReference.DisconnectRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.DisconnectResponse> DisconnectAsync(VirtualFileSystemClient.VFSServiceReference.DisconnectRequest request) {
             return base.Channel.DisconnectAsync(request);
         }
         
-        public VFSClient.VFSServiceReference.FSCommandResponse FSCommand(VFSClient.VFSServiceReference.FSCommandRequest request) {
+        public VirtualFileSystemClient.VFSServiceReference.FSCommandResponse FSCommand(VirtualFileSystemClient.VFSServiceReference.FSCommandRequest request) {
             return base.Channel.FSCommand(request);
         }
         
-        public System.Threading.Tasks.Task<VFSClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VFSClient.VFSServiceReference.FSCommandRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.VFSServiceReference.FSCommandResponse> FSCommandAsync(VirtualFileSystemClient.VFSServiceReference.FSCommandRequest request) {
             return base.Channel.FSCommandAsync(request);
         }
     }

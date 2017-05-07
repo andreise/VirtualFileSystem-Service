@@ -7,8 +7,8 @@
     <ProjectGuid>{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VFSClient</RootNamespace>
-    <AssemblyName>VFSClient</AssemblyName>
+    <RootNamespace>VirtualFileSystemClient</RootNamespace>
+    <AssemblyName>VirtualFileSystemClient</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -66,16 +66,16 @@
     <None Include="Service References\VFSServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.ConnectResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.DisconnectResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VFSServiceReference\VFSClient.VFSServiceReference.FSCommandResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\VFSServiceReference\VFSService.wsdl" />
+    <None Include="Service References\VFSServiceReference\VirtualFileSystemClient.VFSServiceReference.ConnectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VFSServiceReference\VirtualFileSystemClient.VFSServiceReference.DisconnectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\VFSServiceReference\VirtualFileSystemClient.VFSServiceReference.FSCommandResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">

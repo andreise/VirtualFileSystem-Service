@@ -1,6 +1,6 @@
 ﻿using static System.Console;
 
-namespace VFSClient
+namespace VirtualFileSystemClient
 {
     using Model;
 

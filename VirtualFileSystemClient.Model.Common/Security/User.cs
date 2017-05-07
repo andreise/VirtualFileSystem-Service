@@ -1,4 +1,4 @@
-﻿namespace VFSClient.Model.Security
+﻿namespace VirtualFileSystemClient.Model.Security
 {
 
     public sealed class User
