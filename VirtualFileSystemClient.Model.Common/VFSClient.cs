@@ -31,7 +31,7 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected abstract Task DisconnectCommandHandler();
 
-        protected abstract Task VFSCommandHandler();
+        protected abstract Task VFSCommandHandler(IConsoleCommand<ConsoleCommandCode> command);
 
         protected async Task ProcessCommand<TException>(Func<Task> handler) where TException : Exception
         {
@@ -53,6 +53,9 @@ namespace VirtualFileSystemClient.Model.Common
         {
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
+
+            if (command.CommandCode != ConsoleCommandCode.Connect)
+                throw new ArgumentException(paramName: nameof(command), message: Invariant($"Command is not the '{nameof(ConsoleCommandCode.Connect)}' command."));
 
             string userName;
 
@@ -86,15 +89,21 @@ namespace VirtualFileSystemClient.Model.Common
             await this.ProcessCommand<TDisconnectException>(this.DisconnectCommandHandler);
         }
 
-        protected async Task ProcessVFSCommand()
+        protected async Task ProcessVFSCommand(IConsoleCommand<ConsoleCommandCode> command)
         {
+            if (command is null)
+                throw new ArgumentNullException(paramName: nameof(command));
+
+            if (!(command.CommandCode is null))
+                throw new ArgumentException(paramName: nameof(command), message: "Command is not a file system command.");
+
             if (this.User.Credentials is null)
             {
                 this.Output("Please connect to the host before sending to it any other commands.");
                 return;
             }
 
-            await this.ProcessCommand<TVFSException>(this.VFSCommandHandler);
+            await this.ProcessCommand<TVFSException>(async () => await this.VFSCommandHandler(command));
         }
 
     }
