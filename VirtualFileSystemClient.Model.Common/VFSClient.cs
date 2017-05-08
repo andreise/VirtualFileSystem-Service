@@ -54,13 +54,13 @@ namespace VirtualFileSystemClient.Model.Common
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
 
-            if (command.Parameters.Count == 0)
+            string userName;
+
+            if (command.Parameters.Count == 0 || string.IsNullOrWhiteSpace(userName = command.Parameters[0]))
             {
                 this.Output("User name not specified.");
                 return;
             }
-
-            string userName = command.Parameters[0];
 
             if (!(this.User.Credentials is null))
             {
