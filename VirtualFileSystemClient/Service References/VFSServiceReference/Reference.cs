@@ -17,7 +17,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ConnectRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ConnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -36,7 +36,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -62,7 +62,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ConnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ConnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -87,7 +87,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] Token {
+        internal byte[] Token {
             get {
                 return this.TokenField;
             }
@@ -100,7 +100,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TotalUsers {
+        internal int TotalUsers {
             get {
                 return this.TotalUsersField;
             }
@@ -113,7 +113,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -142,7 +142,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.DisconnectFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.FSCommandFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.ConnectFault))]
-    public partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -161,7 +161,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FaultMessage {
+        internal string FaultMessage {
             get {
                 return this.FaultMessageField;
             }
@@ -187,13 +187,13 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
+    internal partial class DisconnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -210,7 +210,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
+    internal partial class FSCommandFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CommandLineField;
@@ -219,7 +219,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         private string UserNameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommandLine {
+        internal string CommandLine {
             get {
                 return this.CommandLineField;
             }
@@ -232,7 +232,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -249,13 +249,13 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
+    internal partial class ConnectFault : VirtualFileSystemClient.VFSServiceReference.BaseFault {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UserNameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -272,7 +272,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class DisconnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -294,7 +294,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] Token {
+        internal byte[] Token {
             get {
                 return this.TokenField;
             }
@@ -307,7 +307,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -333,7 +333,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class DisconnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -352,7 +352,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -378,7 +378,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FSCommandRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -403,7 +403,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommandLine {
+        internal string CommandLine {
             get {
                 return this.CommandLineField;
             }
@@ -416,7 +416,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] Token {
+        internal byte[] Token {
             get {
                 return this.TokenField;
             }
@@ -429,7 +429,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -455,7 +455,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FSCommandResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -483,7 +483,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommandLine {
+        internal string CommandLine {
             get {
                 return this.CommandLineField;
             }
@@ -496,7 +496,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrentDirectory {
+        internal string CurrentDirectory {
             get {
                 return this.CurrentDirectoryField;
             }
@@ -509,7 +509,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ResponseMessage {
+        internal string ResponseMessage {
             get {
                 return this.ResponseMessageField;
             }
@@ -522,7 +522,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -548,7 +548,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemChangedData", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FileSystemChangedData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FileSystemChangedData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -570,7 +570,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommandLine {
+        internal string CommandLine {
             get {
                 return this.CommandLineField;
             }
@@ -583,7 +583,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -607,7 +607,7 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VFSServiceReference.IVFSService", CallbackContract=typeof(VirtualFileSystemClient.VFSServiceReference.IVFSServiceCallback))]
-    public interface IVFSService {
+    internal interface IVFSService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.VFSServiceReference.ConnectFault), Action="http://tempuri.org/IVFSService/ConnectConnectFaultFault", Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
@@ -632,19 +632,19 @@ namespace VirtualFileSystemClient.VFSServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IVFSServiceCallback {
+    internal interface IVFSServiceCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IVFSService/FileSystemChangedNotify")]
         void FileSystemChangedNotify(VirtualFileSystemClient.VFSServiceReference.FileSystemChangedData data);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IVFSServiceChannel : VirtualFileSystemClient.VFSServiceReference.IVFSService, System.ServiceModel.IClientChannel {
+    internal interface IVFSServiceChannel : VirtualFileSystemClient.VFSServiceReference.IVFSService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class VFSServiceClient : System.ServiceModel.DuplexClientBase<VirtualFileSystemClient.VFSServiceReference.IVFSService>, VirtualFileSystemClient.VFSServiceReference.IVFSService {
+    internal partial class VFSServiceClient : System.ServiceModel.DuplexClientBase<VirtualFileSystemClient.VFSServiceReference.IVFSService>, VirtualFileSystemClient.VFSServiceReference.IVFSService {
         
         public VFSServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
