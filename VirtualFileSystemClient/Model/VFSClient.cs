@@ -9,7 +9,7 @@ namespace VirtualFileSystemClient.Model
     using Security;
     using VFSServiceReference;
 
-    internal static class VFSClient
+    internal static class VFSClientLegacy
     {
 
         private static bool EqualUserNames(string name1, string name2) => UserNameComparerProvider.Default.Equals(name1, name2);

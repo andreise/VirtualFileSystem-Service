@@ -6,6 +6,6 @@ namespace VirtualFileSystemClient
 
     static class Program
     {
-        static void Main(string[] args) => VFSClient.Run(ReadLine, WriteLine).Wait();
+        static void Main(string[] args) => VFSClientLegacy.Run(ReadLine, WriteLine).Wait();
     }
 }
