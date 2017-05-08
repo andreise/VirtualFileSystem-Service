@@ -34,6 +34,8 @@ namespace VirtualFileSystemClient.Model
             );
         }
 
+        private const string ServerReturnedNullResponseMessage = "Server returned null response.";
+
         protected override async Task ConnectCommandHandler(string userName)
         {
             var response = await this.Service.ConnectAsync(
@@ -45,12 +47,14 @@ namespace VirtualFileSystemClient.Model
 
             if (response is null)
             {
+                string message = ServerReturnedNullResponseMessage;
                 throw new FaultException<ConnectFault>(
                     new ConnectFault()
                     {
-                        FaultMessage = "Server returned null response.",
+                        FaultMessage = message,
                         UserName = userName
-                    }
+                    },
+                    message
                 );
             }
 
@@ -72,12 +76,14 @@ namespace VirtualFileSystemClient.Model
 
             if (response is null)
             {
+                string message = ServerReturnedNullResponseMessage;
                 throw new FaultException<DisconnectFault>(
                     new DisconnectFault()
                     {
-                        FaultMessage = "Server returned null response.",
+                        FaultMessage = message,
                         UserName = this.User.Credentials.UserName
-                    }
+                    },
+                    message
                 );
             }
 
@@ -99,13 +105,15 @@ namespace VirtualFileSystemClient.Model
 
             if (response is null)
             {
+                string message = ServerReturnedNullResponseMessage;
                 throw new FaultException<FSCommandFault>(
                     new FSCommandFault()
                     {
-                        FaultMessage = "Server returned null response.",
+                        FaultMessage = message,
                         UserName = this.User.Credentials.UserName,
                         CommandLine = command.CommandLine
-                    }
+                    },
+                    message
                 );
             }
 

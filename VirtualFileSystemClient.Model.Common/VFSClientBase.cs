@@ -33,7 +33,7 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected abstract Task VFSCommandHandler(IConsoleCommand<ConsoleCommandCode> command);
 
-        protected async Task ProcessCommand<TException>(Func<Task> handler) where TException : Exception
+        private async Task ProcessCommand<TException>(Func<Task> handler) where TException : Exception
         {
             try
             {
@@ -76,7 +76,6 @@ namespace VirtualFileSystemClient.Model.Common
 
             await this.ProcessCommand<TConnectException>(async () => await this.ConnectCommandHandler(userName));
         }
-
 
         protected async Task ProcessDisconnectCommand()
         {
