@@ -19,8 +19,20 @@ namespace VirtualFileSystemClient.Model
             this.Input = input;
         }
 
+        private bool alreadyRun;
+
+        private readonly object runLock = new object();
+
         public async Task Run()
         {
+            lock (this.runLock)
+            {
+                if (this.alreadyRun)
+                    throw new InvalidOperationException("Client instance once has already been launched.");
+
+                this.alreadyRun = true;
+            }
+
             this.Output("Virtual File System Client");
             this.Output(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
             this.Output(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
