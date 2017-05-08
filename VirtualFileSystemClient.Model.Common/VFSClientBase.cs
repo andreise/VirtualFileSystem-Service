@@ -7,7 +7,7 @@ namespace VirtualFileSystemClient.Model.Common
 {
     using Security;
 
-    public abstract class VFSClient<TConnectException, TDisconnectException, TVFSException>
+    public abstract class VFSClientBase<TConnectException, TDisconnectException, TVFSException>
         where TConnectException : Exception
         where TDisconnectException : Exception
         where TVFSException : Exception
@@ -19,7 +19,7 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected readonly Action<string> Output;
 
-        public VFSClient(Action<string> output)
+        public VFSClientBase(Action<string> output)
         {
             if (output is null)
                 throw new ArgumentNullException(nameof(output));

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\VFSClient.cs" />
+    <Compile Include="Model\VFSClientBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\VFSServiceReference\Reference.cs">

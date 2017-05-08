@@ -1,102 +1,81 @@
 ﻿using System;
-using System.ServiceModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.ServiceModel;
 using VirtualFileSystem.Common;
+using VirtualFileSystemClient.VFSServiceReference;
 using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model
 {
-    using VFSServiceReference;
 
-    public sealed class VFSClient : VFSClient<ConnectFault, DisconnectFault, FSCommandFault>
+    internal sealed class VFSClient : VFSClientBase
     {
 
-        private readonly VFSServiceClient Service;
+        private readonly Func<string> Input;
 
-        public VFSClient(VFSServiceClient service, Action<string> output) : base(output)
+        private void HandleCallback(FileSystemChangedData data)
         {
-            if (service is null)
-                throw new ArgumentNullException(nameof(service));
+            if (data is null || data.UserName is null)
+                return;
 
-            this.Service = service;
+            if (this.User.Credentials is null)
+                return;
+
+            if (EqualUserNames(data.UserName, this.User.Credentials.UserName))
+                return;
+
+            this.Output(Invariant($"User '{data.UserName}' performed command: {data.CommandLine}"));
         }
 
-        protected override async Task ConnectCommandHandler(string userName)
+        protected override VFSServiceClient Service { get; }
+
+        public VFSClient(Func<string> input, Action<string> output) : base(output)
         {
-            var response = await this.Service.ConnectAsync(
-                new ConnectRequest()
-                {
-                    UserName = userName
-                }
+            if (input is null)
+                throw new ArgumentNullException(nameof(input));
+
+            this.Input = input;
+
+            this.Service = new VFSServiceClient(
+                new InstanceContext(new VFSServiceCallbackHandler(this.HandleCallback))
             );
-
-            if (response is null)
-            {
-                throw new FaultException<ConnectFault>(
-                    new ConnectFault()
-                    {
-                        FaultMessage = "Server returned null response.",
-                        UserName = userName
-                    }
-                );
-            }
-
-            this.User.SetCredentials(userName, response.Token);
-
-            this.Output(Invariant($"User '{response.UserName}' connected successfully."));
-            this.Output(Invariant($"Total users: {response.TotalUsers}."));
         }
 
-        protected override async Task DisconnectCommandHandler()
+        public async Task Run()
         {
-            var response = await this.Service.DisconnectAsync(
-                new DisconnectRequest()
-                {
-                    UserName = this.User.Credentials.UserName,
-                    Token = this.User.Credentials.Token
-                }
-            );
+            this.Output("Virtual File System Client");
+            this.Output(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
+            this.Output(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
-            if (response is null)
+            IConsoleCommand<ConsoleCommandCode> command;
+
+            IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandParser.TryParse<ConsoleCommandCode>(this.Input(), isCaseSensitive: false);
+
+            while (
+                !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
+            )
             {
-                throw new FaultException<DisconnectFault>(
-                    new DisconnectFault()
-                    {
-                        FaultMessage = "Server returned null response.",
-                        UserName = this.User.Credentials.UserName
-                    }
-                );
-            }
+                if (string.IsNullOrWhiteSpace(command.CommandLine))
+                    continue;
 
-            this.User.ResetCredentials();
-
-            this.Output(Invariant($"User '{response.UserName}' disconnected."));
-        }
-
-        protected override async Task VFSCommandHandler(IConsoleCommand<ConsoleCommandCode> command)
-        {
-            var response = await this.Service.FSCommandAsync(
-                new FSCommandRequest()
+                switch (command.CommandCode)
                 {
-                    UserName = this.User.Credentials.UserName,
-                    Token = this.User.Credentials.Token,
-                    CommandLine = command.CommandLine
+                    case ConsoleCommandCode.Connect:
+                        await this.ProcessConnectCommand(command);
+                        break;
+
+                    case ConsoleCommandCode.Disconnect:
+                        await this.ProcessDisconnectCommand();
+                        break;
+
+                    default:
+                        await this.ProcessVFSCommand(command);
+                        break;
                 }
-            );
-
-            if (response is null)
-            {
-                throw new FaultException<FSCommandFault>(
-                    new FSCommandFault()
-                    {
-                        FaultMessage = "Server returned null response.",
-                        UserName = this.User.Credentials.UserName,
-                        CommandLine = command.CommandLine
-                    }
-                );
-            }
-
-            this.Output(response.ResponseMessage);
+            } // while
         }
 
     }
