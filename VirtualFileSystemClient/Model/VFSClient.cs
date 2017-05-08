@@ -120,7 +120,6 @@ namespace VirtualFileSystemClient.Model
         }
 
         private static async Task ProcessFSCommandHelper<TFaultException>(
-            IConsoleCommand<ConsoleCommandCode> command,
             User user,
             Func<Task> handler,
             Action<string> writeLine
@@ -140,14 +139,7 @@ namespace VirtualFileSystemClient.Model
 
         private static async Task ProcessFSCommand(IConsoleCommand<ConsoleCommandCode> command, User user, VFSServiceClient service, Action<string> writeLine)
         {
-            if (user.Credentials is null)
-            {
-                writeLine("Please connect to the host before sending to it any other commands.");
-                return;
-            }
-
             await ProcessFSCommandHelper<FaultException<FSCommandFault>>(
-                command,
                 user,
                 async () =>
                 {
