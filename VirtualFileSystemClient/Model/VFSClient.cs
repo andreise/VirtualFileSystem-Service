@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.ServiceModel;
 using VirtualFileSystem.Common;
-using VirtualFileSystemClient.VFSServiceReference;
 using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model
@@ -16,32 +11,12 @@ namespace VirtualFileSystemClient.Model
 
         private readonly Func<string> Input;
 
-        private void HandleCallback(FileSystemChangedData data)
-        {
-            if (data is null || data.UserName is null)
-                return;
-
-            if (this.User.Credentials is null)
-                return;
-
-            if (EqualUserNames(data.UserName, this.User.Credentials.UserName))
-                return;
-
-            this.Output(Invariant($"User '{data.UserName}' performed command: {data.CommandLine}"));
-        }
-
-        protected override VFSServiceClient Service { get; }
-
         public VFSClient(Func<string> input, Action<string> output) : base(output)
         {
             if (input is null)
                 throw new ArgumentNullException(nameof(input));
 
             this.Input = input;
-
-            this.Service = new VFSServiceClient(
-                new InstanceContext(new VFSServiceCallbackHandler(this.HandleCallback))
-            );
         }
 
         public async Task Run()
@@ -54,28 +29,35 @@ namespace VirtualFileSystemClient.Model
 
             IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandParser.TryParse<ConsoleCommandCode>(this.Input(), isCaseSensitive: false);
 
-            while (
-                !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
-            )
+            try
             {
-                if (string.IsNullOrWhiteSpace(command.CommandLine))
-                    continue;
-
-                switch (command.CommandCode)
+                while (
+                    !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
+                )
                 {
-                    case ConsoleCommandCode.Connect:
-                        await this.ProcessConnectCommand(command);
-                        break;
+                    if (string.IsNullOrWhiteSpace(command.CommandLine))
+                        continue;
 
-                    case ConsoleCommandCode.Disconnect:
-                        await this.ProcessDisconnectCommand();
-                        break;
+                    switch (command.CommandCode)
+                    {
+                        case ConsoleCommandCode.Connect:
+                            await this.ProcessConnectCommand(command);
+                            break;
 
-                    default:
-                        await this.ProcessVFSCommand(command);
-                        break;
-                }
-            } // while
+                        case ConsoleCommandCode.Disconnect:
+                            await this.ProcessDisconnectCommand();
+                            break;
+
+                        default:
+                            await this.ProcessVFSCommand(command);
+                            break;
+                    }
+                } // while
+            }
+            finally
+            {
+                this.Service.Abort();
+            }
         }
 
     }

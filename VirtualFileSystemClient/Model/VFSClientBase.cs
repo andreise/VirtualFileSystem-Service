@@ -11,11 +11,28 @@ namespace VirtualFileSystemClient.Model
     internal abstract class VFSClientBase : VFSClientBase<ConnectFault, DisconnectFault, FSCommandFault>
     {
 
-        public VFSClientBase(Action<string> output) : base(output)
+        private void HandleCallback(FileSystemChangedData data)
         {
+            if (data is null || data.UserName is null)
+                return;
+
+            if (this.User.Credentials is null)
+                return;
+
+            if (EqualUserNames(data.UserName, this.User.Credentials.UserName))
+                return;
+
+            this.Output(Invariant($"User '{data.UserName}' performed command: {data.CommandLine}"));
         }
 
-        protected abstract VFSServiceClient Service { get; }
+        protected readonly VFSServiceClient Service;
+
+        public VFSClientBase(Action<string> output) : base(output)
+        {
+            this.Service = new VFSServiceClient(
+                new InstanceContext(new VFSServiceCallbackHandler(this.HandleCallback))
+            );
+        }
 
         protected override async Task ConnectCommandHandler(string userName)
         {
