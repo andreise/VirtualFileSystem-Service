@@ -11,11 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualFileSystemClient.Model.Common", "VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj", "{E64400B8-B1C6-4C74-8F7C-722F1EC01C2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystemClient", "VirtualFileSystemClient\VirtualFileSystemClient.csproj", "{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}"
-	ProjectSection(ProjectDependencies) = postProject
-		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA} = {ABD16C53-55D0-46A5-B19B-D8283C28CFAA}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.ServiceModel", "VirtualFileSystem.ServiceModel\VirtualFileSystem.ServiceModel.csproj", "{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualFileSystem.WindowsService", "VirtualFileSystem.WindowsService\VirtualFileSystem.WindowsService.csproj", "{F2D18D0D-7E36-4F0C-BA4D-CF8192C84D8B}"
@@ -49,10 +44,6 @@ Global
 		{E64400B8-B1C6-4C74-8F7C-722F1EC01C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64400B8-B1C6-4C74-8F7C-722F1EC01C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E64400B8-B1C6-4C74-8F7C-722F1EC01C2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23E473C0-4752-49B4-BF0A-A5FD94A5DF40}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD16C53-55D0-46A5-B19B-D8283C28CFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
