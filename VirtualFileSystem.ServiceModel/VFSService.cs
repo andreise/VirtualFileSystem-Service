@@ -163,7 +163,7 @@ namespace VirtualFileSystem.ServiceModel
             return new DeauthorizeResponse() { UserName = request.UserName };
         }
 
-        private string ProcessRequestCommand(FileSystemConsoleRequest request, IConsoleCommand<ConsoleCommandCode> command)
+        private string ProcessFileSystemConsoleOperation(FileSystemConsoleRequest request, IConsoleCommand<ConsoleCommandCode> command)
         {
             const string defaultResponseMessage = "Command performed successfully.";
 
@@ -307,7 +307,7 @@ namespace VirtualFileSystem.ServiceModel
             string responseMessage;
             try
             {
-                responseMessage = this.ProcessRequestCommand(request, command);
+                responseMessage = this.ProcessFileSystemConsoleOperation(request, command);
             }
             catch (Exception e)
             {
