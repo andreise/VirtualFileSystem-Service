@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd2" namespace="http://andrey.sergeev.vfsservice" />
+  <xs:element name="Connect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q1:ConnectRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConnectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://andrey.sergeev.vfsservice" minOccurs="0" name="ConnectResult" nillable="true" type="q2:ConnectResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Disconnect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q3:DisconnectRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisconnectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://andrey.sergeev.vfsservice" minOccurs="0" name="DisconnectResult" nillable="true" type="q4:DisconnectResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FSCommand">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FSCommandRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FSCommandResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FSCommandResult" nillable="true" type="q6:FSCommandResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FileSystemChangedNotify">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://andrey.sergeev.vfsservice" minOccurs="0" name="data" nillable="true" type="q7:FileSystemChangedData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -33,9 +33,16 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\VirtualFileSystemServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="VFSClientBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -44,6 +51,49 @@
       <Project>{e64400b8-b1c6-4c74-8f7c-722f1ec01c2b}</Project>
       <Name>VirtualFileSystemClient.Model.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\VirtualFileSystemServiceReference\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VFSService.wsdl" />
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\VirtualFileSystemServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VirtualFileSystemServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
