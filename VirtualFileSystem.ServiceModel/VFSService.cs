@@ -22,7 +22,7 @@ namespace VirtualFileSystem.ServiceModel
     )]
     public class VFSService : IVFSService
     {
-        private IVFSConsole VFSConsole => VFSProvider.Default;
+        private IFileSystem VFSConsole => FileSystemFactory.Default;
 
         private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 

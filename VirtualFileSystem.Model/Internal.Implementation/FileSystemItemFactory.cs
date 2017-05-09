@@ -4,7 +4,7 @@ using static System.FormattableString;
 namespace VirtualFileSystem.Model
 {
 
-    internal static class FSItemFactory
+    internal static class FileSystemItemFactory
     {
 
         private static void ValidateName(string name)
@@ -16,74 +16,74 @@ namespace VirtualFileSystem.Model
                 throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
         }
 
-        public static IFSItem CreateRoot(string name)
+        public static IFileSystemItem CreateRoot(string name)
         {
             ValidateName(name);
 
-            if (!FSPath.IsValidFileSystemName(name))
+            if (!PathUtils.IsValidFileSystemName(name))
                 throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
 
-            IFSItem root = new FSItem(
-                FSItemKind.Root,
+            IFileSystemItem root = new FileSystemItem(
+                FileSystemItemKind.Root,
                 name,
-                new FSItemKind[] { },
-                new FSItemKind[] { FSItemKind.Volume },
+                new FileSystemItemKind[] { },
+                new FileSystemItemKind[] { FileSystemItemKind.Volume },
                 "File system cannot have a parent item.",
                 "File system can contain volumes only as child items."
             );
 
-            IFSItem defaultVolume = CreateVolume(FSPath.Consts.ValidVolumeNames[0]);
+            IFileSystemItem defaultVolume = CreateVolume(PathUtils.Consts.ValidVolumeNames[0]);
             root.AddChild(defaultVolume);
 
             return root;
         }
 
-        public static IFSItem CreateVolume(string name)
+        public static IFileSystemItem CreateVolume(string name)
         {
             ValidateName(name);
 
-            if (!FSPath.IsValidVolumeName(name))
+            if (!PathUtils.IsValidVolumeName(name))
                 throw new ArgumentException(Invariant($"'{name}' is not a valid volume name."));
 
-            return new FSItem(
-                FSItemKind.Volume,
+            return new FileSystemItem(
+                FileSystemItemKind.Volume,
                 name,
-                new FSItemKind[] { FSItemKind.Root },
-                new FSItemKind[] { FSItemKind.Directory, FSItemKind.File },
+                new FileSystemItemKind[] { FileSystemItemKind.Root },
+                new FileSystemItemKind[] { FileSystemItemKind.Directory, FileSystemItemKind.File },
                 "Volume can have only a file system as a parent.",
                 "Volume can contain directories and files only as child items."
             );
         }
 
-        public static IFSItem CreateDirectory(string name)
+        public static IFileSystemItem CreateDirectory(string name)
         {
             ValidateName(name);
 
-            if (!FSPath.IsValidDirectoryName(name))
+            if (!PathUtils.IsValidDirectoryName(name))
                 throw new ArgumentException(Invariant($"'{name}' is not a valid directory name."));
 
-            return new FSItem(
-                FSItemKind.Directory,
+            return new FileSystemItem(
+                FileSystemItemKind.Directory,
                 name,
-                new FSItemKind[] { FSItemKind.Volume, FSItemKind.Directory },
-                new FSItemKind[] { FSItemKind.Directory, FSItemKind.File },
+                new FileSystemItemKind[] { FileSystemItemKind.Volume, FileSystemItemKind.Directory },
+                new FileSystemItemKind[] { FileSystemItemKind.Directory, FileSystemItemKind.File },
                 "Directory can have only a volume or a directory as a parent.",
                 "Directory can contain directories and files only as child items."
             );
         }
 
-        public static IFSItem CreateFile(string name)
+        public static IFileSystemItem CreateFile(string name)
         {
             ValidateName(name);
 
-            if (!FSPath.IsValidFileName(name))
+            if (!PathUtils.IsValidFileName(name))
                 throw new ArgumentException(Invariant($"'{name}' is not a valid file name."));
 
-            return new FSItem(
-                FSItemKind.File,
+            return new FileSystemItem(
+                FileSystemItemKind.File,
                 name,
-                new FSItemKind[] { FSItemKind.Volume, FSItemKind.Directory },
-                new FSItemKind[] { },
+                new FileSystemItemKind[] { FileSystemItemKind.Volume, FileSystemItemKind.Directory },
+                new FileSystemItemKind[] { },
                 "File can have only a volume or a directory as a parent.",
                 "File cannot contain child items."
             );

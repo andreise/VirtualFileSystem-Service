@@ -4,12 +4,12 @@ using System;
 namespace VirtualFileSystem.Model
 {
 
-    internal sealed class FSItemChildItemSet : ItemSet<IFSItem>
+    internal sealed class FileSystemItemChildItemSet : ItemSet<IFileSystemItem>
     {
 
-        private readonly IFSItem owner;
+        private readonly IFileSystemItem owner;
 
-        public FSItemChildItemSet(IFSItem owner)
+        public FileSystemItemChildItemSet(IFileSystemItem owner)
         {
             if (owner is null)
                 throw new ArgumentNullException(nameof(owner));
@@ -17,13 +17,13 @@ namespace VirtualFileSystem.Model
             this.owner = owner;
         }
 
-        private static void ValidateItem(IFSItem item)
+        private static void ValidateItem(IFileSystemItem item)
         {
             if (item is null)
                 throw new ArgumentNullException(nameof(item));
         }
 
-        public override bool Add(IFSItem item)
+        public override bool Add(IFileSystemItem item)
         {
             ValidateItem(item);
 
@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
             return base.Add(item);
         }
 
-        public override bool Remove(IFSItem item)
+        public override bool Remove(IFileSystemItem item)
         {
             ValidateItem(item);
 

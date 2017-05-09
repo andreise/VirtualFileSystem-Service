@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item Name Comparer Provider
     /// </summary>
-    internal static class FSItemNameComparerProvider
+    internal static class FileSystemItemNameComparerProvider
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(
@@ -25,7 +25,7 @@ namespace VirtualFileSystem.Model
         /// <remarks>
         /// Needs for the guaranted static fields initialization in a multithreading work
         /// </remarks>
-        static FSItemNameComparerProvider()
+        static FileSystemItemNameComparerProvider()
         {
         }
 

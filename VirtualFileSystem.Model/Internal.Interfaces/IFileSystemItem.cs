@@ -7,13 +7,13 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item
     /// </summary>
-    internal interface IFSItem
+    internal interface IFileSystemItem
     {
 
         /// <summary>
         /// Item Kind
         /// </summary>
-        FSItemKind Kind { get; }
+        FileSystemItemKind Kind { get; }
 
         /// <summary>
         /// Item Name
@@ -23,7 +23,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Parent Item, or null if this item have no a parent
         /// </summary>
-        IFSItem Parent { get; }
+        IFileSystemItem Parent { get; }
 
         /// <summary>
         /// Resets Parent Item
@@ -41,7 +41,7 @@ namespace VirtualFileSystem.Model
         /// <exception cref="InvalidOperationException">
         /// Throws if parent settings operation is invalid for this item
         /// </exception>
-        void SetParent(IFSItem parent);
+        void SetParent(IFileSystemItem parent);
 
         /// <summary>
         /// Gets zero-based item level in the file system hierarchy
@@ -52,7 +52,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Child Items
         /// </summary>
-        IReadOnlyCollection<IFSItem> ChildItems { get; }
+        IReadOnlyCollection<IFileSystemItem> ChildItems { get; }
 
         /// <summary>
         /// User list which blocked the item
@@ -87,7 +87,7 @@ namespace VirtualFileSystem.Model
         /// Throws if the item is not a volume or a directory, or if the child item is not a directory or a file,
         /// or if the item already have a child with the same name
         /// </exception>
-        void AddChild(IFSItem child);
+        void AddChild(IFileSystemItem child);
 
         /// <summary>
         /// Removes child item
@@ -100,7 +100,7 @@ namespace VirtualFileSystem.Model
         /// or if the child item is a locked file,
         /// or if the item do not contain the specified child
         /// </exception>
-        void RemoveChild(IFSItem child);
+        void RemoveChild(IFileSystemItem child);
 
         /// <summary>
         /// Adds child directory
@@ -111,7 +111,7 @@ namespace VirtualFileSystem.Model
         /// or if the item kind is not volume or directory
         /// </exception>
         /// <returns>Added child directory</returns>
-        IFSItem AddChildDirectory(string name);
+        IFileSystemItem AddChildDirectory(string name);
 
         /// <summary>
         /// Adds child file
@@ -122,7 +122,7 @@ namespace VirtualFileSystem.Model
         /// or if the item kind is not volume or directory
         /// </exception>
         /// <returns>Added child file</returns>
-        IFSItem AddChildFile(string name);
+        IFileSystemItem AddChildFile(string name);
 
         /// <summary>
         /// Removes empty child directory

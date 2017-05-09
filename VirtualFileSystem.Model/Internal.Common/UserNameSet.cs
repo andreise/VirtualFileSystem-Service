@@ -5,10 +5,10 @@ using VirtualFileSystem.Common;
 namespace VirtualFileSystem.Model
 {
 
-    internal sealed class FSUserNameSet : ItemSet<string>
+    internal sealed class UserNameSet : ItemSet<string>
     {
 
-        public FSUserNameSet() : base(UserNameComparerProvider.Default)
+        public UserNameSet() : base(UserNameComparerProvider.Default)
         {
         }
 

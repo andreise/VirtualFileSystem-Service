@@ -8,7 +8,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Path Utils
     /// </summary>
-    internal static partial class FSPath
+    internal static partial class PathUtils
     {
 
         // Path Separator Validators
@@ -106,7 +106,7 @@ namespace VirtualFileSystem.Model
         /// <remarks>
         /// Needs for the guaranted static fields initialization in a multithreading work
         /// </remarks>
-        static FSPath()
+        static PathUtils()
         {
         }
 

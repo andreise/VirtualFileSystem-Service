@@ -2,9 +2,9 @@
 {
 
     /// <summary>
-    /// Virtual File System Console
+    /// File System
     /// </summary>
-    public interface IVFSConsole
+    public interface IFileSystem
     {
 
         string MakeDirectory(string currentDirectory, string newDirectory);

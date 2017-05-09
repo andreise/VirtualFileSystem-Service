@@ -6,7 +6,7 @@ using System.IO;
 namespace VirtualFileSystem.Model
 {
 
-    partial class FSPath
+    partial class PathUtils
     {
 
         /// <summary>
