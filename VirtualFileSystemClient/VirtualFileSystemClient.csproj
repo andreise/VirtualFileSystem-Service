@@ -47,9 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj">
       <Project>{e64400b8-b1c6-4c74-8f7c-722f1ec01c2b}</Project>
       <Name>VirtualFileSystemClient.Model.Common</Name>
