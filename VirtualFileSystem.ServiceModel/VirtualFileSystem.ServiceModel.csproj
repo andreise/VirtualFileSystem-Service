@@ -48,7 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommandCode.cs" />
-    <Compile Include="DataContracts.cs" />
+    <Compile Include="DataContracts.Common.cs" />
+    <Compile Include="DataContracts.VFSCommand.cs" />
+    <Compile Include="DataContracts.Disconnect.cs" />
+    <Compile Include="DataContracts.Connect.cs" />
     <Compile Include="IVFSService.cs" />
     <Compile Include="IVFSServiceCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
