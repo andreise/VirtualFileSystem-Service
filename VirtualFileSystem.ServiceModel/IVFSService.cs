@@ -16,16 +16,16 @@ namespace VirtualFileSystem.ServiceModel
     public interface IVFSService
     {
         [OperationContract]
-        [FaultContract(typeof(ConnectFault))]
-        ConnectResponse Connect(ConnectRequest request);
+        [FaultContract(typeof(AuthorizeFault))]
+        AuthorizeResponse Connect(AuthorizeRequest request);
 
         [OperationContract]
-        [FaultContract(typeof(DisconnectFault))]
-        DisconnectResponse Disconnect(DisconnectRequest request);
+        [FaultContract(typeof(DeauthorizeFault))]
+        DeauthorizeResponse Disconnect(DeauthorizeRequest request);
 
         [OperationContract]
-        [FaultContract(typeof(FSCommandFault))]
-        FSCommandResponse FSCommand(FSCommandRequest request);
+        [FaultContract(typeof(FileSystemConsoleFault))]
+        FileSystemConsoleResponse FSCommand(FileSystemConsoleRequest request);
     }
 
 }

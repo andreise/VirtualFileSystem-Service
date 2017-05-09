@@ -4,14 +4,14 @@ namespace VirtualFileSystem.ServiceModel
 {
 
     [DataContract]
-    public sealed class ConnectRequest
+    public sealed class AuthorizeRequest
     {
         [DataMember]
         public string UserName { get; set; }
     }
 
     [DataContract]
-    public sealed class ConnectResponse
+    public sealed class AuthorizeResponse
     {
         [DataMember]
         public string UserName { get; set; }
@@ -24,7 +24,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class ConnectFault
+    public sealed class AuthorizeFault
     {
         [DataMember]
         public string UserName { get; set; }

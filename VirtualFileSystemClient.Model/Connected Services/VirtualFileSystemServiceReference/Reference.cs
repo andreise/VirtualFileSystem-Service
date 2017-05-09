@@ -15,9 +15,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectRequest", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthorizeRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AuthorizeRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -60,9 +60,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthorizeResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AuthorizeResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -137,9 +137,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class ConnectFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AuthorizeFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -182,9 +182,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectRequest", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeauthorizeRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DeauthorizeRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -243,9 +243,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeauthorizeResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DeauthorizeResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -288,9 +288,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DeauthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class DisconnectFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class DeauthorizeFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -333,9 +333,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandRequest", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemConsoleRequest", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class FileSystemConsoleRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -410,9 +410,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandResponse", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemConsoleResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class FileSystemConsoleResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -503,9 +503,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemConsoleFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FSCommandFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class FileSystemConsoleFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -564,9 +564,9 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemChangedData", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileSystemConsoleNotificationData", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    public partial class FileSystemChangedData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class FileSystemConsoleNotificationData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -628,32 +628,32 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     public interface IVFSService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectFault), Action="http://tempuri.org/IVFSService/ConnectConnectFaultFault", Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeFault), Action="http://tempuri.org/IVFSService/ConnectAuthorizeFaultFault", Name="AuthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectFault), Action="http://tempuri.org/IVFSService/DisconnectDisconnectFaultFault", Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeFault), Action="http://tempuri.org/IVFSService/DisconnectDeauthorizeFaultFault", Name="DeauthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandFault), Action="http://tempuri.org/IVFSService/FSCommandFSCommandFaultFault", Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandRequest request);
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleFault), Action="http://tempuri.org/IVFSService/FSCommandFileSystemConsoleFaultFault", Name="FileSystemConsoleFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandRequest request);
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IVFSServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IVFSService/FileSystemChangedNotify")]
-        void FileSystemChangedNotify(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemChangedData data);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IVFSService/Notify")]
+        void Notify(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleNotificationData data);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -684,27 +684,27 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectRequest request) {
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
             return base.Channel.Connect(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
             return base.Channel.ConnectAsync(request);
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectRequest request) {
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
             return base.Channel.Disconnect(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
             return base.Channel.DisconnectAsync(request);
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandRequest request) {
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
             return base.Channel.FSCommand(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandRequest request) {
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
             return base.Channel.FSCommandAsync(request);
         }
     }

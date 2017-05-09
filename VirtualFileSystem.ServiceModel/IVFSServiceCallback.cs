@@ -7,7 +7,7 @@ namespace VirtualFileSystem.ServiceModel
     {
 
         [OperationContract(IsOneWay = true)]
-        void FileSystemChangedNotify(FileSystemChangedData data);
+        void Notify(FileSystemConsoleNotificationData data);
 
     }
 

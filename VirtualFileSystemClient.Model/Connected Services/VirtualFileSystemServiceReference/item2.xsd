@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://andrey.sergeev.vfsservice" elementFormDefault="qualified" targetNamespace="http://andrey.sergeev.vfsservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ConnectRequest">
+  <xs:complexType name="AuthorizeRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ConnectRequest" nillable="true" type="tns:ConnectRequest" />
-  <xs:complexType name="ConnectResponse">
+  <xs:element name="AuthorizeRequest" nillable="true" type="tns:AuthorizeRequest" />
+  <xs:complexType name="AuthorizeResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="TotalUsers" type="xs:int" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ConnectResponse" nillable="true" type="tns:ConnectResponse" />
-  <xs:complexType name="ConnectFault">
+  <xs:element name="AuthorizeResponse" nillable="true" type="tns:AuthorizeResponse" />
+  <xs:complexType name="AuthorizeFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ConnectFault" nillable="true" type="tns:ConnectFault" />
-  <xs:complexType name="DisconnectRequest">
+  <xs:element name="AuthorizeFault" nillable="true" type="tns:AuthorizeFault" />
+  <xs:complexType name="DeauthorizeRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="DisconnectRequest" nillable="true" type="tns:DisconnectRequest" />
-  <xs:complexType name="DisconnectResponse">
+  <xs:element name="DeauthorizeRequest" nillable="true" type="tns:DeauthorizeRequest" />
+  <xs:complexType name="DeauthorizeResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="DisconnectResponse" nillable="true" type="tns:DisconnectResponse" />
-  <xs:complexType name="DisconnectFault">
+  <xs:element name="DeauthorizeResponse" nillable="true" type="tns:DeauthorizeResponse" />
+  <xs:complexType name="DeauthorizeFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="DisconnectFault" nillable="true" type="tns:DisconnectFault" />
-  <xs:complexType name="FSCommandRequest">
+  <xs:element name="DeauthorizeFault" nillable="true" type="tns:DeauthorizeFault" />
+  <xs:complexType name="FileSystemConsoleRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FSCommandRequest" nillable="true" type="tns:FSCommandRequest" />
-  <xs:complexType name="FSCommandResponse">
+  <xs:element name="FileSystemConsoleRequest" nillable="true" type="tns:FileSystemConsoleRequest" />
+  <xs:complexType name="FileSystemConsoleResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrentDirectory" nillable="true" type="xs:string" />
@@ -55,19 +55,19 @@
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FSCommandResponse" nillable="true" type="tns:FSCommandResponse" />
-  <xs:complexType name="FSCommandFault">
+  <xs:element name="FileSystemConsoleResponse" nillable="true" type="tns:FileSystemConsoleResponse" />
+  <xs:complexType name="FileSystemConsoleFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FSCommandFault" nillable="true" type="tns:FSCommandFault" />
-  <xs:complexType name="FileSystemChangedData">
+  <xs:element name="FileSystemConsoleFault" nillable="true" type="tns:FileSystemConsoleFault" />
+  <xs:complexType name="FileSystemConsoleNotificationData">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FileSystemChangedData" nillable="true" type="tns:FileSystemChangedData" />
+  <xs:element name="FileSystemConsoleNotificationData" nillable="true" type="tns:FileSystemConsoleNotificationData" />
 </xs:schema>

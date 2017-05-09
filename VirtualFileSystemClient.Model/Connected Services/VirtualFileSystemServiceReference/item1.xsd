@@ -4,49 +4,49 @@
   <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q1:ConnectRequest" />
+        <xs:element xmlns:q1="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q1:AuthorizeRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConnectResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://andrey.sergeev.vfsservice" minOccurs="0" name="ConnectResult" nillable="true" type="q2:ConnectResponse" />
+        <xs:element xmlns:q2="http://andrey.sergeev.vfsservice" minOccurs="0" name="ConnectResult" nillable="true" type="q2:AuthorizeResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Disconnect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q3:DisconnectRequest" />
+        <xs:element xmlns:q3="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q3:DeauthorizeRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DisconnectResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://andrey.sergeev.vfsservice" minOccurs="0" name="DisconnectResult" nillable="true" type="q4:DisconnectResponse" />
+        <xs:element xmlns:q4="http://andrey.sergeev.vfsservice" minOccurs="0" name="DisconnectResult" nillable="true" type="q4:DeauthorizeResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="FSCommand">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FSCommandRequest" />
+        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FileSystemConsoleRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="FSCommandResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FSCommandResult" nillable="true" type="q6:FSCommandResponse" />
+        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FSCommandResult" nillable="true" type="q6:FileSystemConsoleResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FileSystemChangedNotify">
+  <xs:element name="Notify">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://andrey.sergeev.vfsservice" minOccurs="0" name="data" nillable="true" type="q7:FileSystemChangedData" />
+        <xs:element xmlns:q7="http://andrey.sergeev.vfsservice" minOccurs="0" name="data" nillable="true" type="q7:FileSystemConsoleNotificationData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

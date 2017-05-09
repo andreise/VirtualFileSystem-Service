@@ -73,13 +73,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\VirtualFileSystemServiceReference\VFSService.wsdl" />
-    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectResponse.datasource">
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectResponse.datasource">
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandResponse.datasource">
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>

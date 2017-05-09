@@ -26,7 +26,7 @@ namespace VirtualFileSystem.ServiceModel
     {
         private readonly IFileSystemConsole Console = FileSystemConsoleFactory.Create(FileSystemFactory.Default);
 
-        private IVFSServiceCallback Callback => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
+        private IVFSServiceCallback GetCallbackChannel() => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private TokenProvider TokenProvider => TokenProvider.Default;
 
@@ -84,25 +84,25 @@ namespace VirtualFileSystem.ServiceModel
                 throw new AuthenticateUserException(Invariant($"'{userName}' user session is not actual or is expired."));
         }
 
-        private static FaultException<ConnectFault> CreateConnectFaultException(string userName, string message) =>
-            new FaultException<ConnectFault>(
-                detail: new ConnectFault() { UserName = userName },
+        private static FaultException<AuthorizeFault> CreateConnectFaultException(string userName, string message) =>
+            new FaultException<AuthorizeFault>(
+                detail: new AuthorizeFault() { UserName = userName },
                 reason: message
             );
 
-        private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>
-            new FaultException<DisconnectFault>(
-                detail: new DisconnectFault() { UserName = userName },
+        private static FaultException<DeauthorizeFault> CreateDisconnectFaultException(string userName, string message) =>
+            new FaultException<DeauthorizeFault>(
+                detail: new DeauthorizeFault() { UserName = userName },
                 reason: message
             );
 
-        private static FaultException<FSCommandFault> CreateFSCommandFaultException(string userName, string commandLine, string message) =>
-            new FaultException<FSCommandFault>(
-                detail: new FSCommandFault() { UserName = userName, CommandLine = commandLine },
+        private static FaultException<FileSystemConsoleFault> CreateFSCommandFaultException(string userName, string commandLine, string message) =>
+            new FaultException<FileSystemConsoleFault>(
+                detail: new FileSystemConsoleFault() { UserName = userName, CommandLine = commandLine },
                 reason: message
             );
 
-        public ConnectResponse Connect(ConnectRequest request)
+        public AuthorizeResponse Connect(AuthorizeRequest request)
         {
             if (request is null)
                 throw CreateConnectFaultException(null, Invariant($"{nameof(request)} is null."));
@@ -127,10 +127,10 @@ namespace VirtualFileSystem.ServiceModel
 
             this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
 
-            return new ConnectResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
+            return new AuthorizeResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
         }
 
-        public DisconnectResponse Disconnect(DisconnectRequest request)
+        public DeauthorizeResponse Disconnect(DeauthorizeRequest request)
         {
             if (request is null)
                 throw CreateDisconnectFaultException(null, Invariant($"{nameof(request)} is null."));
@@ -160,10 +160,10 @@ namespace VirtualFileSystem.ServiceModel
 
             this.connectedUsers.Remove(request.UserName);
 
-            return new DisconnectResponse() { UserName = request.UserName };
+            return new DeauthorizeResponse() { UserName = request.UserName };
         }
 
-        private string ProcessRequestCommand(FSCommandRequest request, IConsoleCommand<ConsoleCommandCode> command)
+        private string ProcessRequestCommand(FileSystemConsoleRequest request, IConsoleCommand<ConsoleCommandCode> command)
         {
             const string defaultResponseMessage = "Command performed successfully.";
 
@@ -264,7 +264,7 @@ namespace VirtualFileSystem.ServiceModel
             }
         }
 
-        public FSCommandResponse FSCommand(FSCommandRequest request)
+        public FileSystemConsoleResponse FSCommand(FileSystemConsoleRequest request)
         {
             if (request is null)
                 throw CreateFSCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));
@@ -314,9 +314,9 @@ namespace VirtualFileSystem.ServiceModel
                 throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
-            this.Callback.FileSystemChangedNotify(new FileSystemChangedData() { UserName = request.UserName, CommandLine = request.CommandLine });
+            this.GetCallbackChannel().Notify(new FileSystemConsoleNotificationData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
-            return new FSCommandResponse()
+            return new FileSystemConsoleResponse()
             {
                 UserName = request.UserName,
                 CurrentDirectory = this.connectedUsers[request.UserName].CurrentDirectory,

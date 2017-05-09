@@ -149,7 +149,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Connect_ConnectFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Connect_AuthorizeFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -218,7 +218,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Disconnect_DisconnectFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Disconnect_DeauthorizeFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -287,7 +287,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FSCommand_FSCommandFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FSCommand_FileSystemConsoleFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -310,7 +310,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FileSystemChangedNotify_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Notify_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -346,8 +346,8 @@
   <wsdl:message name="IVFSService_Connect_OutputMessage">
     <wsdl:part name="parameters" element="tns:ConnectResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Connect_ConnectFaultFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://andrey.sergeev.vfsservice" name="detail" element="q1:ConnectFault" />
+  <wsdl:message name="IVFSService_Connect_AuthorizeFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://andrey.sergeev.vfsservice" name="detail" element="q1:AuthorizeFault" />
   </wsdl:message>
   <wsdl:message name="IVFSService_Disconnect_InputMessage">
     <wsdl:part name="parameters" element="tns:Disconnect" />
@@ -355,8 +355,8 @@
   <wsdl:message name="IVFSService_Disconnect_OutputMessage">
     <wsdl:part name="parameters" element="tns:DisconnectResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Disconnect_DisconnectFaultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://andrey.sergeev.vfsservice" name="detail" element="q2:DisconnectFault" />
+  <wsdl:message name="IVFSService_Disconnect_DeauthorizeFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://andrey.sergeev.vfsservice" name="detail" element="q2:DeauthorizeFault" />
   </wsdl:message>
   <wsdl:message name="IVFSService_FSCommand_InputMessage">
     <wsdl:part name="parameters" element="tns:FSCommand" />
@@ -364,30 +364,30 @@
   <wsdl:message name="IVFSService_FSCommand_OutputMessage">
     <wsdl:part name="parameters" element="tns:FSCommandResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_FSCommand_FSCommandFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://andrey.sergeev.vfsservice" name="detail" element="q3:FSCommandFault" />
+  <wsdl:message name="IVFSService_FSCommand_FileSystemConsoleFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://andrey.sergeev.vfsservice" name="detail" element="q3:FileSystemConsoleFault" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_FileSystemChangedNotify_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:FileSystemChangedNotify" />
+  <wsdl:message name="IVFSService_Notify_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:Notify" />
   </wsdl:message>
   <wsdl:portType name="IVFSService">
     <wsdl:operation name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Connect" message="tns:IVFSService_Connect_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/ConnectResponse" message="tns:IVFSService_Connect_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/ConnectConnectFaultFault" name="ConnectFaultFault" message="tns:IVFSService_Connect_ConnectFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/ConnectAuthorizeFaultFault" name="AuthorizeFaultFault" message="tns:IVFSService_Connect_AuthorizeFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
       <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Disconnect" message="tns:IVFSService_Disconnect_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/DisconnectResponse" message="tns:IVFSService_Disconnect_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/DisconnectDisconnectFaultFault" name="DisconnectFaultFault" message="tns:IVFSService_Disconnect_DisconnectFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/DisconnectDeauthorizeFaultFault" name="DeauthorizeFaultFault" message="tns:IVFSService_Disconnect_DeauthorizeFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="FSCommand">
       <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/FSCommand" message="tns:IVFSService_FSCommand_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/FSCommandResponse" message="tns:IVFSService_FSCommand_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/FSCommandFSCommandFaultFault" name="FSCommandFaultFault" message="tns:IVFSService_FSCommand_FSCommandFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/FSCommandFileSystemConsoleFaultFault" name="FileSystemConsoleFaultFault" message="tns:IVFSService_FSCommand_FileSystemConsoleFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="FileSystemChangedNotify">
-      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/FileSystemChangedNotify" message="tns:IVFSService_FileSystemChangedNotify_OutputCallbackMessage" />
+    <wsdl:operation name="Notify">
+      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/Notify" message="tns:IVFSService_Notify_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_IVFSService" type="tns:IVFSService">
@@ -403,9 +403,9 @@
         <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ConnectFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_ConnectFaultFault_Fault" />
-        <soap12:fault use="literal" name="ConnectFaultFault" namespace="" />
+      <wsdl:fault name="AuthorizeFaultFault">
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_AuthorizeFaultFault_Fault" />
+        <soap12:fault use="literal" name="AuthorizeFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
@@ -418,9 +418,9 @@
         <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="DisconnectFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_DisconnectFaultFault_Fault" />
-        <soap12:fault use="literal" name="DisconnectFaultFault" namespace="" />
+      <wsdl:fault name="DeauthorizeFaultFault">
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_DeauthorizeFaultFault_Fault" />
+        <soap12:fault use="literal" name="DeauthorizeFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="FSCommand">
@@ -433,15 +433,15 @@
         <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="FSCommandFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_FSCommandFaultFault_Fault" />
-        <soap12:fault use="literal" name="FSCommandFaultFault" namespace="" />
+      <wsdl:fault name="FileSystemConsoleFaultFault">
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_FileSystemConsoleFaultFault_Fault" />
+        <soap12:fault use="literal" name="FileSystemConsoleFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="FileSystemChangedNotify">
-      <soap12:operation soapAction="http://tempuri.org/IVFSService/FileSystemChangedNotify" style="document" />
+    <wsdl:operation name="Notify">
+      <soap12:operation soapAction="http://tempuri.org/IVFSService/Notify" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FileSystemChangedNotify_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Notify_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

@@ -9,14 +9,14 @@ namespace VirtualFileSystemClient.Model
     using VirtualFileSystemServiceReference;
     using Common;
 
-    public sealed class Client : ClientBase<ConnectFault, DisconnectFault, FSCommandFault>
+    public sealed class Client : ClientBase<AuthorizeFault, DeauthorizeFault, FileSystemConsoleFault>
     {
 
         private const string ServerReturnedNullResponseMessage = "Server returned null response.";
 
         private readonly VFSServiceClient Service;
 
-        private void HandleCallback(FileSystemChangedData data)
+        private void HandleCallback(FileSystemConsoleNotificationData data)
         {
             if (data is null || data.UserName is null)
                 return;
@@ -42,7 +42,7 @@ namespace VirtualFileSystemClient.Model
         protected override async Task ProcessAuthorizeOperationHandler(string userName)
         {
             var response = await this.Service.ConnectAsync(
-                new ConnectRequest()
+                new AuthorizeRequest()
                 {
                     UserName = userName
                 }
@@ -51,8 +51,8 @@ namespace VirtualFileSystemClient.Model
             if (response is null)
             {
                 string message = ServerReturnedNullResponseMessage;
-                throw new FaultException<ConnectFault>(
-                    new ConnectFault() { UserName = userName },
+                throw new FaultException<AuthorizeFault>(
+                    new AuthorizeFault() { UserName = userName },
                     message
                 );
             }
@@ -66,7 +66,7 @@ namespace VirtualFileSystemClient.Model
         protected override async Task ProcessDeauthorizeOperationHandler()
         {
             var response = await this.Service.DisconnectAsync(
-                new DisconnectRequest()
+                new DeauthorizeRequest()
                 {
                     UserName = this.User.Credentials.UserName,
                     Token = this.User.Credentials.Token
@@ -76,8 +76,8 @@ namespace VirtualFileSystemClient.Model
             if (response is null)
             {
                 string message = ServerReturnedNullResponseMessage;
-                throw new FaultException<DisconnectFault>(
-                    new DisconnectFault() { UserName = this.User.Credentials.UserName },
+                throw new FaultException<DeauthorizeFault>(
+                    new DeauthorizeFault() { UserName = this.User.Credentials.UserName },
                     message
                 );
             }
@@ -90,7 +90,7 @@ namespace VirtualFileSystemClient.Model
         protected override async Task ProcessFileSystemConsoleOperationHandler(IConsoleCommand<ConsoleCommandCode> command)
         {
             var response = await this.Service.FSCommandAsync(
-                new FSCommandRequest()
+                new FileSystemConsoleRequest()
                 {
                     UserName = this.User.Credentials.UserName,
                     Token = this.User.Credentials.Token,
@@ -101,8 +101,8 @@ namespace VirtualFileSystemClient.Model
             if (response is null)
             {
                 string message = ServerReturnedNullResponseMessage;
-                throw new FaultException<FSCommandFault>(
-                    new FSCommandFault()
+                throw new FaultException<FileSystemConsoleFault>(
+                    new FileSystemConsoleFault()
                     {
                         UserName = this.User.Credentials.UserName,
                         CommandLine = command.CommandLine

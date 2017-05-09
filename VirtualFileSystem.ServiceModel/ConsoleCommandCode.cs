@@ -4,7 +4,7 @@
     /// <summary>
     /// Console Command Codes
     /// </summary>
-    public enum ConsoleCommandCode
+    internal enum ConsoleCommandCode
     {
         /// <summary>
         /// Make Directory Command
