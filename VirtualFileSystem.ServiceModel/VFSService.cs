@@ -84,19 +84,19 @@ namespace VirtualFileSystem.ServiceModel
                 throw new AuthenticateUserException(Invariant($"'{userName}' user session is not actual or is expired."));
         }
 
-        private static FaultException<AuthorizeFault> CreateConnectFaultException(string userName, string message) =>
+        private static FaultException<AuthorizeFault> CreateAuthorizeFaultException(string userName, string message) =>
             new FaultException<AuthorizeFault>(
                 detail: new AuthorizeFault() { UserName = userName },
                 reason: message
             );
 
-        private static FaultException<DeauthorizeFault> CreateDisconnectFaultException(string userName, string message) =>
+        private static FaultException<DeauthorizeFault> CreateDeauthorizeFaultException(string userName, string message) =>
             new FaultException<DeauthorizeFault>(
                 detail: new DeauthorizeFault() { UserName = userName },
                 reason: message
             );
 
-        private static FaultException<FileSystemConsoleFault> CreateFSCommandFaultException(string userName, string commandLine, string message) =>
+        private static FaultException<FileSystemConsoleFault> CreateFileSystemConsoleFaultException(string userName, string commandLine, string message) =>
             new FaultException<FileSystemConsoleFault>(
                 detail: new FileSystemConsoleFault() { UserName = userName, CommandLine = commandLine },
                 reason: message
@@ -105,20 +105,20 @@ namespace VirtualFileSystem.ServiceModel
         public AuthorizeResponse Authorize(AuthorizeRequest request)
         {
             if (request is null)
-                throw CreateConnectFaultException(null, Invariant($"{nameof(request)} is null."));
+                throw CreateAuthorizeFaultException(null, Invariant($"{nameof(request)} is null."));
 
             if (request.UserName is null)
-                throw CreateConnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
+                throw CreateAuthorizeFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
-                throw CreateConnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
+                throw CreateAuthorizeFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
 
             request.UserName = request.UserName.Trim();
 
             if (this.connectedUsers.ContainsKey(request.UserName))
             {
                 if (this.IsActualUserSession(request.UserName))
-                    throw CreateConnectFaultException(request.UserName, Invariant($"User '{request.UserName}' already connected."));
+                    throw CreateAuthorizeFaultException(request.UserName, Invariant($"User '{request.UserName}' already connected."));
 
                 this.connectedUsers.Remove(request.UserName);
             }
@@ -133,19 +133,19 @@ namespace VirtualFileSystem.ServiceModel
         public DeauthorizeResponse Deauthorize(DeauthorizeRequest request)
         {
             if (request is null)
-                throw CreateDisconnectFaultException(null, Invariant($"{nameof(request)} is null."));
+                throw CreateDeauthorizeFaultException(null, Invariant($"{nameof(request)} is null."));
 
             if (request.UserName is null)
-                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
+                throw CreateDeauthorizeFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
-                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
+                throw CreateDeauthorizeFaultException(request.UserName, Invariant($"{nameof(request.UserName)} is empty."));
 
             if (request.Token is null)
-                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.Token)} is null."));
+                throw CreateDeauthorizeFaultException(request.UserName, Invariant($"{nameof(request.Token)} is null."));
 
             if (request.Token.Length == 0)
-                throw CreateDisconnectFaultException(request.UserName, Invariant($"{nameof(request.Token)} is empty."));
+                throw CreateDeauthorizeFaultException(request.UserName, Invariant($"{nameof(request.Token)} is empty."));
 
             request.UserName = request.UserName.Trim();
 
@@ -155,7 +155,7 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (AuthenticateUserException e)
             {
-                throw CreateDisconnectFaultException(request.UserName, e.Message);
+                throw CreateDeauthorizeFaultException(request.UserName, e.Message);
             }
 
             this.connectedUsers.Remove(request.UserName);
@@ -170,7 +170,7 @@ namespace VirtualFileSystem.ServiceModel
             Action<int> checkParameterCount = estimatedCount =>
             {
                 if (command.Parameters.Count < estimatedCount)
-                    throw CreateFSCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
+                    throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
             };
 
             switch (command.CommandCode)
@@ -255,7 +255,7 @@ namespace VirtualFileSystem.ServiceModel
 
                 default:
                     {
-                        throw CreateFSCommandFaultException(
+                        throw CreateFileSystemConsoleFaultException(
                             request.UserName,
                             request.CommandLine,
                             Invariant($"Unsupported command ({command.Command}).")
@@ -267,19 +267,19 @@ namespace VirtualFileSystem.ServiceModel
         public FileSystemConsoleResponse FileSystemConsole(FileSystemConsoleRequest request)
         {
             if (request is null)
-                throw CreateFSCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));
+                throw CreateFileSystemConsoleFaultException(null, null, Invariant($"{nameof(request)} is null."));
 
             if (request.UserName is null)
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
 
             if (request.CommandLine is null)
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
 
             if (string.IsNullOrEmpty(request.CommandLine))
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is empty."));
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is empty."));
 
             request.UserName = request.UserName.Trim();
 
@@ -289,7 +289,7 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (AuthenticateUserException e)
             {
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
@@ -301,7 +301,7 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (ArgumentException e)
             {
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
             string responseMessage;
@@ -311,7 +311,7 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (Exception e)
             {
-                throw CreateFSCommandFaultException(request.UserName, request.CommandLine, e.Message);
+                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
             this.GetCallbackChannel().Notify(new FileSystemConsoleNotificationData() { UserName = request.UserName, CommandLine = request.CommandLine });
