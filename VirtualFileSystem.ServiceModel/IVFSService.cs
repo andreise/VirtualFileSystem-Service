@@ -17,15 +17,15 @@ namespace VirtualFileSystem.ServiceModel
     {
         [OperationContract]
         [FaultContract(typeof(AuthorizeFault))]
-        AuthorizeResponse Connect(AuthorizeRequest request);
+        AuthorizeResponse Authorize(AuthorizeRequest request);
 
         [OperationContract]
         [FaultContract(typeof(DeauthorizeFault))]
-        DeauthorizeResponse Disconnect(DeauthorizeRequest request);
+        DeauthorizeResponse Deauthorize(DeauthorizeRequest request);
 
         [OperationContract]
         [FaultContract(typeof(FileSystemConsoleFault))]
-        FileSystemConsoleResponse FSCommand(FileSystemConsoleRequest request);
+        FileSystemConsoleResponse FileSystemConsole(FileSystemConsoleRequest request);
     }
 
 }

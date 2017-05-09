@@ -627,26 +627,26 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VirtualFileSystemServiceReference.IVFSService", CallbackContract=typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.IVFSServiceCallback))]
     public interface IVFSService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeFault), Action="http://tempuri.org/IVFSService/ConnectAuthorizeFaultFault", Name="AuthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Authorize", ReplyAction="http://tempuri.org/IVFSService/AuthorizeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeFault), Action="http://tempuri.org/IVFSService/AuthorizeAuthorizeFaultFault", Name="AuthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Authorize(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Connect", ReplyAction="http://tempuri.org/IVFSService/ConnectResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Authorize", ReplyAction="http://tempuri.org/IVFSService/AuthorizeResponse")]
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> AuthorizeAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeFault), Action="http://tempuri.org/IVFSService/DisconnectDeauthorizeFaultFault", Name="DeauthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Deauthorize", ReplyAction="http://tempuri.org/IVFSService/DeauthorizeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeFault), Action="http://tempuri.org/IVFSService/DeauthorizeDeauthorizeFaultFault", Name="DeauthorizeFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Deauthorize(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Disconnect", ReplyAction="http://tempuri.org/IVFSService/DisconnectResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/Deauthorize", ReplyAction="http://tempuri.org/IVFSService/DeauthorizeResponse")]
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DeauthorizeAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleFault), Action="http://tempuri.org/IVFSService/FSCommandFileSystemConsoleFaultFault", Name="FileSystemConsoleFault", Namespace="http://andrey.sergeev.vfsservice")]
-        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FileSystemConsole", ReplyAction="http://tempuri.org/IVFSService/FileSystemConsoleResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleFault), Action="http://tempuri.org/IVFSService/FileSystemConsoleFileSystemConsoleFaultFault", Name="FileSystemConsoleFault", Namespace="http://andrey.sergeev.vfsservice")]
+        VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FileSystemConsole(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FSCommand", ReplyAction="http://tempuri.org/IVFSService/FSCommandResponse")]
-        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVFSService/FileSystemConsole", ReplyAction="http://tempuri.org/IVFSService/FileSystemConsoleResponse")]
+        System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FileSystemConsoleAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -684,28 +684,28 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Connect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
-            return base.Channel.Connect(request);
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse Authorize(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
+            return base.Channel.Authorize(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> ConnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
-            return base.Channel.ConnectAsync(request);
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse> AuthorizeAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeRequest request) {
+            return base.Channel.AuthorizeAsync(request);
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Disconnect(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
-            return base.Channel.Disconnect(request);
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse Deauthorize(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
+            return base.Channel.Deauthorize(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DisconnectAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
-            return base.Channel.DisconnectAsync(request);
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse> DeauthorizeAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeRequest request) {
+            return base.Channel.DeauthorizeAsync(request);
         }
         
-        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FSCommand(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
-            return base.Channel.FSCommand(request);
+        public VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse FileSystemConsole(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
+            return base.Channel.FileSystemConsole(request);
         }
         
-        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FSCommandAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
-            return base.Channel.FSCommandAsync(request);
+        public System.Threading.Tasks.Task<VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse> FileSystemConsoleAsync(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleRequest request) {
+            return base.Channel.FileSystemConsoleAsync(request);
         }
     }
 }

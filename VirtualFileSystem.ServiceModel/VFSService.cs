@@ -102,7 +102,7 @@ namespace VirtualFileSystem.ServiceModel
                 reason: message
             );
 
-        public AuthorizeResponse Connect(AuthorizeRequest request)
+        public AuthorizeResponse Authorize(AuthorizeRequest request)
         {
             if (request is null)
                 throw CreateConnectFaultException(null, Invariant($"{nameof(request)} is null."));
@@ -130,7 +130,7 @@ namespace VirtualFileSystem.ServiceModel
             return new AuthorizeResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
         }
 
-        public DeauthorizeResponse Disconnect(DeauthorizeRequest request)
+        public DeauthorizeResponse Deauthorize(DeauthorizeRequest request)
         {
             if (request is null)
                 throw CreateDisconnectFaultException(null, Invariant($"{nameof(request)} is null."));
@@ -264,7 +264,7 @@ namespace VirtualFileSystem.ServiceModel
             }
         }
 
-        public FileSystemConsoleResponse FSCommand(FileSystemConsoleRequest request)
+        public FileSystemConsoleResponse FileSystemConsole(FileSystemConsoleRequest request)
         {
             if (request is null)
                 throw CreateFSCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));

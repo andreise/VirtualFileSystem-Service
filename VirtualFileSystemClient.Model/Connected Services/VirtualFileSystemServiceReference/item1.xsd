@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd2" namespace="http://andrey.sergeev.vfsservice" />
-  <xs:element name="Connect">
+  <xs:element name="Authorize">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q1:AuthorizeRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ConnectResponse">
+  <xs:element name="AuthorizeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://andrey.sergeev.vfsservice" minOccurs="0" name="ConnectResult" nillable="true" type="q2:AuthorizeResponse" />
+        <xs:element xmlns:q2="http://andrey.sergeev.vfsservice" minOccurs="0" name="AuthorizeResult" nillable="true" type="q2:AuthorizeResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Disconnect">
+  <xs:element name="Deauthorize">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q3:DeauthorizeRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DisconnectResponse">
+  <xs:element name="DeauthorizeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://andrey.sergeev.vfsservice" minOccurs="0" name="DisconnectResult" nillable="true" type="q4:DeauthorizeResponse" />
+        <xs:element xmlns:q4="http://andrey.sergeev.vfsservice" minOccurs="0" name="DeauthorizeResult" nillable="true" type="q4:DeauthorizeResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FSCommand">
+  <xs:element name="FileSystemConsole">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FileSystemConsoleRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FSCommandResponse">
+  <xs:element name="FileSystemConsoleResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FSCommandResult" nillable="true" type="q6:FileSystemConsoleResponse" />
+        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FileSystemConsoleResult" nillable="true" type="q6:FileSystemConsoleResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

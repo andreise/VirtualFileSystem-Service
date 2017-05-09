@@ -103,7 +103,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Connect_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Authorize_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -126,7 +126,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Connect_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Authorize_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -149,7 +149,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Connect_AuthorizeFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Authorize_AuthorizeFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -172,7 +172,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Disconnect_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Deauthorize_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -195,7 +195,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Disconnect_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Deauthorize_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -218,7 +218,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Disconnect_DeauthorizeFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_Deauthorize_DeauthorizeFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -241,7 +241,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FSCommand_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FileSystemConsole_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -264,7 +264,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FSCommand_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FileSystemConsole_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -287,7 +287,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FSCommand_FileSystemConsoleFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IVFSService_FileSystemConsole_FileSystemConsoleFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -340,51 +340,51 @@
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/VirtualFileSystem.ServiceModel/VFSService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IVFSService_Connect_InputMessage">
-    <wsdl:part name="parameters" element="tns:Connect" />
+  <wsdl:message name="IVFSService_Authorize_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authorize" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Connect_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  <wsdl:message name="IVFSService_Authorize_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthorizeResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Connect_AuthorizeFaultFault_FaultMessage">
+  <wsdl:message name="IVFSService_Authorize_AuthorizeFaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://andrey.sergeev.vfsservice" name="detail" element="q1:AuthorizeFault" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Disconnect_InputMessage">
-    <wsdl:part name="parameters" element="tns:Disconnect" />
+  <wsdl:message name="IVFSService_Deauthorize_InputMessage">
+    <wsdl:part name="parameters" element="tns:Deauthorize" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Disconnect_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DisconnectResponse" />
+  <wsdl:message name="IVFSService_Deauthorize_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeauthorizeResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_Disconnect_DeauthorizeFaultFault_FaultMessage">
+  <wsdl:message name="IVFSService_Deauthorize_DeauthorizeFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://andrey.sergeev.vfsservice" name="detail" element="q2:DeauthorizeFault" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_FSCommand_InputMessage">
-    <wsdl:part name="parameters" element="tns:FSCommand" />
+  <wsdl:message name="IVFSService_FileSystemConsole_InputMessage">
+    <wsdl:part name="parameters" element="tns:FileSystemConsole" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_FSCommand_OutputMessage">
-    <wsdl:part name="parameters" element="tns:FSCommandResponse" />
+  <wsdl:message name="IVFSService_FileSystemConsole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FileSystemConsoleResponse" />
   </wsdl:message>
-  <wsdl:message name="IVFSService_FSCommand_FileSystemConsoleFaultFault_FaultMessage">
+  <wsdl:message name="IVFSService_FileSystemConsole_FileSystemConsoleFaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://andrey.sergeev.vfsservice" name="detail" element="q3:FileSystemConsoleFault" />
   </wsdl:message>
   <wsdl:message name="IVFSService_Notify_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:Notify" />
   </wsdl:message>
   <wsdl:portType name="IVFSService">
-    <wsdl:operation name="Connect">
-      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Connect" message="tns:IVFSService_Connect_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/ConnectResponse" message="tns:IVFSService_Connect_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/ConnectAuthorizeFaultFault" name="AuthorizeFaultFault" message="tns:IVFSService_Connect_AuthorizeFaultFault_FaultMessage" />
+    <wsdl:operation name="Authorize">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Authorize" message="tns:IVFSService_Authorize_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/AuthorizeResponse" message="tns:IVFSService_Authorize_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/AuthorizeAuthorizeFaultFault" name="AuthorizeFaultFault" message="tns:IVFSService_Authorize_AuthorizeFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Disconnect">
-      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Disconnect" message="tns:IVFSService_Disconnect_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/DisconnectResponse" message="tns:IVFSService_Disconnect_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/DisconnectDeauthorizeFaultFault" name="DeauthorizeFaultFault" message="tns:IVFSService_Disconnect_DeauthorizeFaultFault_FaultMessage" />
+    <wsdl:operation name="Deauthorize">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/Deauthorize" message="tns:IVFSService_Deauthorize_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/DeauthorizeResponse" message="tns:IVFSService_Deauthorize_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/DeauthorizeDeauthorizeFaultFault" name="DeauthorizeFaultFault" message="tns:IVFSService_Deauthorize_DeauthorizeFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="FSCommand">
-      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/FSCommand" message="tns:IVFSService_FSCommand_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/FSCommandResponse" message="tns:IVFSService_FSCommand_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/FSCommandFileSystemConsoleFaultFault" name="FileSystemConsoleFaultFault" message="tns:IVFSService_FSCommand_FileSystemConsoleFaultFault_FaultMessage" />
+    <wsdl:operation name="FileSystemConsole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVFSService/FileSystemConsole" message="tns:IVFSService_FileSystemConsole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/FileSystemConsoleResponse" message="tns:IVFSService_FileSystemConsole_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IVFSService/FileSystemConsoleFileSystemConsoleFaultFault" name="FileSystemConsoleFaultFault" message="tns:IVFSService_FileSystemConsole_FileSystemConsoleFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="Notify">
       <wsdl:output wsaw:Action="http://tempuri.org/IVFSService/Notify" message="tns:IVFSService_Notify_OutputCallbackMessage" />
@@ -393,48 +393,48 @@
   <wsdl:binding name="WSDualHttpBinding_IVFSService" type="tns:IVFSService">
     <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="Connect">
-      <soap12:operation soapAction="http://tempuri.org/IVFSService/Connect" style="document" />
+    <wsdl:operation name="Authorize">
+      <soap12:operation soapAction="http://tempuri.org/IVFSService/Authorize" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Authorize_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Authorize_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
       <wsdl:fault name="AuthorizeFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Connect_AuthorizeFaultFault_Fault" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Authorize_AuthorizeFaultFault_Fault" />
         <soap12:fault use="literal" name="AuthorizeFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="Disconnect">
-      <soap12:operation soapAction="http://tempuri.org/IVFSService/Disconnect" style="document" />
+    <wsdl:operation name="Deauthorize">
+      <soap12:operation soapAction="http://tempuri.org/IVFSService/Deauthorize" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Deauthorize_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Deauthorize_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
       <wsdl:fault name="DeauthorizeFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Disconnect_DeauthorizeFaultFault_Fault" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_Deauthorize_DeauthorizeFaultFault_Fault" />
         <soap12:fault use="literal" name="DeauthorizeFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="FSCommand">
-      <soap12:operation soapAction="http://tempuri.org/IVFSService/FSCommand" style="document" />
+    <wsdl:operation name="FileSystemConsole">
+      <soap12:operation soapAction="http://tempuri.org/IVFSService/FileSystemConsole" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FileSystemConsole_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FileSystemConsole_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
       <wsdl:fault name="FileSystemConsoleFaultFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FSCommand_FileSystemConsoleFaultFault_Fault" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IVFSService_FileSystemConsole_FileSystemConsoleFaultFault_Fault" />
         <soap12:fault use="literal" name="FileSystemConsoleFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>

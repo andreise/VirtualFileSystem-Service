@@ -41,7 +41,7 @@ namespace VirtualFileSystemClient.Model
 
         protected override async Task ProcessAuthorizeOperationHandler(string userName)
         {
-            var response = await this.Service.ConnectAsync(
+            var response = await this.Service.AuthorizeAsync(
                 new AuthorizeRequest()
                 {
                     UserName = userName
@@ -65,7 +65,7 @@ namespace VirtualFileSystemClient.Model
 
         protected override async Task ProcessDeauthorizeOperationHandler()
         {
-            var response = await this.Service.DisconnectAsync(
+            var response = await this.Service.DeauthorizeAsync(
                 new DeauthorizeRequest()
                 {
                     UserName = this.User.Credentials.UserName,
@@ -89,7 +89,7 @@ namespace VirtualFileSystemClient.Model
 
         protected override async Task ProcessFileSystemConsoleOperationHandler(IConsoleCommand<ConsoleCommandCode> command)
         {
-            var response = await this.Service.FSCommandAsync(
+            var response = await this.Service.FileSystemConsoleAsync(
                 new FileSystemConsoleRequest()
                 {
                     UserName = this.User.Credentials.UserName,
