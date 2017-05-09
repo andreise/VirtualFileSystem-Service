@@ -68,7 +68,7 @@ namespace VirtualFileSystemClient.Model
             }
             finally
             {
-                this.Service.Abort();
+                this.Service.Abort(); // async closing the client
             }
         }
 
