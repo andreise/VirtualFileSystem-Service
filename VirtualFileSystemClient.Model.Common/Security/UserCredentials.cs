@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirtualFileSystemClient.Model.Security
+namespace VirtualFileSystemClient.Model.Common.Security
 {
 
     public sealed class UserCredentials

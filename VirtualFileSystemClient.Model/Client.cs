@@ -7,6 +7,7 @@ namespace VirtualFileSystemClient.Model
 {
     using VirtualFileSystem.Common;
     using VirtualFileSystemServiceReference;
+    using Common;
 
     public sealed class Client : ClientBase<ConnectFault, DisconnectFault, FSCommandFault>
     {
