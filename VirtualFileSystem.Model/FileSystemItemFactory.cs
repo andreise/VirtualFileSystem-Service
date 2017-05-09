@@ -4,7 +4,7 @@ using static System.FormattableString;
 namespace VirtualFileSystem.Model
 {
 
-    internal static class FileSystemItemFactory
+    public static class FileSystemItemFactory
     {
 
         private static void ValidateName(string name)

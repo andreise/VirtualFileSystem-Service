@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item
     /// </summary>
-    internal interface IFileSystemItem
+    public interface IFileSystemItem
     {
 
         /// <summary>

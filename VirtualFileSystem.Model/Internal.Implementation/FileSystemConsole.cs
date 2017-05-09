@@ -8,9 +8,9 @@ namespace VirtualFileSystem.Model
 {
 
     /// <summary>
-    /// File System
+    /// File System Console
     /// </summary>
-    internal sealed class FileSystem : IFileSystem
+    public sealed class FileSystemConsole : IFileSystemConsole
     {
 
         private readonly IFileSystemItem root;
@@ -18,12 +18,18 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="name">File System Name</param>
-        /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
-        /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public FileSystem(string name)
+        /// <param name="root">File System Root Item</param>
+        /// <exception cref="ArgumentNullException">Throws if the root is null</exception>
+        /// <exception cref="ArgumentException">Throws if the item is not a root item</exception>
+        public FileSystemConsole(IFileSystemItem root)
         {
-            this.root = FileSystemItemFactory.CreateRoot(name);
+            if (root is null)
+                throw new ArgumentNullException(paramName: nameof(root));
+
+            if (root.Kind != FileSystemItemKind.Root)
+                throw new ArgumentException(paramName: nameof(root), message: "Item must be a root item.");
+
+            this.root = root;
         }
 
         private static string DefaultVolumePath => PathUtils.Consts.ValidVolumeNames[0];
@@ -45,11 +51,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.Volume && currentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException("Destination path is not a volume or a directory.");
+                throw new FileSystemConsoleException("Destination path is not a volume or a directory.");
 
             currentItem.AddChildDirectory(directoryParts[directoryParts.Length - 1]);
             return directory;
@@ -69,11 +75,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.Volume && currentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException("Destination path is not a volume or a directory.");
+                throw new FileSystemConsoleException("Destination path is not a volume or a directory.");
 
             return directory;
         }
@@ -92,11 +98,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException("Destination path is not a directory.");
+                throw new FileSystemConsoleException("Destination path is not a directory.");
 
             currentItem.Parent.RemoveChildDirectory(currentItem.Name);
 
@@ -134,14 +140,14 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException("Destination path is not a directory.");
+                throw new FileSystemConsoleException("Destination path is not a directory.");
 
             if (HasLocks(currentItem))
-                throw new FileSystemException("Directory or its subdirectories contain one or more locked files.");
+                throw new FileSystemConsoleException("Directory or its subdirectories contain one or more locked files.");
 
             currentItem.Parent.RemoveChildDirectoryWithTree(currentItem.Name);
 
@@ -162,11 +168,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.Volume && currentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException("Destination path is not a volume or a directory.");
+                throw new FileSystemConsoleException("Destination path is not a volume or a directory.");
 
             currentItem.AddChildFile(directoryParts[directoryParts.Length - 1]);
             return fileName;
@@ -186,11 +192,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.File)
-                throw new FileSystemException("Destination path is not a file.");
+                throw new FileSystemConsoleException("Destination path is not a file.");
 
             currentItem.Parent.RemoveChildFile(currentItem.Name);
 
@@ -211,11 +217,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.File)
-                throw new FileSystemException("Destination path is not a file.");
+                throw new FileSystemConsoleException("Destination path is not a file.");
 
             currentItem.Lock(userName);
 
@@ -236,11 +242,11 @@ namespace VirtualFileSystem.Model
             {
                 currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (currentItem.Kind != FileSystemItemKind.File)
-                throw new FileSystemException("Destination path is not a file.");
+                throw new FileSystemConsoleException("Destination path is not a file.");
 
             currentItem.Unlock(userName);
 
@@ -284,16 +290,16 @@ namespace VirtualFileSystem.Model
             {
                 sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, sourcePathParts[i]));
                 if (sourcePathCurrentItem is null)
-                    throw new FileSystemException("Source path is not exists.");
+                    throw new FileSystemConsoleException("Source path is not exists.");
             }
 
             if (sourcePathCurrentItem.Kind != FileSystemItemKind.Directory && sourcePathCurrentItem.Kind != FileSystemItemKind.File)
-                throw new FileSystemException(Invariant($"'{sourcePath}' is not a directory or a file."));
+                throw new FileSystemConsoleException(Invariant($"'{sourcePath}' is not a directory or a file."));
 
             if (sourcePathCurrentItem.Kind == FileSystemItemKind.File)
             {
                 if (sourcePathCurrentItem.LockedBy.Count > 0)
-                    throw new FileSystemException(Invariant($"File '{sourcePath}' is locked."));
+                    throw new FileSystemConsoleException(Invariant($"File '{sourcePath}' is locked."));
             }
 
             string[] destPathParts = PathUtils.SplitPath(destPath);
@@ -304,17 +310,17 @@ namespace VirtualFileSystem.Model
             {
                 destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, destPathParts[i]));
                 if (destPathCurrentItem is null)
-                    throw new FileSystemException("Destination path is not exists.");
+                    throw new FileSystemConsoleException("Destination path is not exists.");
             }
 
             if (destPathCurrentItem.Kind != FileSystemItemKind.Volume && destPathCurrentItem.Kind != FileSystemItemKind.Directory)
-                throw new FileSystemException(Invariant($"'{destPath}' is not a volume or a directory."));
+                throw new FileSystemConsoleException(Invariant($"'{destPath}' is not a volume or a directory."));
 
             if (sourcePathCurrentItem == destPathCurrentItem)
-                throw new FileSystemException("Source path and destination path must be not equal.");
+                throw new FileSystemConsoleException("Source path and destination path must be not equal.");
 
             if (sourcePathCurrentItem.Parent == destPathCurrentItem)
-                throw new FileSystemException("Source path cannot be copied or moved to its parent.");
+                throw new FileSystemConsoleException("Source path cannot be copied or moved to its parent.");
 
             if (sourcePathCurrentItem.Kind == FileSystemItemKind.Directory)
             {
@@ -322,14 +328,14 @@ namespace VirtualFileSystem.Model
                 while (!(destPathCurrentItemParent is null))
                 {
                     if (destPathCurrentItemParent == sourcePathCurrentItem)
-                        throw new FileSystemException("Source directory cannot be a parent of the dest directory.");
+                        throw new FileSystemConsoleException("Source directory cannot be a parent of the dest directory.");
 
                     destPathCurrentItemParent = destPathCurrentItemParent.Parent;
                 }
             }
 
             if (HasLocks(sourcePathCurrentItem))
-                throw new FileSystemException("Source path contain one or more locked files and cannot be moved.");
+                throw new FileSystemConsoleException("Source path contain one or more locked files and cannot be moved.");
 
             if (move)
             {

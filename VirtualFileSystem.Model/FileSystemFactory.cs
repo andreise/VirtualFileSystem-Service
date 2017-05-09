@@ -16,14 +16,14 @@ namespace VirtualFileSystem.Model
         /// <returns>Returns a new file system</returns>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>
-        public static IFileSystem Create(string name) => new FileSystem(name);
+        public static IFileSystemItem Create(string name) => FileSystemItemFactory.CreateRoot(name);
 
-        private static readonly Lazy<IFileSystem> defaultInstance = new Lazy<IFileSystem>(() => Create("Default Virtual File System"));
+        private static readonly Lazy<IFileSystemItem> defaultInstance = new Lazy<IFileSystemItem>(() => Create("Default Virtual File System"));
 
         /// <summary>
         /// Default File System
         /// </summary>
-        public static IFileSystem Default => defaultInstance.Value;
+        public static IFileSystemItem Default => defaultInstance.Value;
 
         /// <summary>
         /// Static constructor

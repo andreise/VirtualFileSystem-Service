@@ -2,9 +2,9 @@
 {
 
     /// <summary>
-    /// File System
+    /// File System Console
     /// </summary>
-    public interface IFileSystem
+    public interface IFileSystemConsole
     {
 
         string MakeDirectory(string currentDirectory, string newDirectory);

@@ -4,7 +4,7 @@
     /// <summary>
     /// File System Item Kind
     /// </summary>
-    internal enum FileSystemItemKind
+    public enum FileSystemItemKind
     {
         /// <summary>
         /// Root
