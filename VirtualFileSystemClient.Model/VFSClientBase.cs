@@ -4,8 +4,8 @@ using System.ServiceModel;
 namespace VirtualFileSystemClient.Model
 {
 
-    public abstract class VFSClientBase<TConnectDetail, TDisconnectDetail, TVFSDetail> :
-        Common.VFSClientBase<FaultException<TConnectDetail>, FaultException<TDisconnectDetail>, FaultException<TVFSDetail>>
+    public abstract class VFSClientBase<TConnectFault, TDisconnectFault, TVFSFault> :
+        Common.VFSClientBase<FaultException<TConnectFault>, FaultException<TDisconnectFault>, FaultException<TVFSFault>>
     {
 
         public VFSClientBase(Action<string> output) : base(output)
