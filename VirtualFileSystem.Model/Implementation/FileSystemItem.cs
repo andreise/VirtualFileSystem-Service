@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using static System.FormattableString;
 
-namespace VirtualFileSystem.Model
+namespace VirtualFileSystem.Model.Implementation
 {
 
     /// <summary>

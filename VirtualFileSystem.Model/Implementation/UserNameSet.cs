@@ -2,7 +2,7 @@
 using System;
 using VirtualFileSystem.Common;
 
-namespace VirtualFileSystem.Model
+namespace VirtualFileSystem.Model.Implementation
 {
 
     internal sealed class UserNameSet : ItemSet<string>

@@ -3,7 +3,7 @@ using System.ServiceProcess;
 
 namespace VirtualFileSystem.WindowsService
 {
-    using ServiceModel;
+    using VirtualFileSystem.ServiceModel;
 
     public sealed class VFSWindowsService : ServiceBase
     {

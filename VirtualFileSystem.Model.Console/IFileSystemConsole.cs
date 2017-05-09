@@ -1,4 +1,4 @@
-﻿namespace VirtualFileSystem.Model
+﻿namespace VirtualFileSystem.Model.Console
 {
 
     /// <summary>

@@ -12,7 +12,7 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// Creates a new file system
         /// </summary>
-        /// <param name="name">File system name</param>
+        /// <param name="name">File System Name</param>
         /// <returns>Returns a new file system</returns>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty or is not a valid file system name</exception>

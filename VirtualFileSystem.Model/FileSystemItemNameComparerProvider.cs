@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Item Name Comparer Provider
     /// </summary>
-    internal static class FileSystemItemNameComparerProvider
+    public static class FileSystemItemNameComparerProvider
     {
 
         private static readonly Lazy<StringComparer> defaultInstance = new Lazy<StringComparer>(

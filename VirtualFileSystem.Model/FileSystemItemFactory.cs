@@ -3,6 +3,7 @@ using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
 {
+    using Implementation;
 
     public static class FileSystemItemFactory
     {

@@ -8,7 +8,7 @@ namespace VirtualFileSystem.Model
     /// <summary>
     /// File System Path Utils
     /// </summary>
-    internal static partial class PathUtils
+    public static partial class PathUtils
     {
 
         // Path Separator Validators

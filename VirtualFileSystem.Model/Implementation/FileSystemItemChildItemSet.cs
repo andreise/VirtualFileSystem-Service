@@ -1,7 +1,7 @@
 ﻿using Common.Collections;
 using System;
 
-namespace VirtualFileSystem.Model
+namespace VirtualFileSystem.Model.Implementation
 {
 
     internal sealed class FileSystemItemChildItemSet : ItemSet<IFileSystemItem>

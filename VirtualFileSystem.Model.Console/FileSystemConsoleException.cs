@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirtualFileSystem.Model
+namespace VirtualFileSystem.Model.Console
 {
 
     public sealed class FileSystemConsoleException : Exception

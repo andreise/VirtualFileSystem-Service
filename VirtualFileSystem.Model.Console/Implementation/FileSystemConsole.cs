@@ -4,7 +4,7 @@ using System.Text;
 using VirtualFileSystem.Common;
 using static System.FormattableString;
 
-namespace VirtualFileSystem.Model
+namespace VirtualFileSystem.Model.Console.Implementation
 {
 
     /// <summary>

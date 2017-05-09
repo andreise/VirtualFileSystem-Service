@@ -70,6 +70,10 @@
       <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
       <Name>VirtualFileSystem.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VirtualFileSystem.Model.Console\VirtualFileSystem.Model.Console.csproj">
+      <Project>{bef8d427-6d8c-4114-b18e-5e0993bfaec9}</Project>
+      <Name>VirtualFileSystem.Model.Console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualFileSystem.Model\VirtualFileSystem.Model.csproj">
       <Project>{974107d1-26e9-4c1e-96af-329a8ad30ffc}</Project>
       <Name>VirtualFileSystem.Model</Name>
