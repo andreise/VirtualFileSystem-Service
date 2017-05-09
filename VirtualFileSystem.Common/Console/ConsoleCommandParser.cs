@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace VirtualFileSystem.Common
+namespace VirtualFileSystem.Common.Console
 {
+    using Implementation;
 
     public static class ConsoleCommandParser
     {

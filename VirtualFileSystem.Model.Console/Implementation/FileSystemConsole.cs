@@ -5,7 +5,7 @@ using static System.FormattableString;
 
 namespace VirtualFileSystem.Model.Console.Implementation
 {
-    using VirtualFileSystem.Common;
+    using VirtualFileSystem.Common.Security;
 
     /// <summary>
     /// File System Console

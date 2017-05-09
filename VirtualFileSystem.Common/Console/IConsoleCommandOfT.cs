@@ -1,4 +1,4 @@
-﻿namespace VirtualFileSystem.Common
+﻿namespace VirtualFileSystem.Common.Console
 {
 
     /// <summary>

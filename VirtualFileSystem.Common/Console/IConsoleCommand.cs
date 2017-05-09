@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VirtualFileSystem.Common
+namespace VirtualFileSystem.Common.Console
 {
 
     /// <summary>

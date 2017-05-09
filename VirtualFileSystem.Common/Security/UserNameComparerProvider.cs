@@ -1,7 +1,7 @@
 ﻿using Common.Comparers;
 using System;
 
-namespace VirtualFileSystem.Common
+namespace VirtualFileSystem.Common.Security
 {
 
     /// <summary>

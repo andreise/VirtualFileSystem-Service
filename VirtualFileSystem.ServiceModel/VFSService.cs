@@ -7,7 +7,8 @@ using static System.FormattableString;
 
 namespace VirtualFileSystem.ServiceModel
 {
-    using VirtualFileSystem.Common;
+    using VirtualFileSystem.Common.Console;
+    using VirtualFileSystem.Common.Security;
     using VirtualFileSystem.Model;
     using VirtualFileSystem.Model.Console;
     using Security;

@@ -5,7 +5,7 @@ using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model
 {
-    using VirtualFileSystem.Common;
+    using VirtualFileSystem.Common.Console;
     using VirtualFileSystemServiceReference;
     using Common;
 

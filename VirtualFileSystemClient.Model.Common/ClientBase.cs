@@ -5,7 +5,8 @@ using static System.FormattableString;
 namespace VirtualFileSystemClient.Model.Common
 {
     using Security;
-    using VirtualFileSystem.Common;
+    using VirtualFileSystem.Common.Console;
+    using VirtualFileSystem.Common.Security;
 
     public abstract class ClientBase<TAuthorizeException, TDeauthorizeException, TFileSystemConsoleException>
         where TAuthorizeException : Exception

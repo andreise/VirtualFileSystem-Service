@@ -3,7 +3,7 @@ using System;
 
 namespace VirtualFileSystem.Model.Implementation
 {
-    using VirtualFileSystem.Common;
+    using VirtualFileSystem.Common.Security;
 
     internal sealed class UserNameSet : ItemSet<string>
     {
