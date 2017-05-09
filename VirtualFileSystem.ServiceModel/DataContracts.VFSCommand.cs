@@ -33,7 +33,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class FSCommandFault : BaseFault
+    public sealed class FSCommandFault
     {
         [DataMember]
         public string UserName { get; set; }

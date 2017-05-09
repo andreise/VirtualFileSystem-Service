@@ -52,11 +52,7 @@ namespace VirtualFileSystemClient.Model
             {
                 string message = ServerReturnedNullResponseMessage;
                 throw new FaultException<ConnectFault>(
-                    new ConnectFault()
-                    {
-                        FaultMessage = message,
-                        UserName = userName
-                    },
+                    new ConnectFault() { UserName = userName },
                     message
                 );
             }
@@ -81,11 +77,7 @@ namespace VirtualFileSystemClient.Model
             {
                 string message = ServerReturnedNullResponseMessage;
                 throw new FaultException<DisconnectFault>(
-                    new DisconnectFault()
-                    {
-                        FaultMessage = message,
-                        UserName = this.User.Credentials.UserName
-                    },
+                    new DisconnectFault() { UserName = this.User.Credentials.UserName },
                     message
                 );
             }
@@ -112,7 +104,6 @@ namespace VirtualFileSystemClient.Model
                 throw new FaultException<FSCommandFault>(
                     new FSCommandFault()
                     {
-                        FaultMessage = message,
                         UserName = this.User.Credentials.UserName,
                         CommandLine = command.CommandLine
                     },

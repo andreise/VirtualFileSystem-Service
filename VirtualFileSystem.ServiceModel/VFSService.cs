@@ -86,19 +86,19 @@ namespace VirtualFileSystem.ServiceModel
 
         private static FaultException<ConnectFault> CreateConnectFaultException(string userName, string message) =>
             new FaultException<ConnectFault>(
-                detail: new ConnectFault() { UserName = userName, FaultMessage = message },
+                detail: new ConnectFault() { UserName = userName },
                 reason: message
             );
 
         private static FaultException<DisconnectFault> CreateDisconnectFaultException(string userName, string message) =>
             new FaultException<DisconnectFault>(
-                detail: new DisconnectFault() { UserName = userName, FaultMessage = message },
+                detail: new DisconnectFault() { UserName = userName },
                 reason: message
             );
 
         private static FaultException<FSCommandFault> CreateFSCommandFaultException(string userName, string commandLine, string message) =>
             new FaultException<FSCommandFault>(
-                detail: new FSCommandFault() { UserName = userName, CommandLine = commandLine, FaultMessage = message },
+                detail: new FSCommandFault() { UserName = userName, CommandLine = commandLine },
                 reason: message
             );
 

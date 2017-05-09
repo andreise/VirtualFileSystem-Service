@@ -15,21 +15,11 @@
   </xs:complexType>
   <xs:element name="ConnectResponse" nillable="true" type="tns:ConnectResponse" />
   <xs:complexType name="ConnectFault">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:BaseFault">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ConnectFault" nillable="true" type="tns:ConnectFault" />
-  <xs:complexType name="BaseFault">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BaseFault" nillable="true" type="tns:BaseFault" />
+  <xs:element name="ConnectFault" nillable="true" type="tns:ConnectFault" />
   <xs:complexType name="DisconnectRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
@@ -44,13 +34,9 @@
   </xs:complexType>
   <xs:element name="DisconnectResponse" nillable="true" type="tns:DisconnectResponse" />
   <xs:complexType name="DisconnectFault">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:BaseFault">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="DisconnectFault" nillable="true" type="tns:DisconnectFault" />
   <xs:complexType name="FSCommandRequest">
@@ -71,14 +57,10 @@
   </xs:complexType>
   <xs:element name="FSCommandResponse" nillable="true" type="tns:FSCommandResponse" />
   <xs:complexType name="FSCommandFault">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:BaseFault">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="FSCommandFault" nillable="true" type="tns:FSCommandFault" />
   <xs:complexType name="FileSystemChangedData">

@@ -137,18 +137,15 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BaseFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DisconnectFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FSCommandFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.ConnectFault))]
-    public partial class BaseFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ConnectFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FaultMessageField;
+        private string UserNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -161,14 +158,14 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FaultMessage {
+        public string UserName {
             get {
-                return this.FaultMessageField;
+                return this.UserNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.FaultMessageField, value) != true)) {
-                    this.FaultMessageField = value;
-                    this.RaisePropertyChanged("FaultMessage");
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
                 }
             }
         }
@@ -179,91 +176,6 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-    [System.SerializableAttribute()]
-    public partial class DisconnectFault : VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.BaseFault {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
-    [System.SerializableAttribute()]
-    public partial class FSCommandFault : VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.BaseFault {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommandLineField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommandLine {
-            get {
-                return this.CommandLineField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
-                    this.CommandLineField = value;
-                    this.RaisePropertyChanged("CommandLine");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConnectFault", Namespace="http://andrey.sergeev.vfsservice")]
-    [System.SerializableAttribute()]
-    public partial class ConnectFault : VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.BaseFault {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
-                }
             }
         }
     }
@@ -334,6 +246,51 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
     [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectResponse", Namespace="http://andrey.sergeev.vfsservice")]
     [System.SerializableAttribute()]
     public partial class DisconnectResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class DisconnectFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -517,6 +474,67 @@ namespace VirtualFileSystemClient.Model.VirtualFileSystemServiceReference {
                 if ((object.ReferenceEquals(this.ResponseMessageField, value) != true)) {
                     this.ResponseMessageField = value;
                     this.RaisePropertyChanged("ResponseMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FSCommandFault", Namespace="http://andrey.sergeev.vfsservice")]
+    [System.SerializableAttribute()]
+    public partial class FSCommandFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommandLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommandLine {
+            get {
+                return this.CommandLineField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommandLineField, value) != true)) {
+                    this.CommandLineField = value;
+                    this.RaisePropertyChanged("CommandLine");
                 }
             }
         }

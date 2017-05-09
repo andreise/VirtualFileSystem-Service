@@ -3,8 +3,6 @@
 namespace VirtualFileSystem.ServiceModel
 {
 
-    // Callbacks
-
     [DataContract]
     internal sealed class FileSystemChangedData
     {
@@ -13,15 +11,6 @@ namespace VirtualFileSystem.ServiceModel
 
         [DataMember]
         public string CommandLine { get; set; }
-    }
-
-    // Faults
-
-    [DataContract]
-    public abstract class BaseFault
-    {
-        [DataMember]
-        public string FaultMessage { get; set; }
     }
 
 }

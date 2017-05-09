@@ -24,7 +24,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class ConnectFault : BaseFault
+    public sealed class ConnectFault
     {
         [DataMember]
         public string UserName { get; set; }

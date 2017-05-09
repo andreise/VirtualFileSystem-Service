@@ -21,7 +21,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class DisconnectFault : BaseFault
+    public sealed class DisconnectFault
     {
         [DataMember]
         public string UserName { get; set; }

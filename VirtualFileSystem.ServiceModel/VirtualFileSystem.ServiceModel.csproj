@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommandCode.cs" />
-    <Compile Include="DataContracts.Common.cs" />
+    <Compile Include="DataContracts.NotificationData.cs" />
     <Compile Include="DataContracts.VFSCommand.cs" />
     <Compile Include="DataContracts.Disconnect.cs" />
     <Compile Include="DataContracts.Connect.cs" />
