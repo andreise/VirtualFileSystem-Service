@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model.Console.Implementation
 {
+    using VirtualFileSystem.Common;
 
     /// <summary>
     /// File System Console

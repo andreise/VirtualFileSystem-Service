@@ -1,9 +1,9 @@
 ﻿using Common.Collections;
 using System;
-using VirtualFileSystem.Common;
 
 namespace VirtualFileSystem.Model.Implementation
 {
+    using VirtualFileSystem.Common;
 
     internal sealed class UserNameSet : ItemSet<string>
     {

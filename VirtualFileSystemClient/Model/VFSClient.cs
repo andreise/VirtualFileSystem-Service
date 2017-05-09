@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model
 {
+    using VirtualFileSystem.Common;
 
     internal sealed class VFSClient : VFSClientBase
     {

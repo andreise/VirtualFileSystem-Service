@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model
 {
+    using VirtualFileSystem.Common;
     using VFSServiceReference;
 
     internal abstract class VFSClientBase : VFSClientBase<ConnectFault, DisconnectFault, FSCommandFault>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using VirtualFileSystem.Common;
 using static System.FormattableString;
 
 namespace VirtualFileSystemClient.Model.Common
 {
+    using VirtualFileSystem.Common;
     using Security;
 
     public abstract class VFSClientBase<TConnectException, TDisconnectException, TVFSException>
