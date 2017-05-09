@@ -38,6 +38,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientBase.cs" />
     <Compile Include="Connected Services\VirtualFileSystemServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -45,8 +47,13 @@
     </Compile>
     <Compile Include="VFSClientBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VFSServiceCallbackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualFileSystem.Common\VirtualFileSystem.Common.csproj">
+      <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
+      <Name>VirtualFileSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj">
       <Project>{e64400b8-b1c6-4c74-8f7c-722f1ec01c2b}</Project>
       <Name>VirtualFileSystemClient.Model.Common</Name>
