@@ -14,6 +14,10 @@ namespace VirtualFileSystemClient.Model
 
         private const string ServerReturnedNullResponseMessage = "Server returned null response.";
 
+        private bool alreadyRun;
+
+        private readonly object runLock = new object();
+
         private readonly VFSServiceClient Service;
 
         private void HandleCallback(FileSystemConsoleNotificationData data)
@@ -36,8 +40,6 @@ namespace VirtualFileSystemClient.Model
                 new InstanceContext(new VFSServiceCallbackHandler(this.HandleCallback))
             );
         }
-
-        protected override void CloseService() => this.Service.Abort(); // async closing the service
 
         protected override async Task ProcessAuthorizeOperationHandler(string userName)
         {
@@ -112,6 +114,26 @@ namespace VirtualFileSystemClient.Model
             }
 
             this.Output(response.ResponseMessage);
+        }
+
+        public override async Task Run()
+        {
+            lock (this.runLock)
+            {
+                if (this.alreadyRun)
+                    throw new InvalidOperationException("Client instance once has already been launched.");
+
+                this.alreadyRun = true;
+            }
+
+            try
+            {
+                await base.Run();
+            }
+            finally
+            {
+                this.Service.Abort(); // async closing the service
+            }
         }
 
     }

@@ -16,10 +16,6 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected static bool EqualUserNames(string name1, string name2) => UserNameComparerProvider.Default.Equals(name1, name2);
 
-        private bool alreadyRun;
-
-        private readonly object runLock = new object();
-
         protected readonly User User = new User();
 
         protected readonly Func<string> Input;
@@ -59,8 +55,6 @@ namespace VirtualFileSystemClient.Model.Common
         protected abstract Task ProcessDeauthorizeOperationHandler();
 
         protected abstract Task ProcessFileSystemConsoleOperationHandler(IConsoleCommand<ConsoleCommandCode> command);
-
-        protected abstract void CloseService();
 
         private async Task ProcessAuthorizeOperation(IConsoleCommand<ConsoleCommandCode> command)
         {
@@ -121,16 +115,8 @@ namespace VirtualFileSystemClient.Model.Common
             await this.ProcessOperation<TFileSystemConsoleException>(async () => await this.ProcessFileSystemConsoleOperationHandler(command));
         }
 
-        public async Task Run()
+        public virtual async Task Run()
         {
-            lock (this.runLock)
-            {
-                if (this.alreadyRun)
-                    throw new InvalidOperationException("Client instance once has already been launched.");
-
-                this.alreadyRun = true;
-            }
-
             this.Output("Virtual File System Client");
             this.Output(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
             this.Output(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
@@ -139,35 +125,28 @@ namespace VirtualFileSystemClient.Model.Common
 
             IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandParser.TryParse<ConsoleCommandCode>(this.Input(), isCaseSensitive: false);
 
-            try
+            while (
+                !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
+            )
             {
-                while (
-                    !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
-                )
+                if (string.IsNullOrWhiteSpace(command.CommandLine))
+                    continue;
+
+                switch (command.CommandCode)
                 {
-                    if (string.IsNullOrWhiteSpace(command.CommandLine))
-                        continue;
+                    case ConsoleCommandCode.Connect:
+                        await this.ProcessAuthorizeOperation(command);
+                        break;
 
-                    switch (command.CommandCode)
-                    {
-                        case ConsoleCommandCode.Connect:
-                            await this.ProcessAuthorizeOperation(command);
-                            break;
+                    case ConsoleCommandCode.Disconnect:
+                        await this.ProcessDeauthorizeOperation();
+                        break;
 
-                        case ConsoleCommandCode.Disconnect:
-                            await this.ProcessDeauthorizeOperation();
-                            break;
-
-                        default:
-                            await this.ProcessFileSystemConsoleOperation(command);
-                            break;
-                    }
-                } // while
-            }
-            finally
-            {
-                this.CloseService();
-            }
+                    default:
+                        await this.ProcessFileSystemConsoleOperation(command);
+                        break;
+                }
+            } // while
         }
 
     }
