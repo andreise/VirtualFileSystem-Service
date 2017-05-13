@@ -9,8 +9,8 @@ namespace VirtualFileSystem.ServiceModel.Security
 
         public DateTime LastActivityTimeUtc
         {
-            get { return this.lastActivityTimeUtc; }
-            set { this.lastActivityTimeUtc = value.ToUniversalTime(); }
+            get => this.lastActivityTimeUtc;
+            set => this.lastActivityTimeUtc = value.ToUniversalTime();
         }
 
         public byte[] Token { get; }
