@@ -201,7 +201,7 @@ namespace VirtualFileSystem.Model.Implementation
             bool IsChildAlreadyExists() => this.ChildItems.Any(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, child.Name));
 
             if (IsChildAlreadyExists())
-                throw new InvalidOperationException("Child item the specified name already exists.");
+                throw new InvalidOperationException("Child item with the specified name already exists.");
 
             this.childItems.Add(child);
         }
