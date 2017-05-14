@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Common.Console.Implementation
         /// <param name="isCaseSensitive">Is command a case sensitive</param>
         /// <param name="command">Command</param>
         /// <param name="parameters">Command Parameters</param>
-        public ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IEnumerable<string> parameters = null)
+        public ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IReadOnlyList<string> parameters = null)
             : base(commandLine, isCaseSensitive, command, parameters)
         {
             var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);

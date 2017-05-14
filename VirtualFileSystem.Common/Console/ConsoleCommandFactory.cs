@@ -15,7 +15,7 @@ namespace VirtualFileSystem.Common.Console
                 commandLine,
                 isCaseSensitive,
                 commandLineItems.FirstOrDefault() ?? string.Empty,
-                commandLineItems.Skip(1)
+                commandLineItems.Skip(1).ToArray()
             );
         }
 
