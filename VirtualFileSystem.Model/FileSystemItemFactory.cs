@@ -58,31 +58,53 @@ namespace VirtualFileSystem.Model
                 [FileSystemItemKind.File] = "File cannot contain child items."
             };
 
-        private static IFileSystemItem CreateItemInternal(FileSystemItemKind kind, string name) => new FileSystemItem(
-            kind,
-            name,
-            validParentKinds[kind],
-            validChildKinds[kind],
-            validParentKindsMessage[kind],
-            validChildKindsMessage[kind]
-        );
+        private static readonly IReadOnlyDictionary<FileSystemItemKind, Action<string>> itemNameValidators =
+            new Dictionary<FileSystemItemKind, Action<string>>()
+            {
+                [FileSystemItemKind.Root] = name =>
+                {
+                    if (!PathUtils.IsValidFileSystemName(name))
+                        throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
+                },
+                [FileSystemItemKind.Volume] = name =>
+                {
+                    if (!PathUtils.IsValidVolumeName(name))
+                        throw new ArgumentException(Invariant($"'{name}' is not a valid volume name."));
+                },
+                [FileSystemItemKind.Directory] = name =>
+                {
+                    if (!PathUtils.IsValidDirectoryName(name))
+                        throw new ArgumentException(Invariant($"'{name}' is not a valid directory name."));
+                },
+                [FileSystemItemKind.File] = name =>
+                {
+                    if (!PathUtils.IsValidFileName(name))
+                        throw new ArgumentException(Invariant($"'{name}' is not a valid file name."));
+                }
+            };
 
-        private static void ValidateName(string name)
+        private static IFileSystemItem CreateItemInternal(FileSystemItemKind kind, string name)
         {
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException(Invariant($"{nameof(name)} is empty."), nameof(name));
+
+            itemNameValidators[kind](name);
+
+            return new FileSystemItem(
+                kind,
+                name,
+                validParentKinds[kind],
+                validChildKinds[kind],
+                validParentKindsMessage[kind],
+                validChildKindsMessage[kind]
+            );
         }
 
         public static IFileSystemItem CreateRoot(string name)
         {
-            ValidateName(name);
-
-            if (!PathUtils.IsValidFileSystemName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid file system name."));
-
             IFileSystemItem root = CreateItemInternal(FileSystemItemKind.Root, name);
 
             IFileSystemItem defaultVolume = CreateVolume(PathUtils.Consts.ValidVolumeNames[0]);
@@ -91,35 +113,11 @@ namespace VirtualFileSystem.Model
             return root;
         }
 
-        public static IFileSystemItem CreateVolume(string name)
-        {
-            ValidateName(name);
+        public static IFileSystemItem CreateVolume(string name) => CreateItemInternal(FileSystemItemKind.Volume, name);
 
-            if (!PathUtils.IsValidVolumeName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid volume name."));
+        public static IFileSystemItem CreateDirectory(string name) => CreateItemInternal(FileSystemItemKind.Directory, name);
 
-            return CreateItemInternal(FileSystemItemKind.Volume, name);
-        }
-
-        public static IFileSystemItem CreateDirectory(string name)
-        {
-            ValidateName(name);
-
-            if (!PathUtils.IsValidDirectoryName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid directory name."));
-
-            return CreateItemInternal(FileSystemItemKind.Directory, name);
-        }
-
-        public static IFileSystemItem CreateFile(string name)
-        {
-            ValidateName(name);
-
-            if (!PathUtils.IsValidFileName(name))
-                throw new ArgumentException(Invariant($"'{name}' is not a valid file name."));
-
-            return CreateItemInternal(FileSystemItemKind.File, name);
-        }
+        public static IFileSystemItem CreateFile(string name) => CreateItemInternal(FileSystemItemKind.File, name);
 
     }
 
