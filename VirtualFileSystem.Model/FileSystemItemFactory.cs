@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using static System.FormattableString;
 
 namespace VirtualFileSystem.Model
@@ -101,6 +102,22 @@ namespace VirtualFileSystem.Model
                 validParentKindsMessage[kind],
                 validChildKindsMessage[kind]
             );
+        }
+
+        private static readonly IReadOnlyCollection<FileSystemItemKind> validKinds = new ReadOnlyCollection<FileSystemItemKind>(new FileSystemItemKind[]
+        {
+            FileSystemItemKind.Root,
+            FileSystemItemKind.Volume,
+            FileSystemItemKind.Directory,
+            FileSystemItemKind.File
+        });
+
+        public static IFileSystemItem CreateItem(FileSystemItemKind kind, string name)
+        {
+            if (!validKinds.Contains(kind))
+                throw new ArgumentOutOfRangeException(nameof(kind), kind, "File system item kind is invalid.");
+
+            return CreateItemInternal(kind, name);
         }
 
         public static IFileSystemItem CreateRoot(string name)
