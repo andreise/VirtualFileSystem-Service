@@ -1,12 +1,11 @@
 ﻿using Common.Enums;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 
-namespace VirtualFileSystem.Common.Console.Implementation
+namespace VirtualFileSystem.Common.Console
 {
 
-    internal sealed class ConsoleCommand<TCommandCodeEnum> : ConsoleCommand, IConsoleCommand<TCommandCodeEnum> where TCommandCodeEnum : struct
+    public class ConsoleCommand<TCommandCodeEnum> : ConsoleCommand, IConsoleCommand<TCommandCodeEnum> where TCommandCodeEnum : struct
     {
 
         /// <summary>
@@ -28,11 +27,9 @@ namespace VirtualFileSystem.Common.Console.Implementation
         /// Constructor
         /// </summary>
         /// <param name="commandLine">Command Line</param>
-        /// <param name="isCaseSensitive">Is command a case sensitive</param>
-        /// <param name="command">Command</param>
-        /// <param name="parameters">Command Parameters</param>
-        public ConsoleCommand(string commandLine, bool isCaseSensitive, string command, IReadOnlyList<string> parameters = null)
-            : base(commandLine, isCaseSensitive, command, parameters)
+        /// <param name="isCaseSensitive">Is case sensitive command line</param>
+        /// <exception cref="ArgumentNullException">Throws if command line is null</exception>
+        public ConsoleCommand(string commandLine, bool isCaseSensitive) : base(commandLine, isCaseSensitive)
         {
             var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
             if (!(commandCode is null) && !IsNumeric(this.Command))

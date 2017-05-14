@@ -297,7 +297,7 @@ namespace VirtualFileSystem.ServiceModel
             IConsoleCommand<ConsoleCommandCode> command;
             try
             {
-                command = ConsoleCommandFactory.Parse<ConsoleCommandCode>(request.CommandLine, isCaseSensitive: false);
+                command = new ConsoleCommand<ConsoleCommandCode>(request.CommandLine, isCaseSensitive: false);
             }
             catch (ArgumentException e)
             {

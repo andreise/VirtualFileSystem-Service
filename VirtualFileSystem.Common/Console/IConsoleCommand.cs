@@ -10,12 +10,18 @@ namespace VirtualFileSystem.Common.Console
     {
 
         /// <summary>
+        /// Original Command Line
+        /// </summary>
+        string OriginalCommandLine { get; }
+
+        /// <summary>
         /// Command Line
         /// </summary>
+        /// <remarks>Command Line in the normalized form</remarks>
         string CommandLine { get; }
 
         /// <summary>
-        /// Is command a case sensitive
+        /// Is case sensitive command line
         /// </summary>
         bool IsCaseSensitive { get; }
 
