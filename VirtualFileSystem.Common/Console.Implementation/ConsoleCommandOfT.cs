@@ -35,7 +35,7 @@ namespace VirtualFileSystem.Common.Console.Implementation
             : base(commandLine, isCaseSensitive, command, parameters)
         {
             var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
-            if (!IsNumeric(this.Command))
+            if (!(commandCode is null) && !IsNumeric(this.Command))
                 this.CommandCode = commandCode;
         }
 
