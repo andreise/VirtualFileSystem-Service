@@ -373,26 +373,23 @@ namespace VirtualFileSystem.Model.Implementation
         /// <exception cref="ArgumentOutOfRangeException">Throws if the kind is incorrect</exception>
         /// <exception cref="ArgumentNullException">Throws if the name is null</exception>
         /// <exception cref="ArgumentException">Throws if the name is empty</exception>
-        public FileSystemItem(
+        internal FileSystemItem(
             FileSystemItemKind kind,
             string name,
-            IEnumerable<FileSystemItemKind> validParentKinds,
-            IEnumerable<FileSystemItemKind> validChildKinds,
+            IReadOnlyCollection<FileSystemItemKind> validParentKinds,
+            IReadOnlyCollection<FileSystemItemKind> validChildKinds,
             string validParentKindsMessage,
             string validChildKindsMessage
         )
         {
-            string NormalizeString(string s) => s?.Trim() ?? string.Empty;
-            IReadOnlyCollection<T> NormalizeCollection<T>(IEnumerable<T> source) => new ReadOnlyCollection<T>(source?.ToArray() ?? new T[] { });
-
             this.Kind = kind;
-            this.Name = NormalizeString(name);
+            this.Name = name;
 
-            this.validParentKinds = NormalizeCollection(validParentKinds);
-            this.validChildKinds = NormalizeCollection(validChildKinds);
+            this.validParentKinds = validParentKinds;
+            this.validChildKinds = validChildKinds;
 
-            this.validParentKindsMessage = NormalizeString(validParentKindsMessage);
-            this.validChildKindsMessage = NormalizeString(validChildKindsMessage);
+            this.validParentKindsMessage = validParentKindsMessage;
+            this.validChildKindsMessage = validChildKindsMessage;
 
             this.childItems = new FileSystemItemChildItemSet(this);
         }
