@@ -5,7 +5,7 @@ namespace VirtualFileSystem.Common.Console
 {
     using Implementation;
 
-    public static class ConsoleCommandParser
+    public static class ConsoleCommandFactory
     {
 
         private static IConsoleCommand ParseInternal(string commandLine, bool isCaseSensitive)

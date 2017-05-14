@@ -123,7 +123,7 @@ namespace VirtualFileSystemClient.Model.Common
 
             IConsoleCommand<ConsoleCommandCode> command;
 
-            IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandParser.TryParse<ConsoleCommandCode>(this.Input(), isCaseSensitive: false);
+            IConsoleCommand<ConsoleCommandCode> ReadCommand() => ConsoleCommandFactory.TryParse<ConsoleCommandCode>(this.Input(), isCaseSensitive: false);
 
             while (
                 !((command = ReadCommand()) is null) && command.CommandCode != ConsoleCommandCode.Exit
