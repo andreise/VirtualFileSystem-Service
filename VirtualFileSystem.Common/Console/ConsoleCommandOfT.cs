@@ -23,6 +23,12 @@ namespace VirtualFileSystem.Common.Console
                 ulong.TryParse(s, style, provider, out _);
         }
 
+        private TCommandCodeEnum? GetCommandCode()
+        {
+            var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
+            return commandCode is null || IsNumeric(this.Command) ? null : commandCode;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -31,9 +37,7 @@ namespace VirtualFileSystem.Common.Console
         /// <exception cref="ArgumentNullException">Throws if command line is null</exception>
         public ConsoleCommand(string commandLine, bool isCaseSensitive) : base(commandLine, isCaseSensitive)
         {
-            var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
-            if (!(commandCode is null) && !IsNumeric(this.Command))
-                this.CommandCode = commandCode;
+            this.CommandCode = this.GetCommandCode();
         }
 
     }

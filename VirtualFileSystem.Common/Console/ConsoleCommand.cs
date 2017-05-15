@@ -38,6 +38,8 @@ namespace VirtualFileSystem.Common.Console
         /// </summary>
         public IReadOnlyList<string> Parameters { get; }
 
+        private string GetCommandLine() => string.Join(" ", new string[] { this.Command }.Concat(this.Parameters));
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -55,7 +57,7 @@ namespace VirtualFileSystem.Common.Console
             this.Command = items.FirstOrDefault() ?? string.Empty;
             this.Parameters = new ReadOnlyCollection<string>(items.Skip(1).ToArray());
 
-            this.CommandLine = string.Join(" ", new string[] { this.Command }.Concat(this.Parameters));
+            this.CommandLine = this.GetCommandLine();
         }
 
         /// <summary>
