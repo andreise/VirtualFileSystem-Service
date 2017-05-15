@@ -167,7 +167,7 @@ namespace VirtualFileSystem.ServiceModel
         {
             const string defaultResponseMessage = "Command performed successfully.";
 
-            Action<int> checkParameterCount = estimatedCount =>
+            void ValidateParameterCount(int estimatedCount)
             {
                 if (command.Parameters.Count < estimatedCount)
                     throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
@@ -177,7 +177,7 @@ namespace VirtualFileSystem.ServiceModel
             {
                 case ConsoleCommandCode.ChangeDirectory:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         this.connectedUsers[request.UserName].CurrentDirectory =
                             this.Console.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
@@ -185,49 +185,49 @@ namespace VirtualFileSystem.ServiceModel
 
                 case ConsoleCommandCode.CopyTree:
                     {
-                        checkParameterCount(2);
+                        ValidateParameterCount(2);
                         this.Console.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
 
                 case ConsoleCommandCode.DeleteFile:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string fileName = this.Console.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' deleted succesfully.");
                     }
 
                 case ConsoleCommandCode.DeleteTree:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string directory = this.Console.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Tree '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.LockFile:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string fileName = this.Console.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
                     }
 
                 case ConsoleCommandCode.MakeDirectory:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string directory = this.Console.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MakeFile:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string fileName = this.Console.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MoveTree:
                     {
-                        checkParameterCount(2);
+                        ValidateParameterCount(2);
                         this.Console.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
@@ -241,14 +241,14 @@ namespace VirtualFileSystem.ServiceModel
 
                 case ConsoleCommandCode.RemoveDirectory:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string directory = this.Console.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.UnlockFile:
                     {
-                        checkParameterCount(1);
+                        ValidateParameterCount(1);
                         string fileName = this.Console.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
                     }
