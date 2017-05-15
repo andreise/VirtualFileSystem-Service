@@ -26,7 +26,11 @@ namespace VirtualFileSystem.Common.Console
         private TCommandCodeEnum? GetCommandCode()
         {
             var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
-            return commandCode is null || IsNumeric(this.Command) ? null : commandCode;
+
+            if (IsNumeric(this.Command))
+                return null;
+
+            return commandCode;
         }
 
         /// <summary>
