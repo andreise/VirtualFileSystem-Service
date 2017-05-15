@@ -21,11 +21,6 @@ namespace VirtualFileSystem.Common.Console
         string CommandLine { get; }
 
         /// <summary>
-        /// Is case sensitive command line
-        /// </summary>
-        bool IsCaseSensitive { get; }
-
-        /// <summary>
         /// Command
         /// </summary>
         string Command { get; }
@@ -34,6 +29,11 @@ namespace VirtualFileSystem.Common.Console
         /// Command Parameters
         /// </summary>
         IReadOnlyList<string> Parameters { get; }
+
+        /// <summary>
+        /// Is case sensitive command line
+        /// </summary>
+        bool IsCaseSensitive { get; }
 
         /// <summary>
         /// Test command to comform with the specified command

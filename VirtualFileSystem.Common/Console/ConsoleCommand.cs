@@ -24,11 +24,6 @@ namespace VirtualFileSystem.Common.Console
         public string CommandLine { get; }
 
         /// <summary>
-        /// Is case sensitive command line
-        /// </summary>
-        public bool IsCaseSensitive { get; }
-
-        /// <summary>
         /// Command
         /// </summary>
         public string Command { get; }
@@ -37,6 +32,29 @@ namespace VirtualFileSystem.Common.Console
         /// Command Parameters
         /// </summary>
         public IReadOnlyList<string> Parameters { get; }
+
+        /// <summary>
+        /// Is case sensitive command line
+        /// </summary>
+        public bool IsCaseSensitive { get; }
+
+        /// <summary>
+        /// Test command to comform with the specified command
+        /// </summary>
+        /// <param name="command">Command</param>
+        /// <returns>Returns true if the command is comforms to the specified command, otherwise returns false</returns>
+        /// <exception cref="ArgumentNullException">Throws if the specified command is null</exception>
+        public bool IsCommand(string command)
+        {
+            if (command is null)
+                throw new ArgumentNullException(nameof(command));
+
+            return string.Equals(
+                this.Command,
+                command.Trim(),
+                this.IsCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase
+            );
+        }
 
         private string GetCommandLine() => string.Join(" ", new string[] { this.Command }.Concat(this.Parameters));
 
@@ -58,24 +76,8 @@ namespace VirtualFileSystem.Common.Console
             this.Parameters = new ReadOnlyCollection<string>(items.Skip(1).ToArray());
 
             this.CommandLine = this.GetCommandLine();
-        }
 
-        /// <summary>
-        /// Test command to comform with the specified command
-        /// </summary>
-        /// <param name="command">Command</param>
-        /// <returns>Returns true if the command is comforms to the specified command, otherwise returns false</returns>
-        /// <exception cref="ArgumentNullException">Throws if the specified command is null</exception>
-        public bool IsCommand(string command)
-        {
-            if (command is null)
-                throw new ArgumentNullException(nameof(command));
-
-            return string.Equals(
-                this.Command,
-                command.Trim(),
-                this.IsCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase
-            );
+            this.IsCaseSensitive = isCaseSensitive;
         }
 
     }
