@@ -1,6 +1,7 @@
 ﻿using Common.Enums;
 using System;
 using System.Globalization;
+using static System.FormattableString;
 
 namespace VirtualFileSystem.Common.Console
 {
@@ -25,12 +26,16 @@ namespace VirtualFileSystem.Common.Console
 
         private TCommandCodeEnum? GetCommandCode()
         {
-            var commandCode = EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
-
             if (IsNumeric(this.Command))
                 return null;
 
-            return commandCode;
+            return EnumHelper.TryParse<TCommandCodeEnum>(this.Command, ignoreCase: !this.IsCaseSensitive);
+        }
+
+        private static void ValidateCommandCodeEnum()
+        {
+            if (!EnumHelper.IsEnum<TCommandCodeEnum>())
+                throw new ArgumentException(Invariant($"{nameof(TCommandCodeEnum)} is not an enumeration type."));
         }
 
         /// <summary>
@@ -39,8 +44,11 @@ namespace VirtualFileSystem.Common.Console
         /// <param name="commandLine">Command Line</param>
         /// <param name="isCaseSensitive">Is case sensitive command line</param>
         /// <exception cref="ArgumentNullException">Throws if command line is null</exception>
+        /// <exception cref="ArgumentException">Throws if TCommandCodeEnum is not an enumeration type</exception>
         public ConsoleCommand(string commandLine, bool isCaseSensitive) : base(commandLine, isCaseSensitive)
         {
+            ValidateCommandCodeEnum();
+
             this.CommandCode = this.GetCommandCode();
         }
 
