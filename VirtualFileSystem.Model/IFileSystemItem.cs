@@ -78,6 +78,14 @@ namespace VirtualFileSystem.Model
         void Unlock(string userName);
 
         /// <summary>
+        /// Determines the item or its child tree's items are locked
+        /// </summary>
+        /// <returns>
+        /// Returns true if the item or its child tree's items are locked, otherwise returns false
+        /// </returns>
+        bool HasLocks();
+
+        /// <summary>
         /// Adds child item
         /// </summary>
         /// <param name="child">Child item</param>

@@ -163,6 +163,14 @@ namespace VirtualFileSystem.Model.Implementation
             this.lockedBy.Remove(userName);
         }
 
+        /// <summary>
+        /// Determines the item or its child tree's items are locked
+        /// </summary>
+        /// <returns>
+        /// Returns true if the item or its child tree's items are locked, otherwise returns false
+        /// </returns>
+        public bool HasLocks() => this.LockedBy.Count > 0 || this.ChildItems.Any(child => child.HasLocks());
+
         private void ValidateCanHasChildItems()
         {
             if (this.validChildKinds.Count == 0)

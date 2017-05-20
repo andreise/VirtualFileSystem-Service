@@ -109,9 +109,6 @@ namespace VirtualFileSystem.Model.Console.Implementation
             return directory;
         }
 
-        private static bool HasLocks(IFileSystemItem item) =>
-            item.LockedBy.Count > 0 || item.ChildItems.Any(child => HasLocks(child));
-
         public string DeleteTree(string currentDirectory, string directory)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
@@ -132,7 +129,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
             if (currentItem.Kind != FileSystemItemKind.Directory)
                 throw new FileSystemConsoleException("Destination path is not a directory.");
 
-            if (HasLocks(currentItem))
+            if (currentItem.HasLocks())
                 throw new FileSystemConsoleException("Directory or its subdirectories contain one or more locked files.");
 
             currentItem.Parent.RemoveChildDirectoryWithTree(currentItem.Name);
@@ -320,8 +317,8 @@ namespace VirtualFileSystem.Model.Console.Implementation
                 }
             }
 
-            if (HasLocks(sourcePathCurrentItem))
-                throw new FileSystemConsoleException("Source path contain one or more locked files and cannot be moved.");
+            if (sourcePathCurrentItem.HasLocks())
+                throw new FileSystemConsoleException("Source path contain one or more locked files and cannot be copied or moved.");
 
             if (move)
             {
