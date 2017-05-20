@@ -281,7 +281,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             if (sourcePathCurrentItem.Kind == FileSystemItemKind.File)
             {
-                if (sourcePathCurrentItem.LockedBy.Count > 0)
+                if (sourcePathCurrentItem.IsLocked)
                     throw new FileSystemConsoleException(Invariant($"File '{sourcePath}' is locked."));
             }
 
@@ -380,7 +380,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
                 builder.Append(GetItemKindDescription());
 
-                if (item.LockedBy.Count > 0)
+                if (item.IsLocked)
                 {
                     var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
                     builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));

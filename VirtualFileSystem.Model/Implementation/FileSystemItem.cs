@@ -116,6 +116,19 @@ namespace VirtualFileSystem.Model.Implementation
         public IReadOnlyCollection<string> LockedBy => this.lockedBy.Items;
 
         /// <summary>
+        /// Is this item locked
+        /// </summary>
+        public bool IsLocked => this.LockedBy.Count > 0;
+
+        /// <summary>
+        /// Determines this item or any item in its child tree is locked
+        /// </summary>
+        /// <returns>
+        /// Returns true if this item or any item in its child tree is locked, otherwise returns false
+        /// </returns>
+        public bool HasLocks() => this.IsLocked || this.ChildItems.Any(child => child.HasLocks());
+
+        /// <summary>
         /// Locks Item
         /// </summary>
         /// <param name="userName">User Name</param>
@@ -162,14 +175,6 @@ namespace VirtualFileSystem.Model.Implementation
 
             this.lockedBy.Remove(userName);
         }
-
-        /// <summary>
-        /// Determines the item or any item in its child tree is locked
-        /// </summary>
-        /// <returns>
-        /// Returns true if the item or any item in its child tree is locked, otherwise returns false
-        /// </returns>
-        public bool HasLocks() => this.LockedBy.Count > 0 || this.ChildItems.Any(child => child.HasLocks());
 
         private void ValidateCanHasChildItems()
         {
@@ -228,7 +233,7 @@ namespace VirtualFileSystem.Model.Implementation
             if (!this.ChildItems.Contains(child))
                 throw new InvalidOperationException("Item do not have the specified child item.");
 
-            if (child.LockedBy.Count > 0)
+            if (child.IsLocked)
                 throw new InvalidOperationException("Child item is locked.");
 
             this.childItems.Remove(child);
@@ -354,7 +359,7 @@ namespace VirtualFileSystem.Model.Implementation
             if (child.Kind != FileSystemItemKind.File)
                 throw new InvalidOperationException("Item with the specified name is not a file.");
 
-            if (child.LockedBy.Count > 0)
+            if (child.IsLocked)
                 throw new InvalidOperationException("File with the specified name is locked.");
 
             this.childItems.Remove(child);

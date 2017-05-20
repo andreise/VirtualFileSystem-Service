@@ -60,6 +60,19 @@ namespace VirtualFileSystem.Model
         IReadOnlyCollection<string> LockedBy { get; }
 
         /// <summary>
+        /// Is this item locked
+        /// </summary>
+        bool IsLocked { get; }
+
+        /// <summary>
+        /// Determines this item or any item in its child tree is locked
+        /// </summary>
+        /// <returns>
+        /// Returns true if this item or any item in its child tree is locked, otherwise returns false
+        /// </returns>
+        bool HasLocks();
+
+        /// <summary>
         /// Locks Item
         /// </summary>
         /// <param name="userName">User Name</param>
@@ -76,14 +89,6 @@ namespace VirtualFileSystem.Model
         /// <exception cref="ArgumentException">Throws if user name is empty</exception>
         /// <exception cref="InvalidOperationException">Throws if item is not a file or if a file is not locked by the specified user</exception>
         void Unlock(string userName);
-
-        /// <summary>
-        /// Determines the item or any item in its child tree is locked
-        /// </summary>
-        /// <returns>
-        /// Returns true if the item or any item in its child tree is locked, otherwise returns false
-        /// </returns>
-        bool HasLocks();
 
         /// <summary>
         /// Adds child item
