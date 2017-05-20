@@ -374,20 +374,10 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
                 if (itemLevel > 0)
                 {
-                    string GetIndent()
-                    {
-                        const string indentStep = "| ";
+                    for (int i = 0; i < itemLevel; i++)
+                        builder.Append("| ");
 
-                        var indent = new StringBuilder(indentStep.Length * itemLevel);
-                        for (int i = 0; i < itemLevel; i++)
-                            indent.Append(indentStep);
-
-                        indent[indent.Length - 1] = '_';
-
-                        return indent.ToString();
-                    }
-
-                    builder.Append(GetIndent());
+                    builder[builder.Length - 1] = '_';
                 }
 
                 builder.Append(item.Name);
