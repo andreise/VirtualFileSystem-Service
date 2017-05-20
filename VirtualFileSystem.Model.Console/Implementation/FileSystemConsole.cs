@@ -376,10 +376,14 @@ namespace VirtualFileSystem.Model.Console.Implementation
                 {
                     string GetIndent()
                     {
-                        var indent = new StringBuilder(2 * itemLevel);
+                        const string indentStep = "| ";
+
+                        var indent = new StringBuilder(indentStep.Length * itemLevel);
                         for (int i = 0; i < itemLevel; i++)
-                            indent.Append("| ");
+                            indent.Append(indentStep);
+
                         indent[indent.Length - 1] = '_';
+
                         return indent.ToString();
                     }
 
