@@ -354,7 +354,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
             currentDirectory, sourcePath, destPath, move: true
         );
 
-        private void PrintTreeHelper(IFileSystemItem item, StringBuilder builder, bool printRoot)
+        private static void PrintTreeHelper(IFileSystemItem item, StringBuilder builder, bool printRoot)
         {
             void PrintItem()
             {
