@@ -109,19 +109,8 @@ namespace VirtualFileSystem.Model.Console.Implementation
             return directory;
         }
 
-        private static bool HasLocks(IFileSystemItem item)
-        {
-            if (item.LockedBy.Count > 0)
-                return true;
-
-            foreach (IFileSystemItem child in item.ChildItems)
-            {
-                if (HasLocks(child))
-                    return true;
-            }
-
-            return false;
-        }
+        private static bool HasLocks(IFileSystemItem item) =>
+            item.LockedBy.Count > 0 || item.ChildItems.Any(child => HasLocks(child));
 
         public string DeleteTree(string currentDirectory, string directory)
         {
