@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Linq;
+using System;
 using System.Linq;
 using System.Text;
 using static System.FormattableString;
@@ -239,20 +240,27 @@ namespace VirtualFileSystem.Model.Console.Implementation
         private static void CopyItemTree(IFileSystemItem item, IFileSystemItem destItem)
         {
             if (item.Kind != FileSystemItemKind.Directory && item.Kind != FileSystemItemKind.File)
-                throw new InvalidOperationException(Invariant($"{nameof(item)} is not a directory or a file."));
+                throw new ArgumentException(Invariant($"{nameof(item)} is not a directory or a file."), nameof(item));
 
             if (destItem.Kind != FileSystemItemKind.Volume && destItem.Kind != FileSystemItemKind.Directory)
-                throw new InvalidOperationException(Invariant($"{nameof(destItem)} is not a volume or directory."));
+                throw new ArgumentException(Invariant($"{nameof(destItem)} is not a volume or directory."), nameof(item));
 
-            IFileSystemItem itemCopy;
+            IFileSystemItem CopyItem()
+            {
+                switch (item.Kind)
+                {
+                    case FileSystemItemKind.Directory:
+                        return destItem.AddChildDirectory(item.Name);
+                    case FileSystemItemKind.File:
+                        return destItem.AddChildFile(item.Name);
+                    default:
+                        throw new ArgumentException(Invariant($"{nameof(item)} is not a directory or a file."), nameof(item));
+                }
+            }
 
-            if (item.Kind == FileSystemItemKind.Directory)
-                itemCopy = destItem.AddChildDirectory(item.Name);
-            else
-                itemCopy = destItem.AddChildFile(item.Name);
+            IFileSystemItem itemCopy = CopyItem();
 
-            foreach (IFileSystemItem child in item.ChildItems)
-                CopyItemTree(child, itemCopy);
+            item.ChildItems.ForEach(child => CopyItemTree(child, itemCopy));
         }
 
         private void CopyOrMoveInternal(string currentDirectory, string sourcePath, string destPath, bool move)
@@ -389,11 +397,11 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             PrintItem();
 
-            foreach (var childGroup in item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key))
-            {
-                foreach (var child in childGroup.OrderBy(child => child.Name, FileSystemItemNameComparerProvider.Default))
-                    PrintTreeHelper(child, builder, printRoot);
-            }
+            item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key).ForEach(
+                childGroup => childGroup.OrderBy(child => child.Name, FileSystemItemNameComparerProvider.Default).ForEach(
+                    child => PrintTreeHelper(child, builder, printRoot)
+                )
+            );
         }
 
         public string PrintTree(bool printRoot)
