@@ -385,15 +385,19 @@ namespace VirtualFileSystem.Model.Console.Implementation
                 switch (item.Kind)
                 {
                     case FileSystemItemKind.Directory:
-                        builder.Append(" [DIR]");
+                        {
+                            builder.Append(" [DIR]");
+                        }
                         break;
 
                     case FileSystemItemKind.File:
-                        builder.Append(" [FILE]");
-                        if (item.LockedBy.Count > 0)
                         {
-                            var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
-                            builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                            builder.Append(" [FILE]");
+                            if (item.LockedBy.Count > 0)
+                            {
+                                var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
+                                builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                            }
                         }
                         break;
                 }
