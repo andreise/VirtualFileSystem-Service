@@ -57,7 +57,6 @@ namespace VirtualFileSystem.Model
         /// <summary>
         /// User list which blocked the item
         /// </summary>
-        /// <exception cref="InvalidOperationException">Throws if the item is not a file</exception>
         IReadOnlyCollection<string> LockedBy { get; }
 
         /// <summary>

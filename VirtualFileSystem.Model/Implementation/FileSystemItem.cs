@@ -113,17 +113,7 @@ namespace VirtualFileSystem.Model.Implementation
         /// <summary>
         /// User list which blocked the item
         /// </summary>
-        /// <exception cref="InvalidOperationException">Throws if the item is not a file</exception>
-        public IReadOnlyCollection<string> LockedBy
-        {
-            get
-            {
-                if (this.Kind != FileSystemItemKind.File)
-                    throw new InvalidOperationException("Item is not a file.");
-
-                return this.lockedBy.Items;
-            }
-        }
+        public IReadOnlyCollection<string> LockedBy => this.lockedBy.Items;
 
         /// <summary>
         /// Locks Item
@@ -227,14 +217,11 @@ namespace VirtualFileSystem.Model.Implementation
             if (child.Kind != FileSystemItemKind.Directory && child.Kind != FileSystemItemKind.File)
                 throw new InvalidOperationException("Child item is not a directory or a file.");
 
-            if (child.Kind == FileSystemItemKind.File)
-            {
-                if (child.LockedBy.Count > 0)
-                    throw new InvalidOperationException("Child item is a locked file.");
-            }
-
             if (!this.ChildItems.Contains(child))
                 throw new InvalidOperationException("Item do not have the specified child item.");
+
+            if (child.LockedBy.Count > 0)
+                throw new InvalidOperationException("Child item is locked.");
 
             this.childItems.Remove(child);
         }

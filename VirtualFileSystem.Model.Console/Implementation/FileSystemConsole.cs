@@ -109,19 +109,16 @@ namespace VirtualFileSystem.Model.Console.Implementation
             return directory;
         }
 
-        private static bool IsLockedItem(IFileSystemItem item)
-        {
-            return item.Kind == FileSystemItemKind.File && item.LockedBy.Count > 0;
-        }
-
         private static bool HasLocks(IFileSystemItem item)
         {
-            if (IsLockedItem(item))
+            if (item.LockedBy.Count > 0)
                 return true;
 
             foreach (IFileSystemItem child in item.ChildItems)
+            {
                 if (HasLocks(child))
                     return true;
+            }
 
             return false;
         }
@@ -393,13 +390,14 @@ namespace VirtualFileSystem.Model.Console.Implementation
                     case FileSystemItemKind.File:
                         {
                             builder.Append(" [FILE]");
-                            if (item.LockedBy.Count > 0)
-                            {
-                                var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
-                                builder.Append(Invariant($"[LOCKED BY: {string.Join(", ", lockedBy)}]"));
-                            }
                         }
                         break;
+                }
+
+                if (item.LockedBy.Count > 0)
+                {
+                    var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
+                    builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));
                 }
             }
 
