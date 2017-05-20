@@ -164,10 +164,10 @@ namespace VirtualFileSystem.Model.Implementation
         }
 
         /// <summary>
-        /// Determines the item or its child tree's items are locked
+        /// Determines the item or any item in its child tree is locked
         /// </summary>
         /// <returns>
-        /// Returns true if the item or its child tree's items are locked, otherwise returns false
+        /// Returns true if the item or any item in its child tree is locked, otherwise returns false
         /// </returns>
         public bool HasLocks() => this.LockedBy.Count > 0 || this.ChildItems.Any(child => child.HasLocks());
 
