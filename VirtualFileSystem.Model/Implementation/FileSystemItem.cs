@@ -14,6 +14,8 @@ namespace VirtualFileSystem.Model.Implementation
     internal sealed class FileSystemItem : IFileSystemItem
     {
 
+        private static StringComparer FileSystemItemNameComparer => FileSystemItemNameComparerProvider.Default;
+
         /// <summary>
         /// Item Kind
         /// </summary>
@@ -201,7 +203,7 @@ namespace VirtualFileSystem.Model.Implementation
             if (!this.validChildKinds.Contains(child.Kind))
                 throw new ArgumentException(this.validChildKindsMessage);
 
-            bool IsChildAlreadyExists() => this.ChildItems.Any(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, child.Name));
+            bool IsChildAlreadyExists() => this.ChildItems.Any(item => FileSystemItemNameComparer.Equals(item.Name, child.Name));
 
             if (IsChildAlreadyExists())
                 throw new InvalidOperationException("Child item with the specified name already exists.");
@@ -254,7 +256,7 @@ namespace VirtualFileSystem.Model.Implementation
 
             IFileSystemItem directory = FileSystemItemFactory.CreateDirectory(name);
 
-            if (this.ChildItems.Any(item => FileSystemItemNameComparerProvider.Default.Equals(directory.Name, item.Name)))
+            if (this.ChildItems.Any(item => FileSystemItemNameComparer.Equals(directory.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             this.childItems.Add(directory);
@@ -276,7 +278,7 @@ namespace VirtualFileSystem.Model.Implementation
 
             IFileSystemItem file = FileSystemItemFactory.CreateFile(name);
 
-            if (this.ChildItems.Any(item => FileSystemItemNameComparerProvider.Default.Equals(file.Name, item.Name)))
+            if (this.ChildItems.Any(item => FileSystemItemNameComparer.Equals(file.Name, item.Name)))
                 throw new InvalidOperationException("Directory or file with the specified name already exists.");
 
             this.childItems.Add(file);
@@ -297,7 +299,7 @@ namespace VirtualFileSystem.Model.Implementation
 
             IFileSystemItem directory = FileSystemItemFactory.CreateDirectory(name); // validate name
 
-            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparer.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -325,7 +327,7 @@ namespace VirtualFileSystem.Model.Implementation
 
             IFileSystemItem directory = FileSystemItemFactory.CreateDirectory(name); // validate name
 
-            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparerProvider.Default.Equals(directory.Name, item.Name)).FirstOrDefault();
+            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparer.Equals(directory.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("Directory with the specified name is not exists.");
@@ -351,7 +353,7 @@ namespace VirtualFileSystem.Model.Implementation
 
             IFileSystemItem file = FileSystemItemFactory.CreateFile(name); // validate name
 
-            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparerProvider.Default.Equals(file.Name, item.Name)).FirstOrDefault();
+            IFileSystemItem child = this.ChildItems.Where(item => FileSystemItemNameComparer.Equals(file.Name, item.Name)).FirstOrDefault();
 
             if (child is null)
                 throw new InvalidOperationException("File with the specified name is not exists.");

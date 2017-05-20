@@ -14,6 +14,10 @@ namespace VirtualFileSystem.Model.Console.Implementation
     public sealed class FileSystemConsole : IFileSystemConsole
     {
 
+        private static StringComparer UserNameComparer => UserNameComparerProvider.Default;
+
+        private static StringComparer FileSystemItemNameComparer => FileSystemItemNameComparerProvider.Default;
+
         private readonly IFileSystemItem root;
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -74,7 +78,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -97,7 +101,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -122,7 +126,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -150,7 +154,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length - 1; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -174,7 +178,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -199,7 +203,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -224,7 +228,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < directoryParts.Length; i++)
             {
-                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, directoryParts[i]));
+                currentItem = currentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, directoryParts[i]));
                 if (currentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -279,7 +283,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < sourcePathParts.Length; i++)
             {
-                sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, sourcePathParts[i]));
+                sourcePathCurrentItem = sourcePathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, sourcePathParts[i]));
                 if (sourcePathCurrentItem is null)
                     throw new FileSystemConsoleException("Source path is not exists.");
             }
@@ -299,7 +303,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
             for (int i = 0; i < destPathParts.Length; i++)
             {
-                destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparerProvider.Default.Equals(item.Name, destPathParts[i]));
+                destPathCurrentItem = destPathCurrentItem.ChildItems.FirstOrDefault(item => FileSystemItemNameComparer.Equals(item.Name, destPathParts[i]));
                 if (destPathCurrentItem is null)
                     throw new FileSystemConsoleException("Destination path is not exists.");
             }
@@ -390,7 +394,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
                 if (item.IsLocked)
                 {
-                    var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparerProvider.Default);
+                    var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparer);
                     builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));
                 }
             }
@@ -398,7 +402,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
             PrintItem();
 
             item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key).ForEach(
-                childGroup => childGroup.OrderBy(child => child.Name, FileSystemItemNameComparerProvider.Default).ForEach(
+                childGroup => childGroup.OrderBy(child => child.Name, FileSystemItemNameComparer).ForEach(
                     child => PrintTreeHelper(child, builder, printRoot)
                 )
             );
