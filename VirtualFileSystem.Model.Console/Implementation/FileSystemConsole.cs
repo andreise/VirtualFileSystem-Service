@@ -379,20 +379,20 @@ namespace VirtualFileSystem.Model.Console.Implementation
 
                 builder.Append(item.Name);
 
-                switch (item.Kind)
+                string GetItemKindDescription()
                 {
-                    case FileSystemItemKind.Directory:
-                        {
-                            builder.Append(" [DIR]");
-                        }
-                        break;
-
-                    case FileSystemItemKind.File:
-                        {
-                            builder.Append(" [FILE]");
-                        }
-                        break;
+                    switch (item.Kind)
+                    {
+                        case FileSystemItemKind.Directory:
+                            return " [DIR]";
+                        case FileSystemItemKind.File:
+                            return " [FILE]";
+                        default:
+                            return null;
+                    }
                 }
+
+                builder.Append(GetItemKindDescription());
 
                 if (item.LockedBy.Count > 0)
                 {
