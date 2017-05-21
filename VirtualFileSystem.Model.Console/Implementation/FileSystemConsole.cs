@@ -357,23 +357,21 @@ namespace VirtualFileSystem.Model.Console.Implementation
             if (item.Kind == FileSystemItemKind.Root && !printRoot)
                 return;
 
-            if (builder.Length > 0)
-                builder.AppendLine();
-
-            int itemLevel = item.GetLevel();
-
-            if (!printRoot)
-                itemLevel--;
-
-            if (itemLevel > 0)
+            void AppendIndent()
             {
-                for (int i = 0; i < itemLevel; i++)
-                    builder.Append("| ");
+                int itemLevel = item.GetLevel();
 
-                builder[builder.Length - 1] = '_';
+                if (!printRoot)
+                    itemLevel--;
+
+                if (itemLevel > 0)
+                {
+                    for (int i = 0; i < itemLevel; i++)
+                        builder.Append("| ");
+
+                    builder[builder.Length - 1] = '_';
+                }
             }
-
-            builder.Append(item.Name);
 
             string GetItemKindDescription()
             {
@@ -388,13 +386,22 @@ namespace VirtualFileSystem.Model.Console.Implementation
                 }
             }
 
-            builder.Append(GetItemKindDescription());
-
-            if (item.IsLocked)
+            string GetLockedByDescription()
             {
-                var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparer);
-                builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                if (!item.IsLocked)
+                    return null;
+
+                var lockedByOrdered = item.LockedBy.OrderBy(userName => userName, UserNameComparer);
+                return Invariant($" [LOCKED BY: {string.Join(", ", lockedByOrdered)}]");
             }
+
+            if (builder.Length > 0)
+                builder.AppendLine();
+
+            AppendIndent();
+            builder.Append(item.Name);
+            builder.Append(GetItemKindDescription());
+            builder.Append(GetLockedByDescription());
         }
 
         private static void PrintTreeHelper(IFileSystemItem item, StringBuilder builder, bool printRoot)
