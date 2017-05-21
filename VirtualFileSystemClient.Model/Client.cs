@@ -41,6 +41,10 @@ namespace VirtualFileSystemClient.Model
             );
         }
 
+        public Client() : this(Console.ReadLine, Console.WriteLine)
+        {
+        }
+
         protected override async Task ProcessAuthorizeOperationHandler(string userName)
         {
             var response = await this.Service.AuthorizeAsync(
