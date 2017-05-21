@@ -11,6 +11,12 @@ namespace VirtualFileSystem.ServiceModel
 
         [DataMember]
         public string CommandLine { get; set; }
+
+        [DataMember]
+        public bool IsSuccess { get; set; }
+
+        [DataMember]
+        public string ResponseMessage { get; set; }
     }
 
 }

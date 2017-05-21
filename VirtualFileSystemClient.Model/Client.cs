@@ -31,7 +31,13 @@ namespace VirtualFileSystemClient.Model
             if (UserNameComparer.Equals(data.UserName, this.User.Credentials.UserName))
                 return;
 
-            this.Output(Invariant($"User '{data.UserName}' performed the command: {data.CommandLine}"));
+            string successDescription = data.IsSuccess ? "successfully" : "unsuccessfully";
+            string responseTitle = data.IsSuccess ? "Response" : "Error";
+
+            this.Output(null);
+            this.Output(Invariant($"User '{data.UserName}' {successDescription} performed the command: {data.CommandLine}"));
+            this.Output(Invariant($"{responseTitle} message: {data.ResponseMessage}"));
+            this.Output(null);
         }
 
         public Client(Func<string> input, Action<string> output) : base(input, output)

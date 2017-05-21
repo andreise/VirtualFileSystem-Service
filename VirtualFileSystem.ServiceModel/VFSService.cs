@@ -304,6 +304,14 @@ namespace VirtualFileSystem.ServiceModel
                 throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
+            CommandPerformedData CreateCommandPerformedData(bool isSuccess, string message) => new CommandPerformedData()
+            {
+                UserName = request.UserName,
+                CommandLine = request.CommandLine,
+                IsSuccess = isSuccess,
+                ResponseMessage = message
+            };
+
             string responseMessage;
             try
             {
@@ -311,10 +319,18 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (Exception e)
             {
-                throw CreateCommandFaultException(request.UserName, request.CommandLine, e.Message);
+                string message = e.Message;
+                try
+                {
+                    this.GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: false, message: message));
+                }
+                finally
+                {
+                    throw CreateCommandFaultException(request.UserName, request.CommandLine, message);
+                }
             }
 
-            this.GetCallbackChannel().OnCommandPerformed(new CommandPerformedData() { UserName = request.UserName, CommandLine = request.CommandLine });
+            this.GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: true, message: responseMessage));
 
             return new CommandResponse()
             {

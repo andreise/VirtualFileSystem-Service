@@ -66,6 +66,8 @@
   <xs:complexType name="CommandPerformedData">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
