@@ -7,17 +7,16 @@ namespace VirtualFileSystemClient.Model
     internal sealed class VFSServiceCallbackHandler : IVFSServiceCallback
     {
 
-        private readonly Action<FileSystemConsoleNotificationData> handler;
+        private readonly Action<CommandPerformedData> commandPerformedHandler;
 
-        public VFSServiceCallbackHandler(Action<FileSystemConsoleNotificationData> handler)
+        public VFSServiceCallbackHandler(
+            Action<CommandPerformedData> commandPerformedHandler
+        )
         {
-            if (handler is null)
-                throw new ArgumentNullException(nameof(handler));
-
-            this.handler = handler;
+            this.commandPerformedHandler = commandPerformedHandler;
         }
 
-        public void Notify(FileSystemConsoleNotificationData data) => this.handler(data);
+        public void OnCommandPerformed(CommandPerformedData data) => this.commandPerformedHandler?.Invoke(data);
 
     }
 

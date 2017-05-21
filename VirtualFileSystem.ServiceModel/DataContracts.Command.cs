@@ -4,7 +4,7 @@ namespace VirtualFileSystem.ServiceModel
 {
 
     [DataContract]
-    public sealed class FileSystemConsoleRequest
+    public sealed class CommandRequest
     {
         [DataMember]
         public string UserName { get; set; }
@@ -17,7 +17,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class FileSystemConsoleResponse
+    public sealed class CommandResponse
     {
         [DataMember]
         public string UserName { get; set; }
@@ -33,7 +33,7 @@ namespace VirtualFileSystem.ServiceModel
     }
 
     [DataContract]
-    public sealed class FileSystemConsoleFault
+    public sealed class CommandFault
     {
         [DataMember]
         public string UserName { get; set; }

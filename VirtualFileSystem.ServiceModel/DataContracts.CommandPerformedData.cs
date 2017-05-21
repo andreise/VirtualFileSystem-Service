@@ -4,7 +4,7 @@ namespace VirtualFileSystem.ServiceModel
 {
 
     [DataContract]
-    internal sealed class FileSystemConsoleNotificationData
+    internal sealed class CommandPerformedData
     {
         [DataMember]
         public string UserName { get; set; }

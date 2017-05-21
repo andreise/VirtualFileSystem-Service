@@ -24,8 +24,8 @@ namespace VirtualFileSystem.ServiceModel
         DeauthorizeResponse Deauthorize(DeauthorizeRequest request);
 
         [OperationContract]
-        [FaultContract(typeof(FileSystemConsoleFault))]
-        FileSystemConsoleResponse FileSystemConsole(FileSystemConsoleRequest request);
+        [FaultContract(typeof(CommandFault))]
+        CommandResponse PerformCommand(CommandRequest request);
     }
 
 }

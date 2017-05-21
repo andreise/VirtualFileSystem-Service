@@ -39,15 +39,15 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DeauthorizeFault" nillable="true" type="tns:DeauthorizeFault" />
-  <xs:complexType name="FileSystemConsoleRequest">
+  <xs:complexType name="CommandRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Token" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FileSystemConsoleRequest" nillable="true" type="tns:FileSystemConsoleRequest" />
-  <xs:complexType name="FileSystemConsoleResponse">
+  <xs:element name="CommandRequest" nillable="true" type="tns:CommandRequest" />
+  <xs:complexType name="CommandResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrentDirectory" nillable="true" type="xs:string" />
@@ -55,19 +55,19 @@
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FileSystemConsoleResponse" nillable="true" type="tns:FileSystemConsoleResponse" />
-  <xs:complexType name="FileSystemConsoleFault">
+  <xs:element name="CommandResponse" nillable="true" type="tns:CommandResponse" />
+  <xs:complexType name="CommandFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FileSystemConsoleFault" nillable="true" type="tns:FileSystemConsoleFault" />
-  <xs:complexType name="FileSystemConsoleNotificationData">
+  <xs:element name="CommandFault" nillable="true" type="tns:CommandFault" />
+  <xs:complexType name="CommandPerformedData">
     <xs:sequence>
       <xs:element minOccurs="0" name="CommandLine" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FileSystemConsoleNotificationData" nillable="true" type="tns:FileSystemConsoleNotificationData" />
+  <xs:element name="CommandPerformedData" nillable="true" type="tns:CommandPerformedData" />
 </xs:schema>

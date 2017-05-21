@@ -76,10 +76,10 @@
     <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.AuthorizeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse.datasource">
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.CommandResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.FileSystemConsoleResponse.datasource">
+    <None Include="Connected Services\VirtualFileSystemServiceReference\VirtualFileSystemClient.Model.VirtualFileSystemServiceReference.DeauthorizeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>

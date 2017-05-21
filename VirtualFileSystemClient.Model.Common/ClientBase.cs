@@ -8,10 +8,10 @@ namespace VirtualFileSystemClient.Model.Common
     using VirtualFileSystem.Common.Console;
     using VirtualFileSystem.Common.Security;
 
-    public abstract class ClientBase<TAuthorizeException, TDeauthorizeException, TFileSystemConsoleException>
+    public abstract class ClientBase<TAuthorizeException, TDeauthorizeException, TCommandException>
         where TAuthorizeException : Exception
         where TDeauthorizeException : Exception
-        where TFileSystemConsoleException : Exception
+        where TCommandException : Exception
     {
 
         protected static StringComparer UserNameComparer => UserNameComparerProvider.Default;
@@ -112,7 +112,7 @@ namespace VirtualFileSystemClient.Model.Common
                 return;
             }
 
-            await this.ProcessOperationAsync<TFileSystemConsoleException>(async () => await this.FileSystemConsoleHandlerAsync(command));
+            await this.ProcessOperationAsync<TCommandException>(async () => await this.FileSystemConsoleHandlerAsync(command));
         }
 
         public virtual async Task RunAsync()

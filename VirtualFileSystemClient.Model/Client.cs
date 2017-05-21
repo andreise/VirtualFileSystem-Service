@@ -9,7 +9,7 @@ namespace VirtualFileSystemClient.Model
     using VirtualFileSystemServiceReference;
     using Common;
 
-    public sealed class Client : ClientBase<AuthorizeFault, DeauthorizeFault, FileSystemConsoleFault>
+    public sealed class Client : ClientBase<AuthorizeFault, DeauthorizeFault, CommandFault>
     {
 
         private const string ServerReturnedNullResponseMessage = "Server returned null response.";
@@ -20,7 +20,7 @@ namespace VirtualFileSystemClient.Model
 
         private readonly VFSServiceClient Service;
 
-        private void HandleCallback(FileSystemConsoleNotificationData data)
+        private void CommandPerformedHandler(CommandPerformedData data)
         {
             if (data is null || data.UserName is null)
                 return;
@@ -37,7 +37,7 @@ namespace VirtualFileSystemClient.Model
         public Client(Func<string> input, Action<string> output) : base(input, output)
         {
             this.Service = new VFSServiceClient(
-                new InstanceContext(new VFSServiceCallbackHandler(this.HandleCallback))
+                new InstanceContext(new VFSServiceCallbackHandler(commandPerformedHandler: this.CommandPerformedHandler))
             );
         }
 
@@ -95,8 +95,8 @@ namespace VirtualFileSystemClient.Model
 
         protected override async Task FileSystemConsoleHandlerAsync(IConsoleCommand<ConsoleCommandCode> command)
         {
-            var response = await this.Service.FileSystemConsoleAsync(
-                new FileSystemConsoleRequest()
+            var response = await this.Service.PerformCommandAsync(
+                new CommandRequest()
                 {
                     UserName = this.User.Credentials.UserName,
                     Token = this.User.Credentials.Token,
@@ -107,8 +107,8 @@ namespace VirtualFileSystemClient.Model
             if (response is null)
             {
                 string message = ServerReturnedNullResponseMessage;
-                throw new FaultException<FileSystemConsoleFault>(
-                    new FileSystemConsoleFault()
+                throw new FaultException<CommandFault>(
+                    new CommandFault()
                     {
                         UserName = this.User.Credentials.UserName,
                         CommandLine = command.CommandLine

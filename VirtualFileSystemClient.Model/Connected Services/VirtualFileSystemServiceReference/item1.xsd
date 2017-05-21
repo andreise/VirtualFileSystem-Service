@@ -29,24 +29,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FileSystemConsole">
+  <xs:element name="PerformCommand">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:FileSystemConsoleRequest" />
+        <xs:element xmlns:q5="http://andrey.sergeev.vfsservice" minOccurs="0" name="request" nillable="true" type="q5:CommandRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="FileSystemConsoleResponse">
+  <xs:element name="PerformCommandResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="FileSystemConsoleResult" nillable="true" type="q6:FileSystemConsoleResponse" />
+        <xs:element xmlns:q6="http://andrey.sergeev.vfsservice" minOccurs="0" name="PerformCommandResult" nillable="true" type="q6:CommandResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Notify">
+  <xs:element name="OnCommandPerformed">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://andrey.sergeev.vfsservice" minOccurs="0" name="data" nillable="true" type="q7:FileSystemConsoleNotificationData" />
+        <xs:element xmlns:q7="http://andrey.sergeev.vfsservice" minOccurs="0" name="data" nillable="true" type="q7:CommandPerformedData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -96,9 +96,9 @@ namespace VirtualFileSystem.ServiceModel
                 reason: message
             );
 
-        private static FaultException<FileSystemConsoleFault> CreateFileSystemConsoleFaultException(string userName, string commandLine, string message) =>
-            new FaultException<FileSystemConsoleFault>(
-                detail: new FileSystemConsoleFault() { UserName = userName, CommandLine = commandLine },
+        private static FaultException<CommandFault> CreateCommandFaultException(string userName, string commandLine, string message) =>
+            new FaultException<CommandFault>(
+                detail: new CommandFault() { UserName = userName, CommandLine = commandLine },
                 reason: message
             );
 
@@ -163,14 +163,14 @@ namespace VirtualFileSystem.ServiceModel
             return new DeauthorizeResponse() { UserName = request.UserName };
         }
 
-        private string ProcessFileSystemConsoleOperation(FileSystemConsoleRequest request, IConsoleCommand<ConsoleCommandCode> command)
+        private string PerformCommandHelper(CommandRequest request, IConsoleCommand<ConsoleCommandCode> command)
         {
             const string defaultResponseMessage = "Command performed successfully.";
 
             void ValidateParameterCount(int estimatedCount)
             {
                 if (command.Parameters.Count < estimatedCount)
-                    throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
+                    throw CreateCommandFaultException(request.UserName, request.CommandLine, "Command parameters count too small.");
             };
 
             switch (command.CommandCode)
@@ -255,7 +255,7 @@ namespace VirtualFileSystem.ServiceModel
 
                 default:
                     {
-                        throw CreateFileSystemConsoleFaultException(
+                        throw CreateCommandFaultException(
                             request.UserName,
                             request.CommandLine,
                             Invariant($"Unsupported command ({command.Command}).")
@@ -264,22 +264,22 @@ namespace VirtualFileSystem.ServiceModel
             }
         }
 
-        public FileSystemConsoleResponse FileSystemConsole(FileSystemConsoleRequest request)
+        public CommandResponse PerformCommand(CommandRequest request)
         {
             if (request is null)
-                throw CreateFileSystemConsoleFaultException(null, null, Invariant($"{nameof(request)} is null."));
+                throw CreateCommandFaultException(null, null, Invariant($"{nameof(request)} is null."));
 
             if (request.UserName is null)
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is null."));
 
             if (string.IsNullOrEmpty(request.UserName))
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.UserName)} is empty."));
 
             if (request.CommandLine is null)
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is null."));
 
             if (string.IsNullOrEmpty(request.CommandLine))
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is empty."));
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"{nameof(request.CommandLine)} is empty."));
 
             request.UserName = request.UserName.Trim();
 
@@ -289,7 +289,7 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (AuthenticateUserException e)
             {
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, e.Message);
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
             this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
@@ -301,22 +301,22 @@ namespace VirtualFileSystem.ServiceModel
             }
             catch (ArgumentException e)
             {
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, Invariant($"Command line is incorrect: {e.Message}."));
             }
 
             string responseMessage;
             try
             {
-                responseMessage = this.ProcessFileSystemConsoleOperation(request, command);
+                responseMessage = this.PerformCommandHelper(request, command);
             }
             catch (Exception e)
             {
-                throw CreateFileSystemConsoleFaultException(request.UserName, request.CommandLine, e.Message);
+                throw CreateCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
-            this.GetCallbackChannel().Notify(new FileSystemConsoleNotificationData() { UserName = request.UserName, CommandLine = request.CommandLine });
+            this.GetCallbackChannel().OnCommandPerformed(new CommandPerformedData() { UserName = request.UserName, CommandLine = request.CommandLine });
 
-            return new FileSystemConsoleResponse()
+            return new CommandResponse()
             {
                 UserName = request.UserName,
                 CurrentDirectory = this.connectedUsers[request.UserName].CurrentDirectory,

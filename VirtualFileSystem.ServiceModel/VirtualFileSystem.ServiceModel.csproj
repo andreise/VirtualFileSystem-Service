@@ -48,8 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommandCode.cs" />
-    <Compile Include="DataContracts.FileSystemConsoleNotificationData.cs" />
-    <Compile Include="DataContracts.FileSystemConsole.cs" />
+    <Compile Include="DataContracts.CommandPerformedData.cs" />
+    <Compile Include="DataContracts.Command.cs" />
     <Compile Include="DataContracts.Deauthorize.cs" />
     <Compile Include="DataContracts.Authorize.cs" />
     <Compile Include="IVFSService.cs" />
