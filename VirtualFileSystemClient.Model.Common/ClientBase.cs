@@ -18,20 +18,20 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected readonly User User = new User();
 
-        protected readonly Func<string> Input;
+        protected readonly Func<string> ReadLine;
 
-        protected readonly Action<string> Output;
+        protected readonly Action<string> WriteLine;
 
-        public ClientBase(Func<string> input, Action<string> output)
+        public ClientBase(Func<string> readLine, Action<string> writeLine)
         {
-            if (input is null)
-                throw new ArgumentNullException(nameof(input));
+            if (readLine is null)
+                throw new ArgumentNullException(nameof(readLine));
 
-            if (output is null)
-                throw new ArgumentNullException(nameof(output));
+            if (writeLine is null)
+                throw new ArgumentNullException(nameof(writeLine));
 
-            this.Input = input;
-            this.Output = output;
+            this.ReadLine = readLine;
+            this.WriteLine = writeLine;
         }
 
         protected async Task ProcessOperationAsync<TException>(Func<Task> handlerAsync) where TException : Exception
@@ -42,11 +42,11 @@ namespace VirtualFileSystemClient.Model.Common
             }
             catch (TException e)
             {
-                this.Output(e.Message);
+                this.WriteLine(e.Message);
             }
             catch (AggregateException e) when (e.InnerException is TException)
             {
-                this.Output(e.InnerException.Message);
+                this.WriteLine(e.InnerException.Message);
             }
         }
 
@@ -71,7 +71,7 @@ namespace VirtualFileSystemClient.Model.Common
 
             if (command.Parameters.Count == 0 || string.IsNullOrWhiteSpace(userName = command.Parameters[0]))
             {
-                this.Output("User name not specified.");
+                this.WriteLine("User name not specified.");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace VirtualFileSystemClient.Model.Common
             {
                 if (!UserNameComparer.Equals(this.User.Credentials.UserName, userName))
                 {
-                    this.Output(Invariant($"Please disconnect current user ('{this.User.Credentials.UserName}') before connect new user."));
+                    this.WriteLine(Invariant($"Please disconnect current user ('{this.User.Credentials.UserName}') before connect new user."));
                     return;
                 }
             }
@@ -91,7 +91,7 @@ namespace VirtualFileSystemClient.Model.Common
         {
             if (this.User.Credentials is null)
             {
-                this.Output("Current user is undefined.");
+                this.WriteLine("Current user is undefined.");
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace VirtualFileSystemClient.Model.Common
 
             if (this.User.Credentials is null)
             {
-                this.Output("Please connect to the host before sending to it any other commands.");
+                this.WriteLine("Please connect to the host before sending to it any other commands.");
                 return;
             }
 
@@ -117,15 +117,15 @@ namespace VirtualFileSystemClient.Model.Common
 
         public virtual async Task RunAsync()
         {
-            this.Output("Virtual File System Client");
-            this.Output(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
-            this.Output(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
+            this.WriteLine("Virtual File System Client");
+            this.WriteLine(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
+            this.WriteLine(Invariant($"Type '{ConsoleCommandCode.Connect} UserName'..."));
 
             IConsoleCommand<ConsoleCommandCode> command;
 
             IConsoleCommand<ConsoleCommandCode> ReadCommand()
             {
-                string commandLine = this.Input();
+                string commandLine = this.ReadLine();
                 return commandLine is null ? null : new ConsoleCommand<ConsoleCommandCode>(commandLine, isCaseSensitive: false);
             }
 

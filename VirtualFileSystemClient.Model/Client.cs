@@ -34,13 +34,13 @@ namespace VirtualFileSystemClient.Model
             string successDescription = data.IsSuccess ? "successfully" : "unsuccessfully";
             string responseTitle = data.IsSuccess ? "Response" : "Error";
 
-            this.Output(null);
-            this.Output(Invariant($"User '{data.UserName}' {successDescription} performed the command: {data.CommandLine}"));
-            this.Output(Invariant($"{responseTitle} message: {data.ResponseMessage}"));
-            this.Output(null);
+            this.WriteLine(null);
+            this.WriteLine(Invariant($"User '{data.UserName}' {successDescription} performed the command: {data.CommandLine}"));
+            this.WriteLine(Invariant($"{responseTitle} message: {data.ResponseMessage}"));
+            this.WriteLine(null);
         }
 
-        public Client(Func<string> input, Action<string> output) : base(input, output)
+        public Client(Func<string> readLine, Action<string> writeLine) : base(readLine, writeLine)
         {
             this.Service = new VFSServiceClient(
                 new InstanceContext(new VFSServiceCallbackHandler(commandPerformedHandler: this.CommandPerformedHandler))
@@ -71,8 +71,8 @@ namespace VirtualFileSystemClient.Model
 
             this.User.SetCredentials(userName, response.Token);
 
-            this.Output(Invariant($"User '{response.UserName}' connected successfully."));
-            this.Output(Invariant($"Total users: {response.TotalUsers}."));
+            this.WriteLine(Invariant($"User '{response.UserName}' connected successfully."));
+            this.WriteLine(Invariant($"Total users: {response.TotalUsers}."));
         }
 
         protected override async Task DeauthorizeHandlerAsync()
@@ -96,7 +96,7 @@ namespace VirtualFileSystemClient.Model
 
             this.User.ResetCredentials();
 
-            this.Output(Invariant($"User '{response.UserName}' disconnected."));
+            this.WriteLine(Invariant($"User '{response.UserName}' disconnected."));
         }
 
         protected override async Task FileSystemConsoleHandlerAsync(IConsoleCommand<ConsoleCommandCode> command)
@@ -123,7 +123,7 @@ namespace VirtualFileSystemClient.Model
                 );
             }
 
-            this.Output(response.ResponseMessage);
+            this.WriteLine(response.ResponseMessage);
         }
 
         public override async Task RunAsync()
