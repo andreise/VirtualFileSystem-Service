@@ -352,54 +352,54 @@ namespace VirtualFileSystem.Model.Console.Implementation
             currentDirectory, sourcePath, destPath, move: true
         );
 
-        private static void PrintTreeHelper(IFileSystemItem item, StringBuilder builder, bool printRoot)
+        private static void PrintItem(IFileSystemItem item, StringBuilder builder, bool printRoot)
         {
-            void PrintItem()
+            if (item.Kind == FileSystemItemKind.Root && !printRoot)
+                return;
+
+            if (builder.Length > 0)
+                builder.AppendLine();
+
+            int itemLevel = item.GetLevel();
+
+            if (!printRoot)
+                itemLevel--;
+
+            if (itemLevel > 0)
             {
-                if (item.Kind == FileSystemItemKind.Root && !printRoot)
-                    return;
+                for (int i = 0; i < itemLevel; i++)
+                    builder.Append("| ");
 
-                if (builder.Length > 0)
-                    builder.AppendLine();
+                builder[builder.Length - 1] = '_';
+            }
 
-                int itemLevel = item.GetLevel();
+            builder.Append(item.Name);
 
-                if (!printRoot)
-                    itemLevel--;
-
-                if (itemLevel > 0)
+            string GetItemKindDescription()
+            {
+                switch (item.Kind)
                 {
-                    for (int i = 0; i < itemLevel; i++)
-                        builder.Append("| ");
-
-                    builder[builder.Length - 1] = '_';
-                }
-
-                builder.Append(item.Name);
-
-                string GetItemKindDescription()
-                {
-                    switch (item.Kind)
-                    {
-                        case FileSystemItemKind.Directory:
-                            return " [DIR]";
-                        case FileSystemItemKind.File:
-                            return " [FILE]";
-                        default:
-                            return null;
-                    }
-                }
-
-                builder.Append(GetItemKindDescription());
-
-                if (item.IsLocked)
-                {
-                    var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparer);
-                    builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));
+                    case FileSystemItemKind.Directory:
+                        return " [DIR]";
+                    case FileSystemItemKind.File:
+                        return " [FILE]";
+                    default:
+                        return null;
                 }
             }
 
-            PrintItem();
+            builder.Append(GetItemKindDescription());
+
+            if (item.IsLocked)
+            {
+                var lockedBy = item.LockedBy.OrderBy(userName => userName, UserNameComparer);
+                builder.Append(Invariant($" [LOCKED BY: {string.Join(", ", lockedBy)}]"));
+            }
+        }
+
+        private static void PrintTreeHelper(IFileSystemItem item, StringBuilder builder, bool printRoot)
+        {
+            PrintItem(item, builder, printRoot);
 
             item.ChildItems.GroupBy(child => child.Kind).OrderBy(group => group.Key).ForEach(
                 childGroup => childGroup.OrderBy(child => child.Name, FileSystemItemNameComparer).ForEach(
