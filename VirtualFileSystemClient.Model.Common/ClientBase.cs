@@ -34,11 +34,11 @@ namespace VirtualFileSystemClient.Model.Common
             this.Output = output;
         }
 
-        protected async Task ProcessOperation<TException>(Func<Task> handler) where TException : Exception
+        protected async Task ProcessOperationAsync<TException>(Func<Task> handlerAsync) where TException : Exception
         {
             try
             {
-                await handler();
+                await handlerAsync();
             }
             catch (TException e)
             {
@@ -50,13 +50,13 @@ namespace VirtualFileSystemClient.Model.Common
             }
         }
 
-        protected abstract Task ProcessAuthorizeOperationHandler(string userName);
+        protected abstract Task AuthorizeHandlerAsync(string userName);
 
-        protected abstract Task ProcessDeauthorizeOperationHandler();
+        protected abstract Task DeauthorizeHandlerAsync();
 
-        protected abstract Task ProcessFileSystemConsoleOperationHandler(IConsoleCommand<ConsoleCommandCode> command);
+        protected abstract Task FileSystemConsoleHandlerAsync(IConsoleCommand<ConsoleCommandCode> command);
 
-        private async Task ProcessAuthorizeOperation(IConsoleCommand<ConsoleCommandCode> command)
+        private async Task AuthorizeAsync(IConsoleCommand<ConsoleCommandCode> command)
         {
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
@@ -84,10 +84,10 @@ namespace VirtualFileSystemClient.Model.Common
                 }
             }
 
-            await this.ProcessOperation<TAuthorizeException>(async () => await this.ProcessAuthorizeOperationHandler(userName));
+            await this.ProcessOperationAsync<TAuthorizeException>(async () => await this.AuthorizeHandlerAsync(userName));
         }
 
-        protected async Task ProcessDeauthorizeOperation()
+        protected async Task DeauthorizeAsync()
         {
             if (this.User.Credentials is null)
             {
@@ -95,10 +95,10 @@ namespace VirtualFileSystemClient.Model.Common
                 return;
             }
 
-            await this.ProcessOperation<TDeauthorizeException>(this.ProcessDeauthorizeOperationHandler);
+            await this.ProcessOperationAsync<TDeauthorizeException>(this.DeauthorizeHandlerAsync);
         }
 
-        protected async Task ProcessFileSystemConsoleOperation(IConsoleCommand<ConsoleCommandCode> command)
+        protected async Task FileSystemConsoleAsync(IConsoleCommand<ConsoleCommandCode> command)
         {
             if (command is null)
                 throw new ArgumentNullException(paramName: nameof(command));
@@ -112,10 +112,10 @@ namespace VirtualFileSystemClient.Model.Common
                 return;
             }
 
-            await this.ProcessOperation<TFileSystemConsoleException>(async () => await this.ProcessFileSystemConsoleOperationHandler(command));
+            await this.ProcessOperationAsync<TFileSystemConsoleException>(async () => await this.FileSystemConsoleHandlerAsync(command));
         }
 
-        public virtual async Task Run()
+        public virtual async Task RunAsync()
         {
             this.Output("Virtual File System Client");
             this.Output(Invariant($"Connect to host specified in the endpoint and send commands to the file system, or type '{nameof(ConsoleCommandCode.Quit)}' or '{nameof(ConsoleCommandCode.Exit)}' to exit."));
@@ -139,19 +139,21 @@ namespace VirtualFileSystemClient.Model.Common
                 switch (command.CommandCode)
                 {
                     case ConsoleCommandCode.Connect:
-                        await this.ProcessAuthorizeOperation(command);
+                        await this.AuthorizeAsync(command);
                         break;
 
                     case ConsoleCommandCode.Disconnect:
-                        await this.ProcessDeauthorizeOperation();
+                        await this.DeauthorizeAsync();
                         break;
 
                     default:
-                        await this.ProcessFileSystemConsoleOperation(command);
+                        await this.FileSystemConsoleAsync(command);
                         break;
                 }
             } // while
         }
+
+        public void Run() => this.RunAsync().Wait();
 
     }
 

@@ -45,7 +45,7 @@ namespace VirtualFileSystemClient.Model
         {
         }
 
-        protected override async Task ProcessAuthorizeOperationHandler(string userName)
+        protected override async Task AuthorizeHandlerAsync(string userName)
         {
             var response = await this.Service.AuthorizeAsync(
                 new AuthorizeRequest()
@@ -69,7 +69,7 @@ namespace VirtualFileSystemClient.Model
             this.Output(Invariant($"Total users: {response.TotalUsers}."));
         }
 
-        protected override async Task ProcessDeauthorizeOperationHandler()
+        protected override async Task DeauthorizeHandlerAsync()
         {
             var response = await this.Service.DeauthorizeAsync(
                 new DeauthorizeRequest()
@@ -93,7 +93,7 @@ namespace VirtualFileSystemClient.Model
             this.Output(Invariant($"User '{response.UserName}' disconnected."));
         }
 
-        protected override async Task ProcessFileSystemConsoleOperationHandler(IConsoleCommand<ConsoleCommandCode> command)
+        protected override async Task FileSystemConsoleHandlerAsync(IConsoleCommand<ConsoleCommandCode> command)
         {
             var response = await this.Service.FileSystemConsoleAsync(
                 new FileSystemConsoleRequest()
@@ -120,7 +120,7 @@ namespace VirtualFileSystemClient.Model
             this.Output(response.ResponseMessage);
         }
 
-        public override async Task Run()
+        public override async Task RunAsync()
         {
             lock (this.runLock)
             {
@@ -132,7 +132,7 @@ namespace VirtualFileSystemClient.Model
 
             try
             {
-                await base.Run();
+                await base.RunAsync();
             }
             finally
             {
