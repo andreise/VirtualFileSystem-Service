@@ -28,7 +28,7 @@ namespace VirtualFileSystemClient.Model
             if (this.User.Credentials is null)
                 return;
 
-            if (EqualUserNames(data.UserName, this.User.Credentials.UserName))
+            if (UserNameComparer.Equals(data.UserName, this.User.Credentials.UserName))
                 return;
 
             this.Output(Invariant($"User '{data.UserName}' performed the command: {data.CommandLine}"));

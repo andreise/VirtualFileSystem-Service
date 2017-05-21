@@ -14,7 +14,7 @@ namespace VirtualFileSystemClient.Model.Common
         where TFileSystemConsoleException : Exception
     {
 
-        protected static bool EqualUserNames(string name1, string name2) => UserNameComparerProvider.Default.Equals(name1, name2);
+        protected static StringComparer UserNameComparer => UserNameComparerProvider.Default;
 
         protected readonly User User = new User();
 
@@ -77,7 +77,7 @@ namespace VirtualFileSystemClient.Model.Common
 
             if (!(this.User.Credentials is null))
             {
-                if (!EqualUserNames(this.User.Credentials.UserName, userName))
+                if (!UserNameComparer.Equals(this.User.Credentials.UserName, userName))
                 {
                     this.Output(Invariant($"Please disconnect current user ('{this.User.Credentials.UserName}') before connect new user."));
                     return;
