@@ -31,7 +31,7 @@ namespace VirtualFileSystem.Model
 
             public const char AltPathSeparator = '/';
 
-            public static IReadOnlyList<char> PathSeparators { get; } = new ReadOnlyCollection<char>(new char[] { PathSeparator, AltPathSeparator });
+            public static IReadOnlyList<char> PathSeparators { get; } = new ReadOnlyCollection<char>(new[] { PathSeparator, AltPathSeparator });
 
             // Volume Names
 
