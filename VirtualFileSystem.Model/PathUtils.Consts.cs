@@ -60,7 +60,7 @@ namespace VirtualFileSystem.Model
                 string[] names = new string[validVolumeChars.Count];
 
                 for (int i = 0; i < names.Length; i++)
-                    names[i] = new string(new char[] { validVolumeChars[i], VolumeSeparator });
+                    names[i] = new string(new[] { validVolumeChars[i], VolumeSeparator });
 
                 return names;
             }

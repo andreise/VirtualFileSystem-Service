@@ -12,7 +12,7 @@ namespace VirtualFileSystem.ServiceModel.Security.Cryptography
         public const int TokenLength512 = 64;
 
         public IReadOnlyList<int> ValidTokenLengths = new ReadOnlyCollection<int>(
-            new int[]
+            new[]
             {
                 TokenLength512
             }

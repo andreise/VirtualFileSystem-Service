@@ -56,7 +56,7 @@ namespace VirtualFileSystem.Common.Console
             );
         }
 
-        private string GetCommandLine() => string.Join(" ", new string[] { this.Command }.Concat(this.Parameters));
+        private string GetCommandLine() => string.Join(" ", new[] { this.Command }.Concat(this.Parameters));
 
         /// <summary>
         /// Constructor
