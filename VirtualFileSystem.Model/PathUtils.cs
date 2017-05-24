@@ -82,23 +82,10 @@ namespace VirtualFileSystem.Model
             return path1 + new string(Consts.PathSeparator, 1) + relativePath2;
         }
 
-        public static string[] SplitPath(string path)
-        {
-            if (path is null)
-                return new string[0];
-
-            string[] tempItems = path.Split(Consts.PathSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            List<string> items = new List<string>(tempItems.Length);
-
-            for (int i = 0; i < tempItems.Length; i++)
-            {
-                if (!string.IsNullOrWhiteSpace(tempItems[i]))
-                    items.Add(tempItems[i]);
-            }
-
-            return items.ToArray();
-        }
+        public static string[] SplitPath(string path) => path?
+            .Split(Consts.PathSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries)
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .ToArray() ?? new string[] { };
 
         /// <summary>
         /// Static constructor
