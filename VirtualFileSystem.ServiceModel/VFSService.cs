@@ -24,13 +24,18 @@ namespace VirtualFileSystem.ServiceModel
     )]
     public class VFSService : IVFSService
     {
-        private readonly IFileSystemConsole Console = FileSystemConsoleFactory.Create(FileSystemFactory.Default);
+        private readonly Lazy<IFileSystemConsole> consoleProvider =
+            new Lazy<IFileSystemConsole>(() => FileSystemConsoleFactory.Create(FileSystemFactory.Default));
 
-        private IVFSServiceCallback GetCallbackChannel() => OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
+        private IFileSystemConsole Console => this.consoleProvider.Value;
 
         private TokenProvider TokenProvider => TokenProvider.Default;
 
-        private readonly Dictionary<string, UserSessionInfo> Users = new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
+        private readonly Dictionary<string, UserSessionInfo> Users =
+            new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
+
+        private IVFSServiceCallback GetCallbackChannel() =>
+            OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
