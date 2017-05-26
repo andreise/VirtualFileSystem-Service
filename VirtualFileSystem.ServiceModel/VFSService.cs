@@ -66,20 +66,9 @@ namespace VirtualFileSystem.ServiceModel
             }
         }
 
-        private bool IsActualUserSession(string userName)
-        {
-            DateTime lastActivityTimeUtc = this.Users[userName].LastActivityTimeUtc;
+        private static TimeSpan GetUserSessionTimeoutSetting() => TimeSpan.FromTicks(TimeSpan.TicksPerSecond * GetUserSessionTimeoutSecondsSetting());
 
-            TimeSpan userSessionTimeout = TimeSpan.FromTicks(
-                TimeSpan.TicksPerSecond *
-                GetUserSessionTimeoutSecondsSetting()
-            );
-
-            DateTime nowUtc = DateTime.UtcNow;
-            return
-                nowUtc >= lastActivityTimeUtc &&
-                nowUtc - lastActivityTimeUtc <= userSessionTimeout;
-        }
+        private bool IsActualUserSession(string userName) => this.Users[userName].IsActualSession(GetUserSessionTimeoutSetting());
 
         private void AuthenticateUser(string userName, byte[] token)
         {
