@@ -30,14 +30,14 @@ namespace VirtualFileSystem.ServiceModel
 
         private TokenProvider TokenProvider => TokenProvider.Default;
 
-        private readonly Dictionary<string, UserSessionInfo> connectedUsers = new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
+        private readonly Dictionary<string, UserSessionInfo> Users = new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
 
         private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
-            if (!this.connectedUsers.ContainsKey(userName))
+            if (!this.Users.ContainsKey(userName))
                 throw new AuthenticateUserException(Invariant($"User '{userName}' is not connected."));
 
-            if (!this.TokenProvider.IsEqualTokens(token, this.connectedUsers[userName].Token))
+            if (!this.TokenProvider.IsEqualTokens(token, this.Users[userName].Token))
                 throw new AuthenticateUserException("User token is invalid.");
         }
 
@@ -63,7 +63,7 @@ namespace VirtualFileSystem.ServiceModel
 
         private bool IsActualUserSession(string userName)
         {
-            DateTime lastActivityTimeUtc = this.connectedUsers[userName].LastActivityTimeUtc;
+            DateTime lastActivityTimeUtc = this.Users[userName].LastActivityTimeUtc;
 
             TimeSpan userSessionTimeout = TimeSpan.FromTicks(
                 TimeSpan.TicksPerSecond *
@@ -115,19 +115,19 @@ namespace VirtualFileSystem.ServiceModel
 
             request.UserName = request.UserName.Trim();
 
-            if (this.connectedUsers.ContainsKey(request.UserName))
+            if (this.Users.ContainsKey(request.UserName))
             {
                 if (this.IsActualUserSession(request.UserName))
                     throw CreateAuthorizeFaultException(request.UserName, Invariant($"User '{request.UserName}' already connected."));
 
-                this.connectedUsers.Remove(request.UserName);
+                this.Users.Remove(request.UserName);
             }
 
             byte[] token = this.TokenProvider.GenerateToken();
 
-            this.connectedUsers.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
+            this.Users.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
 
-            return new AuthorizeResponse() { UserName = request.UserName, Token = token, TotalUsers = this.connectedUsers.Count };
+            return new AuthorizeResponse() { UserName = request.UserName, Token = token, TotalUsers = this.Users.Count };
         }
 
         public DeauthorizeResponse Deauthorize(DeauthorizeRequest request)
@@ -158,7 +158,7 @@ namespace VirtualFileSystem.ServiceModel
                 throw CreateDeauthorizeFaultException(request.UserName, e.Message);
             }
 
-            this.connectedUsers.Remove(request.UserName);
+            this.Users.Remove(request.UserName);
 
             return new DeauthorizeResponse() { UserName = request.UserName };
         }
@@ -178,57 +178,57 @@ namespace VirtualFileSystem.ServiceModel
                 case ConsoleCommandCode.ChangeDirectory:
                     {
                         ValidateParameterCount(1);
-                        this.connectedUsers[request.UserName].CurrentDirectory =
-                            this.Console.ChangeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
-                        return Invariant($"New current directory '{this.connectedUsers[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
+                        this.Users[request.UserName].CurrentDirectory =
+                            this.Console.ChangeDirectory(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        return Invariant($"New current directory '{this.Users[request.UserName].CurrentDirectory}' for user '{request.UserName}' successfully set.");
                     }
 
                 case ConsoleCommandCode.CopyTree:
                     {
                         ValidateParameterCount(2);
-                        this.Console.Copy(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        this.Console.Copy(this.Users[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
 
                 case ConsoleCommandCode.DeleteFile:
                     {
                         ValidateParameterCount(1);
-                        string fileName = this.Console.DeleteFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.Console.DeleteFile(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' deleted succesfully.");
                     }
 
                 case ConsoleCommandCode.DeleteTree:
                     {
                         ValidateParameterCount(1);
-                        string directory = this.Console.DeleteTree(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.Console.DeleteTree(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Tree '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.LockFile:
                     {
                         ValidateParameterCount(1);
-                        string fileName = this.Console.LockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.Console.LockFile(request.UserName, this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' locked succesfully by user '{request.UserName}'.");
                     }
 
                 case ConsoleCommandCode.MakeDirectory:
                     {
                         ValidateParameterCount(1);
-                        string directory = this.Console.MakeDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.Console.MakeDirectory(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MakeFile:
                     {
                         ValidateParameterCount(1);
-                        string fileName = this.Console.MakeFile(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.Console.MakeFile(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' created succesfully.");
                     }
 
                 case ConsoleCommandCode.MoveTree:
                     {
                         ValidateParameterCount(2);
-                        this.Console.Move(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
+                        this.Console.Move(this.Users[request.UserName].CurrentDirectory, command.Parameters[0], command.Parameters[1]);
                         return defaultResponseMessage;
                     }
 
@@ -242,14 +242,14 @@ namespace VirtualFileSystem.ServiceModel
                 case ConsoleCommandCode.RemoveDirectory:
                     {
                         ValidateParameterCount(1);
-                        string directory = this.Console.RemoveDirectory(this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string directory = this.Console.RemoveDirectory(this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"Directory '{directory}' removed succesfully.");
                     }
 
                 case ConsoleCommandCode.UnlockFile:
                     {
                         ValidateParameterCount(1);
-                        string fileName = this.Console.UnlockFile(request.UserName, this.connectedUsers[request.UserName].CurrentDirectory, command.Parameters[0]);
+                        string fileName = this.Console.UnlockFile(request.UserName, this.Users[request.UserName].CurrentDirectory, command.Parameters[0]);
                         return Invariant($"File '{fileName}' unlocked succesfully by user '{request.UserName}'.");
                     }
 
@@ -292,7 +292,7 @@ namespace VirtualFileSystem.ServiceModel
                 throw CreateCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
-            this.connectedUsers[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
+            this.Users[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
 
             IConsoleCommand<ConsoleCommandCode> command;
             try
@@ -335,7 +335,7 @@ namespace VirtualFileSystem.ServiceModel
             return new CommandResponse()
             {
                 UserName = request.UserName,
-                CurrentDirectory = this.connectedUsers[request.UserName].CurrentDirectory,
+                CurrentDirectory = this.Users[request.UserName].CurrentDirectory,
                 CommandLine = request.CommandLine,
                 ResponseMessage = responseMessage
             };
