@@ -6,43 +6,49 @@ namespace VirtualFileSystem.ServiceModel.Security
     internal sealed class UserSessionInfo
     {
 
-        private static void ValidateDateTime(DateTime dateTime)
+        private static DateTime UtcNow() => DateTime.UtcNow;
+
+        private static void ValidateTimeUtc(DateTime value)
         {
-            if (dateTime.Kind != DateTimeKind.Utc)
-                throw new ArgumentException("DateTime must be represented in UTC kind.", nameof(dateTime));
+            if (value.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("DateTime must be represented in UTC kind.", nameof(value));
         }
 
-        private DateTime lastActivityTimeUtc;
+        public DateTime LastActivityTimeUtc { get; private set; }
 
-        public DateTime LastActivityTimeUtc
+        public void UpdateLastActivityTimeUtc(DateTime utcNow)
         {
-            get => this.lastActivityTimeUtc;
-            set
-            {
-                ValidateDateTime(value);
-                this.lastActivityTimeUtc = value;
-            }
+            ValidateTimeUtc(utcNow);
+            this.LastActivityTimeUtc = utcNow;
         }
+
+        public void UpdateLastActivityTimeUtc() =>
+            this.UpdateLastActivityTimeUtc(UtcNow());
 
         public byte[] Token { get; }
 
         public string CurrentDirectory { get; set; }
 
-        public UserSessionInfo(DateTime lastActivityTimeUtc, byte[] token)
+        public UserSessionInfo(DateTime utcNow, byte[] token)
         {
-            this.LastActivityTimeUtc = lastActivityTimeUtc;
+            this.UpdateLastActivityTimeUtc(utcNow);
             this.Token = token;
         }
 
-        public bool IsActualSession(TimeSpan timeout, DateTime nowUtc)
+        public UserSessionInfo(byte[] token) : this(UtcNow(), token)
         {
-            ValidateDateTime(nowUtc);
-            return
-                nowUtc >= this.lastActivityTimeUtc &&
-                nowUtc - this.lastActivityTimeUtc <= timeout;
         }
 
-        public bool IsActualSession(TimeSpan timeout) => this.IsActualSession(timeout, DateTime.UtcNow);
+        public bool IsActualSession(DateTime utcNow, TimeSpan timeout)
+        {
+            ValidateTimeUtc(utcNow);
+            return
+                utcNow >= this.LastActivityTimeUtc &&
+                utcNow - this.LastActivityTimeUtc <= timeout;
+        }
+
+        public bool IsActualSession(TimeSpan timeout) =>
+            this.IsActualSession(UtcNow(), timeout);
 
     }
 

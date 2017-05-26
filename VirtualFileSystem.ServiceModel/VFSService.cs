@@ -119,7 +119,7 @@ namespace VirtualFileSystem.ServiceModel
 
             byte[] token = this.TokenProvider.GenerateToken();
 
-            this.Users.Add(request.UserName, new UserSessionInfo(DateTime.UtcNow, token));
+            this.Users.Add(request.UserName, new UserSessionInfo(token));
 
             return new AuthorizeResponse() { UserName = request.UserName, Token = token, TotalUsers = this.Users.Count };
         }
@@ -286,7 +286,7 @@ namespace VirtualFileSystem.ServiceModel
                 throw CreateCommandFaultException(request.UserName, request.CommandLine, e.Message);
             }
 
-            this.Users[request.UserName].LastActivityTimeUtc = DateTime.UtcNow;
+            this.Users[request.UserName].UpdateLastActivityTimeUtc();
 
             IConsoleCommand<ConsoleCommandCode> command;
             try
