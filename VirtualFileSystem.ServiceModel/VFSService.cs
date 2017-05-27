@@ -24,6 +24,10 @@ namespace VirtualFileSystem.ServiceModel
     )]
     public class VFSService : IVFSService
     {
+
+        private static IVFSServiceCallback GetCallbackChannel() =>
+            OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
+
         private readonly Lazy<IFileSystemConsole> consoleProvider =
             new Lazy<IFileSystemConsole>(() => FileSystemConsoleFactory.Create(FileSystemFactory.Default));
 
@@ -33,9 +37,6 @@ namespace VirtualFileSystem.ServiceModel
 
         private readonly Dictionary<string, UserSessionInfo> Users =
             new Dictionary<string, UserSessionInfo>(UserNameComparerProvider.Default);
-
-        private IVFSServiceCallback GetCallbackChannel() =>
-            OperationContext.Current.GetCallbackChannel<IVFSServiceCallback>();
 
         private void AuthenticateUserWithoutSessionChecking(string userName, byte[] token)
         {
@@ -316,7 +317,7 @@ namespace VirtualFileSystem.ServiceModel
                 string message = e.Message;
                 try
                 {
-                    this.GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: false, message: message));
+                    GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: false, message: message));
                 }
                 finally
                 {
@@ -324,7 +325,7 @@ namespace VirtualFileSystem.ServiceModel
                 }
             }
 
-            this.GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: true, message: responseMessage));
+            GetCallbackChannel().OnCommandPerformed(CreateCommandPerformedData(isSuccess: true, message: responseMessage));
 
             return new CommandResponse()
             {
@@ -335,6 +336,7 @@ namespace VirtualFileSystem.ServiceModel
             };
 
         }
+
     }
 
 }
