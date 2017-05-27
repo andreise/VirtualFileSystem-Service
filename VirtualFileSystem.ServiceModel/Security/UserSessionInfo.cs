@@ -31,6 +31,9 @@ namespace VirtualFileSystem.ServiceModel.Security
 
         public UserSessionInfo(DateTime utcNow, byte[] token)
         {
+            if (token is null)
+                throw new ArgumentNullException(nameof(token));
+
             this.UpdateLastActivityTimeUtc(utcNow);
             this.Token = token;
         }
