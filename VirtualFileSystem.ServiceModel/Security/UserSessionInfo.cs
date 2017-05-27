@@ -14,16 +14,17 @@ namespace VirtualFileSystem.ServiceModel.Security
                 throw new ArgumentException("DateTime must be represented in UTC kind.", nameof(value));
         }
 
-        public DateTime LastActivityTimeUtc { get; private set; }
+        private DateTime lastActivityTimeUtc;
 
-        public void UpdateLastActivityTimeUtc(DateTime utcNow)
+        public DateTime LastActivityTimeUtc
         {
-            ValidateTimeUtc(utcNow);
-            this.LastActivityTimeUtc = utcNow;
+            get => this.lastActivityTimeUtc;
+            private set
+            {
+                ValidateTimeUtc(value);
+                this.lastActivityTimeUtc = value;
+            }
         }
-
-        public void UpdateLastActivityTimeUtc() =>
-            this.UpdateLastActivityTimeUtc(UtcNow());
 
         public byte[] Token { get; }
 
@@ -34,7 +35,7 @@ namespace VirtualFileSystem.ServiceModel.Security
             if (token is null)
                 throw new ArgumentNullException(nameof(token));
 
-            this.UpdateLastActivityTimeUtc(utcNow);
+            this.LastActivityTimeUtc = utcNow;
             this.Token = token;
         }
 
@@ -42,16 +43,19 @@ namespace VirtualFileSystem.ServiceModel.Security
         {
         }
 
+        public void UpdateLastActivityTimeUtc(DateTime utcNow) => this.LastActivityTimeUtc = utcNow;
+
+        public void UpdateLastActivityTimeUtc() => this.UpdateLastActivityTimeUtc(UtcNow());
+
         public bool IsActualSession(DateTime utcNow, TimeSpan timeout)
         {
             ValidateTimeUtc(utcNow);
             return
-                utcNow >= this.LastActivityTimeUtc &&
-                utcNow - this.LastActivityTimeUtc <= timeout;
+                utcNow >= this.lastActivityTimeUtc &&
+                utcNow - this.lastActivityTimeUtc <= timeout;
         }
 
-        public bool IsActualSession(TimeSpan timeout) =>
-            this.IsActualSession(UtcNow(), timeout);
+        public bool IsActualSession(TimeSpan timeout) => this.IsActualSession(UtcNow(), timeout);
 
     }
 
