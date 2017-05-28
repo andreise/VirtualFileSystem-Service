@@ -43,7 +43,7 @@ namespace VirtualFileSystem.ServiceModel
             if (!this.Users.ContainsKey(userName))
                 throw new AuthenticateUserException(Invariant($"User '{userName}' is not connected."));
 
-            if (!this.TokenProvider.IsEqualTokens(token, this.Users[userName].Token))
+            if (!this.TokenProvider.EqualTokens(token, this.Users[userName].Token))
                 throw new AuthenticateUserException("User token is invalid.");
         }
 

@@ -9,6 +9,7 @@ namespace VirtualFileSystem.ServiceModel.Security.Cryptography
 
     internal sealed class TokenProvider
     {
+
         public const int TokenLength512 = 64;
 
         public IReadOnlyList<int> ValidTokenLengths = new ReadOnlyCollection<int>(
@@ -36,15 +37,15 @@ namespace VirtualFileSystem.ServiceModel.Security.Cryptography
         {
         }
 
-        public void ValidateToken(byte[] token)
+        public void ValidateToken(IReadOnlyList<byte> token)
         {
             if (token is null)
                 throw new ArgumentNullException(paramName: nameof(token));
 
-            if (token.Length == 0)
+            if (token.Count == 0)
                 throw new ArgumentException(paramName: nameof(token), message: "Token is empty.");
 
-            if (!this.ValidTokenLengths.Contains(token.Length))
+            if (!this.ValidTokenLengths.Contains(token.Count))
                 throw new ArgumentException(paramName: nameof(token), message: "Token has an invalid length.");
         }
 
@@ -60,22 +61,16 @@ namespace VirtualFileSystem.ServiceModel.Security.Cryptography
             return token;
         }
 
-        public bool IsEqualTokens(byte[] token1, byte[] token2)
+        public bool EqualTokens(IReadOnlyList<byte> token1, IReadOnlyList<byte> token2)
         {
             ValidateToken(token1);
             ValidateToken(token2);
 
-            if (token1.Length != token2.Length)
-                return false;
-
-            for (int i = 0; i < token1.Length; i++)
-            {
-                if (token1[i] != token2[i])
-                    return false;
-            }
-
-            return true;
+            return
+                token1.Count == token2.Count &&
+                token1.SequenceEqual(token2);
         }
+
     }
 
 }
