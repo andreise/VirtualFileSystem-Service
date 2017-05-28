@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 
 namespace VirtualFileSystem.Model
 {
@@ -37,33 +38,15 @@ namespace VirtualFileSystem.Model
 
             public const char VolumeSeparator = ':';
 
-            private static char[] GetValidVolumeChars(char firstChar, char lastChar)
-            {
-                char[] chars = new char[(lastChar - firstChar) + 1];
-
-                chars[0] = firstChar;
-                for (int i = 0; i < chars.Length - 1; i++)
-                {
-                    chars[i + 1] = chars[i];
-                    chars[i + 1]++;
-                }
-
-                return chars;
-            }
+            private static char[] GetValidVolumeChars(char firstChar, char lastChar) =>
+                Enumerable.Range(firstChar, (lastChar - firstChar) + 1).Select(n => (char)n).ToArray();
 
             public static IReadOnlyList<char> ValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars('C', 'Z'));
 
             public static IReadOnlyList<char> AltValidVolumeChars { get; } = new ReadOnlyCollection<char>(GetValidVolumeChars('c', 'z'));
 
-            private static string[] GetValidVolumeNames(IReadOnlyList<char> validVolumeChars)
-            {
-                string[] names = new string[validVolumeChars.Count];
-
-                for (int i = 0; i < names.Length; i++)
-                    names[i] = new string(new[] { validVolumeChars[i], VolumeSeparator });
-
-                return names;
-            }
+            private static string[] GetValidVolumeNames(IReadOnlyList<char> validVolumeChars) =>
+                validVolumeChars.Select(c => new string(new[] { c, VolumeSeparator })).ToArray();
 
             public static IReadOnlyList<string> ValidVolumeNames { get; } = new ReadOnlyCollection<string>(GetValidVolumeNames(ValidVolumeChars));
 
