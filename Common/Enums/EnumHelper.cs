@@ -9,6 +9,8 @@ namespace Common.Enums
 
         public static bool IsEnum<TEnum>() where TEnum : struct => typeof(TEnum).GetTypeInfo().IsEnum;
 
+        public static TEnum[] GetValues<TEnum>() where TEnum : struct => (TEnum[])Enum.GetValues(typeof(TEnum));
+
         public static TEnum? TryParse<TEnum>(string value, bool ignoreCase = false) where TEnum : struct =>
             Enum.TryParse(value, ignoreCase, out TEnum result) ? result : (TEnum?)null;
 
