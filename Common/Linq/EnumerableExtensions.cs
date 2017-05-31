@@ -19,6 +19,11 @@ namespace Common.Linq
                 action(item);
         }
 
+        public static IEnumerable<TSource> Yield<TSource>(this TSource source)
+        {
+            yield return source;
+        }
+
     }
 
 }
