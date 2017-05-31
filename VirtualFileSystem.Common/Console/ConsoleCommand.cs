@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace VirtualFileSystem.Common.Console
             );
         }
 
-        private string GetCommandLine() => string.Join(" ", new[] { this.Command }.Concat(this.Parameters));
+        private string GetCommandLine() => string.Join(" ", this.Command.Yield().Concat(this.Parameters));
 
         /// <summary>
         /// Constructor
