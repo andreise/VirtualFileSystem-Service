@@ -57,8 +57,6 @@ namespace VirtualFileSystem.Common.Console
             );
         }
 
-        private string GetCommandLine() => string.Join(" ", this.Command.Yield().Concat(this.Parameters));
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -76,7 +74,9 @@ namespace VirtualFileSystem.Common.Console
             this.Command = items.FirstOrDefault() ?? string.Empty;
             this.Parameters = new ReadOnlyCollection<string>(items.Skip(1).ToArray());
 
-            this.CommandLine = this.GetCommandLine();
+            string GetCommandLine() => string.Join(" ", this.Command.Yield().Concat(this.Parameters));
+
+            this.CommandLine = GetCommandLine();
 
             this.IsCaseSensitive = isCaseSensitive;
         }
