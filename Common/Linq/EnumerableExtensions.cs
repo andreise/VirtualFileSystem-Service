@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.Linq
 {
@@ -23,6 +24,12 @@ namespace Common.Linq
         {
             yield return source;
         }
+
+        public static IEnumerable<TSource> Concat<TSource>(this TSource first, IEnumerable<TSource> second) =>
+            first.Yield().Concat(second);
+
+        public static IEnumerable<TSource> Concat<TSource>(this IEnumerable<TSource> first, TSource second) =>
+            first.Concat(second.Yield());
 
     }
 
