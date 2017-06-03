@@ -31,6 +31,12 @@ namespace Common.Linq
         public static IEnumerable<TSource> Concat<TSource>(this IEnumerable<TSource> first, TSource second) =>
             first.Concat(second.Yield());
 
+        public static bool IsNullOrEmpty<TSource>(this IReadOnlyCollection<TSource> collection) =>
+            collection is null || collection.Count == 0;
+
+        public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource> collection) =>
+            collection is null || !collection.Any();
+
     }
 
 }
