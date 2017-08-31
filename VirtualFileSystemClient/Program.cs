@@ -4,6 +4,6 @@
 
     static class Program
     {
-        static void Main(string[] args) => new Client().Run();
+        static void Main(string[] args) => new Client().RunAsync().Wait();
     }
 }

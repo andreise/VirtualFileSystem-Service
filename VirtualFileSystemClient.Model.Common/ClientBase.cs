@@ -153,8 +153,6 @@ namespace VirtualFileSystemClient.Model.Common
             } // while
         }
 
-        public void Run() => this.RunAsync().Wait();
-
     }
 
 }
