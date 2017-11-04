@@ -1,9 +1,13 @@
-﻿namespace VirtualFileSystemClient
+﻿using System.Threading.Tasks;
+
+namespace VirtualFileSystemClient
 {
     using Model;
 
     static class Program
     {
-        static void Main(string[] args) => new Client().RunAsync().Wait();
+		static async Task MainAsync(string[] args) => await new Client().RunAsync();
+
+		static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
     }
 }
