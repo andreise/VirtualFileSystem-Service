@@ -6,8 +6,6 @@ namespace VirtualFileSystemClient
 
     static class Program
     {
-		static async Task MainAsync(string[] args) => await new Client().RunAsync();
-
-		static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
+		static async Task Main(string[] args) => await new Client().RunAsync();
     }
 }
