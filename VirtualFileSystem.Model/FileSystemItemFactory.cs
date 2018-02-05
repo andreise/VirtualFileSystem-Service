@@ -104,13 +104,13 @@ namespace VirtualFileSystem.Model
             );
         }
 
-        private static readonly IReadOnlyCollection<FileSystemItemKind> validKinds = new ReadOnlyCollection<FileSystemItemKind>(new FileSystemItemKind[]
+        private static readonly IReadOnlyCollection<FileSystemItemKind> validKinds = new[]
         {
             FileSystemItemKind.Root,
             FileSystemItemKind.Volume,
             FileSystemItemKind.Directory,
             FileSystemItemKind.File
-        });
+        };
 
         public static IFileSystemItem CreateItem(FileSystemItemKind kind, string name)
         {
