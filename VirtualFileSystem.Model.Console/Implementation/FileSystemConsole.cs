@@ -11,7 +11,7 @@ namespace VirtualFileSystem.Model.Console.Implementation
     /// <summary>
     /// File System Console
     /// </summary>
-    public sealed class FileSystemConsole : IFileSystemConsole
+    internal sealed class FileSystemConsole : IFileSystemConsole
     {
 
         private static StringComparer UserNameComparer => UserNameComparerProvider.Default;
