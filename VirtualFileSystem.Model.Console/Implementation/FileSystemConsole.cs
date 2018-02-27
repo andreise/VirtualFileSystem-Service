@@ -267,7 +267,11 @@ namespace VirtualFileSystem.Model.Console.Implementation
             item.ChildItems.ForEach(child => CopyItemTree(child, itemCopy));
         }
 
-        private void CopyOrMoveInternal(string currentDirectory, string sourcePath, string destPath, bool move)
+        private void CopyOrMoveInternal(
+            string currentDirectory,
+            string sourcePath,
+            string destPath,
+            Action<IFileSystemItem, IFileSystemItem> action)
         {
             currentDirectory = NormalizeCurrentDirectory(currentDirectory);
 
@@ -332,24 +336,26 @@ namespace VirtualFileSystem.Model.Console.Implementation
             if (sourcePathCurrentItem.HasLocks())
                 throw new FileSystemConsoleException("Source path contain one or more locked files and cannot be copied or moved.");
 
-            if (move)
+            action(sourcePathCurrentItem, destPathCurrentItem);
+        }
+
+        public void Copy(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
+            currentDirectory,
+            sourcePath,
+            destPath,
+            (sourcePathCurrentItem, destPathCurrentItem) => CopyItemTree(sourcePathCurrentItem, destPathCurrentItem)
+        );
+
+        public void Move(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
+            currentDirectory,
+            sourcePath,
+            destPath,
+            (sourcePathCurrentItem, destPathCurrentItem) =>
             {
                 IFileSystemItem prevParent = sourcePathCurrentItem.Parent;
                 destPathCurrentItem.AddChild(sourcePathCurrentItem);
                 prevParent.RemoveChild(sourcePathCurrentItem);
             }
-            else
-            {
-                CopyItemTree(sourcePathCurrentItem, destPathCurrentItem);
-            }
-        }
-
-        public void Copy(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
-            currentDirectory, sourcePath, destPath, move: false
-        );
-
-        public void Move(string currentDirectory, string sourcePath, string destPath) => CopyOrMoveInternal(
-            currentDirectory, sourcePath, destPath, move: true
         );
 
         private static void PrintItem(IFileSystemItem item, StringBuilder builder, bool printRoot)
