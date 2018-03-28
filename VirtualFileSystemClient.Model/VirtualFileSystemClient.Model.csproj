@@ -54,9 +54,9 @@
       <Project>{088cfc42-3515-45ce-841f-80663fcbc447}</Project>
       <Name>VirtualFileSystem.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VirtualFileSystemClient.Model.Common\VirtualFileSystemClient.Model.Common.csproj">
-      <Project>{e64400b8-b1c6-4c74-8f7c-722f1ec01c2b}</Project>
-      <Name>VirtualFileSystemClient.Model.Common</Name>
+    <ProjectReference Include="..\VirtualFileSystemClient.ModelCore\VirtualFileSystemClient.ModelCore.csproj">
+      <Project>{13f0c174-7132-4555-b8ce-6293aeea2ea8}</Project>
+      <Name>VirtualFileSystemClient.ModelCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

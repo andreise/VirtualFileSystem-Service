@@ -1,4 +1,4 @@
-﻿namespace VirtualFileSystemClient.Model.Common
+﻿namespace VirtualFileSystemClient.ModelCore
 {
 
     /// <summary>

@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using static System.FormattableString;
 
-namespace VirtualFileSystemClient.Model.Common
+namespace VirtualFileSystemClient.ModelCore
 {
     using Security;
     using VirtualFileSystem.Common.Console;
     using VirtualFileSystem.Common.Security;
 
-    public abstract class ClientBase<TAuthorizeException, TDeauthorizeException, TCommandException>
+    public abstract class ClientCoreBase<TAuthorizeException, TDeauthorizeException, TCommandException>
         where TAuthorizeException : Exception
         where TDeauthorizeException : Exception
         where TCommandException : Exception
@@ -22,7 +22,7 @@ namespace VirtualFileSystemClient.Model.Common
 
         protected readonly Action<string> WriteLine;
 
-        public ClientBase(Func<string> readLine, Action<string> writeLine)
+        public ClientCoreBase(Func<string> readLine, Action<string> writeLine)
         {
             if (readLine is null)
                 throw new ArgumentNullException(nameof(readLine));

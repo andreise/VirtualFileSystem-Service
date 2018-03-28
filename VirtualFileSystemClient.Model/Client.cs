@@ -6,8 +6,8 @@ using static System.FormattableString;
 namespace VirtualFileSystemClient.Model
 {
     using VirtualFileSystem.Common.Console;
+    using VirtualFileSystemClient.ModelCore;
     using VirtualFileSystemServiceReference;
-    using Common;
 
     public sealed class Client : ClientBase<AuthorizeFault, DeauthorizeFault, CommandFault>
     {
