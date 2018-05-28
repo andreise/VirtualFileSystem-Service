@@ -7,7 +7,7 @@ namespace VirtualFileSystem.Common.Console
 {
 
     public class ConsoleCommand<TCommandCodeEnum> : ConsoleCommand, IConsoleCommand<TCommandCodeEnum>
-		where TCommandCodeEnum : struct, Enum
+        where TCommandCodeEnum : struct, Enum
     {
 
         /// <summary>
