@@ -6,7 +6,8 @@ using static System.FormattableString;
 namespace VirtualFileSystem.Common.Console
 {
 
-    public class ConsoleCommand<TCommandCodeEnum> : ConsoleCommand, IConsoleCommand<TCommandCodeEnum> where TCommandCodeEnum : struct
+    public class ConsoleCommand<TCommandCodeEnum> : ConsoleCommand, IConsoleCommand<TCommandCodeEnum>
+		where TCommandCodeEnum : struct, Enum
     {
 
         /// <summary>
